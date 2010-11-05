@@ -3,9 +3,9 @@ iTMDb
 
 Objective-C Cocoa wrapper for TMDb.org. © Christian Rasmussen, 2010.
 
-This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. Thus, attribution is not required, but it is appreciated.
+This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. Thus, attribution from within your application is not required, but it is appreciated.
 
-iTMDb is developed for **Mac OS X 10.6 Snow Leopard**, but should work fine with **iOS**.
+iTMDb is developed for **Mac OS X 10.6 Snow Leopard**, but it should work fine with **iOS**.
 
 Please remember to read the TMDb API Terms of Use.
 
@@ -44,7 +44,7 @@ Documentation is in the works. Please see the test application (available in the
 Support for Garbage Collection
 ==============================
 
-iTMDb was developed with support for both garbage supported and unsupported applications. Out of the box, iTMDb compiles to an unsupported binary, but the target can easily be set to supported.
+iTMDb was developed with support for both garbage supported and unsupported applications. Out of the box, iTMDb compiles to a non-garbage collected binary, but the target can easily be set to supported.
 
 Third-party code
 ================

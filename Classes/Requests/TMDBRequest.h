@@ -10,7 +10,7 @@
 
 #import "TMDBRequestDelegate.h"
 
-@interface TMDBRequest : NSObject <NSKeyedArchiverDelegate> {
+@interface TMDBRequest : NSObject {
 	NSMutableData *data;
 	
 	id<TMDBRequestDelegate> delegate;

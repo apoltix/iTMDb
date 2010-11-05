@@ -11,11 +11,14 @@
 #import <iTMDb/iTMDb.h>
 
 @interface TestAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, TMDBDelegate> {
-	IBOutlet NSWindow *window;
-
 	TMDB *tmdb;
 
+	NSArray *allData;
+
 	// IBOutlets
+	IBOutlet NSWindow *window;
+	IBOutlet NSWindow *allDataWindow;
+
 	IBOutlet NSTextField *apiKey;
 	IBOutlet NSTextField *movieID;
 	IBOutlet NSTextField *movieTitle;
@@ -24,13 +27,14 @@
 
 	IBOutlet NSButton *goButton;
 	IBOutlet NSProgressIndicator *throbber;
+	IBOutlet NSButton *viewAllDataButton;
+
+	IBOutlet NSTextView *allDataTextView;
 }
 
 @property (nonatomic, retain, readonly) NSWindow *window;
-@property (nonatomic, assign, readonly) BOOL isGoButtonEnabled;
 
 - (IBAction)go:(id)sender;
-
-- (BOOL)isGoButtonEnabled;
+- (IBAction)viewAllData:(id)sender;
 
 @end

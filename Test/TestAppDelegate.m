@@ -11,11 +11,12 @@
 @implementation TestAppDelegate
 
 @synthesize window;
-@dynamic isGoButtonEnabled;
 
 - (void)awakeFromNib
 {
 	tmdb = nil;
+
+	[allDataTextView setFont:[NSFont fontWithName:@"Lucida Console" size:11.0]];
 }
 
 #pragma mark -
@@ -29,20 +30,28 @@
 										   otherButton:nil
 							 informativeTextWithFormat:@"Please enter both API key and movie ID.\n\n"
 													   @"You can obtain an API key from themoviedb.org."];
-		[alert beginSheetModalForWindow:window
-						  modalDelegate:nil
-						 didEndSelector:nil
-							contextInfo:nil];
+		[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 
 		return;
 	}
 
 	[throbber startAnimation:self];
 	[goButton setEnabled:NO];
+	[viewAllDataButton setEnabled:NO];
 
 	tmdb = [[[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self] retain];
 
 	[tmdb movieWithID:[movieID integerValue]];
+}
+
+- (IBAction)viewAllData:(id)sender
+{
+	if (!allData)
+		return;
+
+	[allDataTextView setString:[allData description]];
+
+	[allDataWindow makeKeyAndOrderFront:self];
 }
 
 #pragma mark -
@@ -50,26 +59,26 @@
 
 - (void)tmdb:(TMDB *)context didFinishLoadingMovie:(TMDBMovie *)movie
 {
-	printf("Did finish loading movie\n");
-
 	[movieTitle setStringValue:movie.title];
 	[movieOverview setString:movie.overview];
 	[movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", movie.runtime]];
 
+	allData = [[NSArray alloc] initWithArray:movie.rawResults copyItems:YES];
+
+	[context release];
+	[movie release];
 	[tmdb release];
 
 	[throbber stopAnimation:self];
 	[goButton setEnabled:YES];
+
+	[viewAllDataButton setEnabled:YES];
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error
 {
 	NSAlert *alert = [NSAlert alertWithError:error];
-	[alert beginSheetModalForWindow:window
-					  modalDelegate:nil
-					 didEndSelector:nil
-						contextInfo:nil];
-	
+	[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 
 	[throbber stopAnimation:self];
 	[goButton setEnabled:YES];

@@ -22,15 +22,6 @@
 													   cachePolicy:NSURLRequestReloadIgnoringCacheData
 												   timeoutInterval:30.0];
 
-	//UIDevice *device = [UIDevice currentDevice];
-
-	//[req setValue:[NSString stringWithFormat:@"%@ %@",API_CLIENT_NAME,API_CLIENT_VERSION] forHTTPHeaderField:@"X-Client"];
-	//[req setValue:device.uniqueIdentifier forHTTPHeaderField:@"X-Device-UDID"];
-	//[req setValue:device.name forHTTPHeaderField:@"X-Device-Name"];
-	//[req setValue:device.model forHTTPHeaderField:@"X-Device-Model"]; // TODO: Use Erica Sadun's UIDevice extension to determine exact model
-	//[req setValue:device.systemName forHTTPHeaderField:@"X-Device-OS-Name"];
-	//[req setValue:device.systemVersion forHTTPHeaderField:@"X-Device-OS-Version"];
-
 	NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:vlreq];
 	
 	if (conn)
@@ -72,13 +63,6 @@
 	[data appendData:thedata];
 }
 
-- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
-{
-	//printf("NSURLConnection did send %i bytes (%i total) in body data, with %i in total (estimate).\n", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
-	//if (delegate && [(NSObject *)delegate respondsToSelector:@selector(request:didSendPostDataWithProgress:)])
-	//	[delegate request:self didSendPostDataWithProgress:(float)totalBytesWritten * 100.0 / (float)totalBytesExpectedToWrite];
-}
-
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
 	NSLog(@"TMDBRequest did fail with error: %@", error);
@@ -91,13 +75,6 @@
     [data release]; // Release the hold that was made with the connection
 
 	[delegate request:self didFinishLoading:nil];
-}
-
-#pragma mark -
-#pragma mark Keyed Archiver Delegate
-- (void)archiverDidFinish:(NSKeyedArchiver *)archiver
-{
-	printf("Keyed archiver did finish %s.\n", [[archiver description] UTF8String]);
 }
 
 @end
