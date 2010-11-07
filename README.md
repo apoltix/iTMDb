@@ -5,7 +5,7 @@ Objective-C Cocoa wrapper for TMDb.org. © Christian Rasmussen, 2010.
 
 This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. Thus, attribution from within your application is not required, but it is appreciated.
 
-iTMDb is developed for **Mac OS X 10.6 Snow Leopard**, but it should work fine with **iOS**.
+iTMDb is developed for **Mac OS X 10.6 Snow Leopard**, but it should work fine with **iOS** (not tested).
 
 Please remember to read the TMDb API Terms of Use.
 
@@ -20,7 +20,7 @@ You can check out the included test target (iTMDbTest) within the Xcode project 
 
         #import <iTMDb/iTMDb.h>
 
-3. You create an instance of iTMDb like this. Replace "<code>api_key</code>" with your own API key, provided by TMDb, and set an object to be the delegate — this object will receive notifications when the loading is done. The object should follow the TMDBDelegate protocol.
+3. You create an instance of iTMDb like this. Replace "<code>api_key</code>" with your own API key, provided by TMDb. iTMDb performs fetch requests asynchronously, so setting a delegate is required. The delegate will receive notifications when the loading is done. The object should follow the TMDBDelegate protocol.
 
         TMDB *tmdb = [[TMDB alloc] initWithAPIKey:@"api_key" delegate:self];
 
@@ -30,7 +30,7 @@ You can check out the included test target (iTMDbTest) within the Xcode project 
 
 5. An API request is made. Once information has been downloaded, the context object (<code>tmdb</code>) will receive a notification. The fetched properties are available through the returned object, which is sent to the context delegate (tmdb.delegate) with the following method:
 
-        - [delegate tmdb:context didFinishLoadingMovie:movie]
+        - [tmdb:(TMDB *)context didFinishLoadingMovie:(TMDBMovie *)movie]
 
    Set the movie's title to a text field:
 
