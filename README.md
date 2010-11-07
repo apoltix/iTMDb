@@ -1,7 +1,7 @@
 iTMDb
 =====
 
-Objective-C Cocoa wrapper for TMDb.org. © Christian Rasmussen, 2010.
+Objective-C Cocoa wrapper (framework) for TMDb.org. © Christian Rasmussen, 2010.
 
 This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. Thus, attribution from within your application is not required, but it is appreciated.
 

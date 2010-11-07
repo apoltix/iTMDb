@@ -26,6 +26,8 @@
 	NSString *_tagline;
 	NSURL *_homepage;
 	NSString *_imdbID;
+	NSArray *_posters;
+	NSArray *_backdrops;
 }
 
 @property (nonatomic, retain, readonly) TMDB *context;
@@ -39,6 +41,8 @@
 @property (nonatomic, retain, readonly) NSString *tagline;
 @property (nonatomic, retain, readonly) NSURL *homepage;
 @property (nonatomic, retain, readonly) NSString *imdbID;
+@property (nonatomic, retain, readonly) NSArray *posters;
+@property (nonatomic, retain, readonly) NSArray *backdrops;
 
 + (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)context;
 

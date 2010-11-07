@@ -65,6 +65,19 @@
 	[movieOverview setString:movie.overview];
 	[movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", movie.runtime]];
 
+	NSDateFormatter *releaseDateFormatter = [[NSDateFormatter alloc] init];
+	[releaseDateFormatter setDateFormat:@"dd-MM-yyyy"];
+	[movieReleaseDate setStringValue:[releaseDateFormatter stringFromDate:movie.released]];
+
+	NSUInteger posterSizeCount = 0;
+	for (TMDBImage *poster in movie.posters)
+		posterSizeCount += [poster sizeCount];
+	[moviePostersCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [movie.posters count], posterSizeCount]];
+	NSUInteger backdropSizeCount = 0;
+	for (TMDBImage *backdrop in movie.backdrops)
+		backdropSizeCount += [backdrop sizeCount];
+	[movieBackdropsCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [movie.backdrops count], backdropSizeCount]];
+
 	allData = [[NSArray alloc] initWithArray:movie.rawResults copyItems:YES];
 
 	[context release];
@@ -87,6 +100,9 @@
 	[movieTitle setStringValue:@""];
 	[movieOverview setString:@""];
 	[movieRuntime setStringValue:@"0"];
+	[movieReleaseDate setStringValue:@"00-00-0000"];
+	[moviePostersCount setStringValue:@"0 (0 sizes total)"];
+	[movieBackdropsCount setStringValue:@"0 (0 sizes total)"];
 
 	[throbber stopAnimation:self];
 	[goButton setEnabled:YES];

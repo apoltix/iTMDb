@@ -8,6 +8,13 @@
 
 #import "TMDB.h"
 #import "TMDBMovie.h"
+#import "TMDBImage.h"
+
+@interface TMDBMovie ()
+
+- (NSArray *)arrayWithImages:(NSArray *)images ofType:(TMDBImageType)type;
+
+@end
 
 @implementation TMDBMovie
 
@@ -20,7 +27,9 @@
             runtime=_runtime,
             tagline=_tagline,
             homepage=_homepage,
-            imdbID=_imdbID;
+            imdbID=_imdbID,
+            posters=_posters,
+            backdrops=_backdrops;
 
 + (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)aContext
 {
@@ -34,10 +43,17 @@
 		_context = aContext;
 
 		_rawResults = nil;
+
+		_id = 0;
 		_title = nil;
+		_released = nil;
 		_overview = nil;
 		_runtime = 0;
 		_tagline = nil;
+		_homepage = nil;
+		_imdbID = nil;
+		_posters = nil;
+		_backdrops = nil;
 
 		// Initialize the fetch request
 		NSURL *requestURL = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.getInfo/%@/json/%@/%li",
@@ -91,6 +107,8 @@
 
 	NSDictionary *d = [_rawResults objectAtIndex:0];
 
+	// SIMPLE DATA
+
 	_id       = [(NSNumber *)[d objectForKey:@"name"] integerValue];
 	_title    = [[d objectForKey:@"name"] copy];
 	_overview = [[d objectForKey:@"overview"] copy];
@@ -98,15 +116,88 @@
 	_homepage = [NSURL URLWithString:[d objectForKey:@"homepage"]];
 	_imdbID   = [[d objectForKey:@"imdb_id"] copy];
 
+	// COMPLEX DATA
+
+	// Release date
 	NSDateFormatter *releasedFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
 	_released = [releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]];
 
+	// Runtime
 	if (!([d objectForKey:@"runtime"] == nil || [[d objectForKey:@"runtime"] isKindOfClass:[NSNull class]]))
 		_runtime  = [[d objectForKey:@"runtime"] unsignedIntegerValue];
 
+	// Posters
+	_posters = nil;
+	if ([d objectForKey:@"posters"])
+		_posters = [self arrayWithImages:[d objectForKey:@"posters"] ofType:TMDBImageTypePoster];
+	//NSLog(@"POSTERS %@", _posters);
+
+	// Backdrops
+	_backdrops = nil;
+	if ([d objectForKey:@"backdrops"])
+		_backdrops = [self arrayWithImages:[d objectForKey:@"backdrops"] ofType:TMDBImageTypeBackdrop];
+	//NSLog(@"BACKDROPS %@", _backdrops);
+
+	// Notify the context that the movie info has been loaded
 	if (_context)
 		[_context movieDidFinishLoading:self];
+}
+
+- (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType {
+	NSMutableArray *imageObjects = [[NSMutableArray arrayWithCapacity:0] autorelease];
+
+	TMDBImage *currentImage = nil;
+	// outerImageDict: the TMDb API wraps each image in a wrapper dictionary (e.g. each backdrop has an "images" dictionary)
+	for (NSDictionary *outerImageDict in theImages)
+	{
+		// innerImageDict: the image info (see outerImageDict)
+		NSDictionary *innerImageDict = [outerImageDict objectForKey:@"image"];
+
+		// Fetch the existing image (if any)
+		BOOL allocatedNewObject = NO;
+		if (currentImage && ![currentImage.id isEqualToString:[innerImageDict objectForKey:@"id"]])
+		{
+			// Warning: This hasn't actually been tested yet
+			NSIndexSet *passed = [imageObjects indexesOfObjectsPassingTest:^(id obj, NSUInteger idx, BOOL *stop) {
+				TMDBImage *lookupImage = (TMDBImage *)obj;
+				BOOL passed = [lookupImage.id isEqualToString:[innerImageDict objectForKey:@"id"]];
+				if (passed) // we only need one object
+					*(stop) = YES;
+				return passed;
+			}];
+
+			if ([passed count] > 0)
+				currentImage = [imageObjects objectAtIndex:[passed firstIndex]];
+			else
+				currentImage = nil;
+		}
+
+		// use !currentBackdrop instead of an else, as an object recovery (fetch) may have been performed
+		if (!currentImage)
+		{
+			currentImage = [[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType];
+			allocatedNewObject = YES;
+		}
+
+		TMDBImageSize imgSize = -1;
+		NSString *imgSizeString = [innerImageDict objectForKey:@"size"];
+		if ([imgSizeString isEqualToString:@"original"])
+			imgSize = TMDBImageSizeOriginal;
+		else if ([imgSizeString isEqualToString:@"mid"])
+			imgSize = TMDBImageSizeMid;
+		else if ([imgSizeString isEqualToString:@"cover"])
+			imgSize = TMDBImageSizeCover;
+		else if ([imgSizeString isEqualToString:@"thumb"])
+			imgSize = TMDBImageSizeThumb;
+
+		[currentImage setURL:[NSURL URLWithString:[innerImageDict objectForKey:@"url"]] forSize:imgSize];
+
+		// Add object if it doesn't already exist
+		if (allocatedNewObject)
+			[imageObjects addObject:currentImage];
+	}
+	return imageObjects;
 }
 
 #pragma mark -
