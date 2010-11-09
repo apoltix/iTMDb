@@ -12,6 +12,8 @@
 
 @interface TMDBMovie ()
 
+- (id)initWithURL:(NSURL *)url context:(TMDB *)context;
+
 - (NSArray *)arrayWithImages:(NSArray *)images ofType:(TMDBImageType)type;
 
 @end
@@ -31,12 +33,20 @@
             posters=_posters,
             backdrops=_backdrops;
 
+#pragma mark -
+#pragma mark Constructors
+
 + (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)aContext
 {
 	return [[TMDBMovie alloc] initWithID:anID context:aContext];
 }
 
-- (id)initWithID:(NSInteger)anID context:(TMDB *)aContext
++ (TMDBMovie *)movieWithName:(NSString *)aName context:(TMDB *)aContext
+{
+	return [[TMDBMovie alloc] initWithName:aName context:aContext];
+}
+
+- (id)initWithURL:(NSURL *)url context:(TMDB *)aContext
 {
 	if ((self = [self init]))
 	{
@@ -54,16 +64,30 @@
 		_imdbID = nil;
 		_posters = nil;
 		_backdrops = nil;
-
-		// Initialize the fetch request
-		NSURL *requestURL = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.getInfo/%@/json/%@/%li",
-												  API_VERSION, _context.language, _context.apiKey, anID]];
-		_request = [TMDBRequest requestWithURL:requestURL delegate:self];
 		
+		// Initialize the fetch request
+		_request = [TMDBRequest requestWithURL:url delegate:self];
 	}
 
-	return nil;
+	return self;
 }
+
+- (id)initWithID:(NSInteger)anID context:(TMDB *)aContext
+{
+	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.getInfo/%@/json/%@/%li",
+									   API_VERSION, aContext.language, aContext.apiKey, anID]];
+	return [self initWithURL:url context:aContext];
+}
+
+- (id)initWithName:(NSString *)aName context:(TMDB *)aContext
+{
+	NSString *aNameEscaped = [aName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.search/%@/json/%@/%@",
+									   API_VERSION, aContext.language, aContext.apiKey, aNameEscaped]];
+	return [self initWithURL:url context:aContext];
+}
+
+#pragma mark -
 
 - (NSString *)description
 {
@@ -75,6 +99,7 @@
 	return [NSString stringWithFormat:@"<%@: %@ (%i)>", [self class], self.title, year, nil];
 }
 
+#pragma mark -
 #pragma mark TMDBRequestDelegate
 - (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error
 {
@@ -113,19 +138,27 @@
 	_title    = [[d objectForKey:@"name"] copy];
 	_overview = [[d objectForKey:@"overview"] copy];
 	_tagline  = [[d objectForKey:@"tagline"] copy];
-	_homepage = [NSURL URLWithString:[d objectForKey:@"homepage"]];
 	_imdbID   = [[d objectForKey:@"imdb_id"] copy];
 
 	// COMPLEX DATA
 
 	// Release date
-	NSDateFormatter *releasedFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
-	_released = [releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]];
+	if ([d objectForKey:@"released"])
+	{
+		NSDateFormatter *releasedFormatter = [[[NSDateFormatter alloc] init] autorelease];
+		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
+		_released = [releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]];
+	}
 
 	// Runtime
 	if (!([d objectForKey:@"runtime"] == nil || [[d objectForKey:@"runtime"] isKindOfClass:[NSNull class]]))
 		_runtime  = [[d objectForKey:@"runtime"] unsignedIntegerValue];
+
+	// Homepage
+	if ([d objectForKey:@"homepage"])
+		_homepage = [NSURL URLWithString:[d objectForKey:@"homepage"]];
+	else
+		_homepage = nil;
 
 	// Posters
 	_posters = nil;

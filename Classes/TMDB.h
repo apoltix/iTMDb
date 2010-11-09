@@ -36,5 +36,6 @@
 #pragma mark -
 #pragma mark Shortcuts
 - (TMDBMovie *)movieWithID:(NSInteger)anID;
+- (TMDBMovie *)movieWithName:(NSString *)aName;
 
 @end

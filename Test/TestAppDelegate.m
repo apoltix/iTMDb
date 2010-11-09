@@ -22,13 +22,13 @@
 #pragma mark -
 - (IBAction)go:(id)sender
 {
-	if (!([[apiKey stringValue] length] > 0 && [movieID integerValue] > 0))
+	if (!([[apiKey stringValue] length] > 0 && ([movieID integerValue] > 0 || [[movieName stringValue] length] > 0)))
 	{
-		NSAlert *alert = [NSAlert alertWithMessageText:@"Missing either API key or movie ID"
+		NSAlert *alert = [NSAlert alertWithMessageText:@"Missing either API key, movie ID or title"
 										 defaultButton:@"OK"
 									   alternateButton:nil
 										   otherButton:nil
-							 informativeTextWithFormat:@"Please enter both API key and movie ID.\n\n"
+							 informativeTextWithFormat:@"Please enter both API key, and a movie ID or title.\n\n"
 													   @"You can obtain an API key from themoviedb.org."];
 		[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 
@@ -41,7 +41,10 @@
 
 	tmdb = [[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self];
 
-	[tmdb movieWithID:[movieID integerValue]];
+	if ([movieID integerValue] > 0)
+		[tmdb movieWithID:[movieID integerValue]];
+	else
+		[tmdb movieWithName:[movieName stringValue]];
 }
 
 - (IBAction)viewAllData:(id)sender
@@ -61,6 +64,12 @@
 {
 	printf("%s\n", [[movie description] UTF8String]);
 
+	[throbber stopAnimation:self];
+	[goButton setEnabled:YES];
+	[viewAllDataButton setEnabled:YES];
+
+	allData = [[NSArray alloc] initWithArray:movie.rawResults copyItems:YES];
+
 	[movieTitle setStringValue:movie.title];
 	[movieOverview setString:movie.overview];
 	[movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", movie.runtime]];
@@ -78,15 +87,8 @@
 		backdropSizeCount += [backdrop sizeCount];
 	[movieBackdropsCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [movie.backdrops count], backdropSizeCount]];
 
-	allData = [[NSArray alloc] initWithArray:movie.rawResults copyItems:YES];
-
 	[context release];
 	//[movie release];
-
-	[throbber stopAnimation:self];
-	[goButton setEnabled:YES];
-
-	[viewAllDataButton setEnabled:YES];
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error

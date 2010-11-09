@@ -28,6 +28,11 @@
 	NSString *_imdbID;
 	NSArray *_posters;
 	NSArray *_backdrops;
+	NSInteger _rating;
+	NSInteger _revenue;
+	NSURL *_trailer;
+	NSArray *_studios;
+	NSString *_originalName;
 }
 
 @property (nonatomic, retain, readonly) TMDB *context;
@@ -45,7 +50,9 @@
 @property (nonatomic, retain, readonly) NSArray *backdrops;
 
 + (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)context;
++ (TMDBMovie *)movieWithName:(NSString *)aName context:(TMDB *)context;
 
 - (id)initWithID:(NSInteger)anID context:(TMDB *)context;
+- (id)initWithName:(NSString *)aName context:(TMDB *)context;
 
 @end

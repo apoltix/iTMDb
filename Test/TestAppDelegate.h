@@ -21,6 +21,7 @@
 
 	IBOutlet NSTextField *apiKey;
 	IBOutlet NSTextField *movieID;
+	IBOutlet NSTextField *movieName;
 	IBOutlet NSTextField *movieTitle;
 	IBOutlet NSTextView  *movieOverview;
 	IBOutlet NSTextField *movieRuntime;

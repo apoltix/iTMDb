@@ -46,6 +46,11 @@
 	return [TMDBMovie movieWithID:anID context:self];
 }
 
+- (TMDBMovie *)movieWithName:(NSString *)aName
+{
+	return [TMDBMovie movieWithName:aName context:self];
+}
+
 #pragma mark -
 #pragma mark Getters and setters
 - (NSString *)apiKey

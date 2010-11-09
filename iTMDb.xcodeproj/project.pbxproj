@@ -10,7 +10,6 @@
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		AA985848128309AA0074F570 /* iTMDb.h in Headers */ = {isa = PBXBuildFile; fileRef = AA985847128309AA0074F570 /* iTMDb.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA98589612830DFC0074F570 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA98589512830DFC0074F570 /* Cocoa.framework */; };
 		AA9858BC12830F200074F570 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9858BB12830F200074F570 /* main.m */; };
 		AA9858C112830F520074F570 /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9858C012830F520074F570 /* TestAppDelegate.m */; };
 		AA9858D012830FA10074F570 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA9858CF12830FA10074F570 /* MainMenu.xib */; };
@@ -33,7 +32,7 @@
 		AAF43A21128361C400F5CC92 /* TMDBDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF43A20128361C400F5CC92 /* TMDBDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAF43B7912836E1B00F5CC92 /* iTMDb.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* iTMDb.framework */; };
 		AAF43B9712836EB200F5CC92 /* iTMDb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* iTMDb.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFA3EB112863A77002B9E38 /* TMDBImage.h */; };
+		AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFA3EB112863A77002B9E38 /* TMDBImage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		AAFA3EB412863A78002B9E38 /* TMDBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFA3EB212863A78002B9E38 /* TMDBImage.m */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +70,6 @@
 		AA985847128309AA0074F570 /* iTMDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb.h; sourceTree = "<group>"; };
 		AA98586D12830B680074F570 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		AA98587A12830D8E0074F570 /* iTMDbTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTMDbTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA98589512830DFC0074F570 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AA9858A612830EAB0074F570 /* iTMDbTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iTMDbTest-Info.plist"; sourceTree = "<group>"; };
 		AA9858BB12830F200074F570 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA9858BF12830F520074F570 /* TestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAppDelegate.h; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA98589612830DFC0074F570 /* Cocoa.framework in Frameworks */,
 				AAF43B9712836EB200F5CC92 /* iTMDb.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,7 +142,6 @@
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				AA98589512830DFC0074F570 /* Cocoa.framework */,
 			);
 			name = iTMDb;
 			sourceTree = "<group>";
@@ -351,9 +347,9 @@
 				AAF438C712834FC400F5CC92 /* TMDBToken.h in Headers */,
 				AAF437F61283464D00F5CC92 /* TMDBRequestDelegate.h in Headers */,
 				AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */,
+				AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */,
 				AAF4398D12835AE000F5CC92 /* iTMDb_Prefix.pch in Headers */,
 				AAF43A1012835F9400F5CC92 /* TMDBRequest.h in Headers */,
-				AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
