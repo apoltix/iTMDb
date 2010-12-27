@@ -13,6 +13,7 @@
 @interface TMDBMovie ()
 
 - (id)initWithURL:(NSURL *)url context:(TMDB *)context;
+- (id)initWithURL:(NSURL *)url context:(TMDB *)context userData:(NSDictionary *)userData;
 
 - (NSArray *)arrayWithImages:(NSArray *)images ofType:(TMDBImageType)type;
 
@@ -20,9 +21,10 @@
 
 @implementation TMDBMovie
 
-@synthesize context,
+@synthesize context=_context,
             rawResults=_rawResults,
             id=_id,
+			userData=_userData,
             title=_title,
             released=_released,
             overview=_overview,
@@ -48,6 +50,11 @@
 
 - (id)initWithURL:(NSURL *)url context:(TMDB *)aContext
 {
+	return [self initWithURL:url context:aContext userData:nil];
+}
+
+- (id)initWithURL:(NSURL *)url context:(TMDB *)aContext userData:(NSDictionary *)userData
+{
 	if ((self = [self init]))
 	{
 		_context = aContext;
@@ -55,6 +62,7 @@
 		_rawResults = nil;
 
 		_id = 0;
+		_userData = [userData retain];
 		_title = nil;
 		_released = nil;
 		_overview = nil;
@@ -64,6 +72,11 @@
 		_imdbID = nil;
 		_posters = nil;
 		_backdrops = nil;
+		_rating = 0;
+		_revenue = 0;
+		_trailer = nil;
+		_studios = nil;
+		_originalName = nil;
 		
 		// Initialize the fetch request
 		_request = [TMDBRequest requestWithURL:url delegate:self];
@@ -84,13 +97,19 @@
 	NSString *aNameEscaped = [aName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.search/%@/json/%@/%@",
 									   API_VERSION, aContext.language, aContext.apiKey, aNameEscaped]];
-	return [self initWithURL:url context:aContext];
+	return [self initWithURL:url context:aContext userData:[NSDictionary dictionaryWithObject:aName forKey:@"title"]];
 }
 
 #pragma mark -
 
 - (NSString *)description
 {
+	if (!self.title)
+		return [NSString stringWithFormat:@"<%@>", [self class], nil];
+
+	if (!self.released)
+		return [NSString stringWithFormat:@"<%@: %@>", [self class], self.title, nil];
+
 	NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 	NSDateComponents *weekdayComponents = [cal components:NSYearCalendarUnit fromDate:self.released];
 	NSInteger year = [weekdayComponents year];
@@ -105,7 +124,7 @@
 {
 	if (error)
 	{
-		NSLog(@"TMDBMovie request failed: %@", [error description]);
+		NSLog(@"iTMDb: TMDBMovie request failed: %@", [error description]);
 		if (_context)
 			[_context movieDidFailLoading:self error:error];
 		return;
@@ -115,7 +134,7 @@
 
 	if (![[_rawResults objectAtIndex:0] isKindOfClass:[NSDictionary class]])
 	{
-		NSLog(@"Returned data is NOT a dictionary!\n%@", _rawResults);
+		//NSLog(@"iTMDb: Returned data is NOT a dictionary!\n%@", _rawResults);
 		if (_context)
 		{
 			NSDictionary *errorDict = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -147,7 +166,7 @@
 	{
 		NSDateFormatter *releasedFormatter = [[[NSDateFormatter alloc] init] autorelease];
 		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
-		_released = [releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]];
+		_released = [[releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]] retain];
 	}
 
 	// Runtime
@@ -156,20 +175,20 @@
 
 	// Homepage
 	if ([d objectForKey:@"homepage"])
-		_homepage = [NSURL URLWithString:[d objectForKey:@"homepage"]];
+		_homepage = [[NSURL URLWithString:[d objectForKey:@"homepage"]] retain];
 	else
 		_homepage = nil;
 
 	// Posters
 	_posters = nil;
 	if ([d objectForKey:@"posters"])
-		_posters = [self arrayWithImages:[d objectForKey:@"posters"] ofType:TMDBImageTypePoster];
+		_posters = [[self arrayWithImages:[d objectForKey:@"posters"] ofType:TMDBImageTypePoster] retain];
 	//NSLog(@"POSTERS %@", _posters);
 
 	// Backdrops
 	_backdrops = nil;
 	if ([d objectForKey:@"backdrops"])
-		_backdrops = [self arrayWithImages:[d objectForKey:@"backdrops"] ofType:TMDBImageTypeBackdrop];
+		_backdrops = [[self arrayWithImages:[d objectForKey:@"backdrops"] ofType:TMDBImageTypeBackdrop] retain];
 	//NSLog(@"BACKDROPS %@", _backdrops);
 
 	// Notify the context that the movie info has been loaded
@@ -178,7 +197,7 @@
 }
 
 - (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType {
-	NSMutableArray *imageObjects = [[NSMutableArray arrayWithCapacity:0] autorelease];
+	NSMutableArray *imageObjects = [[NSMutableArray arrayWithCapacity:0] retain];
 
 	TMDBImage *currentImage = nil;
 	// outerImageDict: the TMDb API wraps each image in a wrapper dictionary (e.g. each backdrop has an "images" dictionary)
@@ -200,7 +219,7 @@
 				return passed;
 			}];
 
-			if ([passed count] > 0)
+			if ([passed count] > 0 && imageObjects)
 				currentImage = [imageObjects objectAtIndex:[passed firstIndex]];
 			else
 				currentImage = nil;
@@ -209,7 +228,7 @@
 		// use !currentBackdrop instead of an else, as an object recovery (fetch) may have been performed
 		if (!currentImage)
 		{
-			currentImage = [[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType];
+			currentImage = [[[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType] retain];
 			allocatedNewObject = YES;
 		}
 
@@ -235,8 +254,9 @@
 
 #pragma mark -
 - (void)dealloc {
-	//printf("dealloc\n");
+	//printf("iTMDb: TMDBMovie dealloc\n");
 	[_request release];
+	[_userData release];
 	[_rawResults release];
 	[_title release];
 	[_released release];

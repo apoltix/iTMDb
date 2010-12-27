@@ -17,6 +17,7 @@
 	TMDB *_context;
 	TMDBRequest *_request;
 
+	NSDictionary *_userData;
 	NSInteger _id;
 	NSArray *_rawResults;
 	NSString *_title;
@@ -38,6 +39,7 @@
 @property (nonatomic, retain, readonly) TMDB *context;
 
 @property (nonatomic, retain, readonly) NSArray *rawResults;
+@property (nonatomic, retain, readonly) NSDictionary *userData;
 @property (nonatomic, assign, readonly) NSInteger id;
 @property (nonatomic, retain, readonly) NSString *title;
 @property (nonatomic, retain, readonly) NSDate *released;

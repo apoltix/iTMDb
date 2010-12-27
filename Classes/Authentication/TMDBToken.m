@@ -8,6 +8,9 @@
 
 #import "TMDBToken.h"
 
+#import "TMDBRequest.h"
+#import "TMDBRequestDelegate.h"
+
 @implementation TMDBToken
 
 + (TMDBToken *)tokenWithContext:(TMDB *)context delegate:(id <TMDBRequestDelegate>)delegate

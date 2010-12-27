@@ -16,7 +16,7 @@
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id <TMDBRequestDelegate>)aDelegate
 {
-	TMDBRequest *vlreq = [TMDBRequest alloc];
+	TMDBRequest *vlreq = [[[TMDBRequest alloc] init] retain];
 
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url
 													   cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -32,6 +32,7 @@
 	}
 	else
 	{
+		NSLog(@"TMDBRequest: Connection failed.\n");
 		[vlreq release];
 	}
 
@@ -71,10 +72,14 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    [connection release];
-    [data release]; // Release the hold that was made with the connection
+	//printf("DID FINISH LOADING REQUEST\n");
+	//[connection release];
+	[data release]; // Release the hold that was made with the connection
 
-	[delegate request:self didFinishLoading:nil];
+	if (delegate)
+		[delegate request:self didFinishLoading:nil];
+	else
+		printf("TMDBRequest: Delegate was not set.");
 }
 
 @end

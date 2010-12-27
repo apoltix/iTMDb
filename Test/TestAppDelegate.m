@@ -39,7 +39,8 @@
 	[goButton setEnabled:NO];
 	[viewAllDataButton setEnabled:NO];
 
-	tmdb = [[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self];
+	if (!tmdb)
+		tmdb = [[[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self] retain];
 
 	if ([movieID integerValue] > 0)
 		[tmdb movieWithID:[movieID integerValue]];
@@ -87,13 +88,13 @@
 		backdropSizeCount += [backdrop sizeCount];
 	[movieBackdropsCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [movie.backdrops count], backdropSizeCount]];
 
-	[context release];
+	//[context release];
 	//[movie release];
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error
 {
-	[context release];
+	//[context release];
 	//[movie release];
 
 	NSAlert *alert = [NSAlert alertWithError:error];

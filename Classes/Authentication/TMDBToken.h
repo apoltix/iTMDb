@@ -9,10 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @class TMDB;
-
-//#import "TMDB.h"
-#import "TMDBRequest.h"
-#import "TMDBRequestDelegate.h"
+@class TMDBRequest;
+@protocol TMDBRequestDelegate;
 
 @interface TMDBToken : NSObject {
 	TMDBRequest *_request;
