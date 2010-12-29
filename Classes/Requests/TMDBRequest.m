@@ -12,7 +12,7 @@
 
 @implementation TMDBRequest
 
-@synthesize data, delegate;
+@synthesize data, delegate, completionBlock;
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id <TMDBRequestDelegate>)aDelegate
 {
@@ -39,16 +39,23 @@
 	return nil;
 }
 
++ (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(void (^)(NSDictionary *parsedData))block
+{
+	TMDBRequest *req = [TMDBRequest requestWithURL:url delegate:nil];
+	req.completionBlock = block;
+	return req;
+}
+
 #pragma mark -
 - (NSDictionary *)parsedData
 {
 	NSString *parsedDataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	NSDictionary *jsonData = (NSDictionary *)[parsedDataString JSONValue];
-	if (!jsonData)
-		NSLog(@"parsedDataString = %@", parsedDataString);
-	
+	//if (!jsonData)
+	//	NSLog(@"parsedDataString = %@", parsedDataString);
+
 	[parsedDataString release];
-	
+
 	return jsonData;
 }
 
@@ -66,20 +73,34 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	NSLog(@"TMDBRequest did fail with error: %@", error);
-	[delegate request:self didFinishLoading:error];
+	if (delegate)
+		[delegate request:self didFinishLoading:error];
+	else if (completionBlock)
+		completionBlock(nil);
+	else
+		NSLog(@"TMDBRequest did fail with error: %@", error);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	//printf("DID FINISH LOADING REQUEST\n");
-	//[connection release];
-	[data release]; // Release the hold that was made with the connection
+	// Release the hold that was made with the connection
+	[data release];
 
 	if (delegate)
 		[delegate request:self didFinishLoading:nil];
+	else if (completionBlock)
+		completionBlock([self parsedData]);
 	else
-		printf("TMDBRequest: Delegate was not set.");
+		NSLog(@"TMDBRequest: Neither a delegate nor a block was set.");
+}
+
+#pragma mark -
+- (void)dealloc
+{
+	[data release];
+	completionBlock = nil;
+
+	[super dealloc];
 }
 
 @end

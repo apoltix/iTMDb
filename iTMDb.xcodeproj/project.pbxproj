@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = AA3242CB12CBEF2F00063558 /* TMDBPerson.h */; };
+		AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3242CC12CBEF2F00063558 /* TMDBPerson.m */; };
 		AA985848128309AA0074F570 /* iTMDb.h in Headers */ = {isa = PBXBuildFile; fileRef = AA985847128309AA0074F570 /* iTMDb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA9858BC12830F200074F570 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9858BB12830F200074F570 /* main.m */; };
 		AA9858C112830F520074F570 /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9858C012830F520074F570 /* TestAppDelegate.m */; };
@@ -67,6 +69,8 @@
 		32DBCF5E0370ADEE00C91783 /* iTMDb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* iTMDb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iTMDb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA3242CB12CBEF2F00063558 /* TMDBPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBPerson.h; path = Classes/People/TMDBPerson.h; sourceTree = "<group>"; };
+		AA3242CC12CBEF2F00063558 /* TMDBPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBPerson.m; path = Classes/People/TMDBPerson.m; sourceTree = "<group>"; };
 		AA985847128309AA0074F570 /* iTMDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb.h; sourceTree = "<group>"; };
 		AA98586D12830B680074F570 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		AA98587A12830D8E0074F570 /* iTMDbTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTMDbTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +236,8 @@
 		AA985840128308360074F570 /* People */ = {
 			isa = PBXGroup;
 			children = (
+				AA3242CB12CBEF2F00063558 /* TMDBPerson.h */,
+				AA3242CC12CBEF2F00063558 /* TMDBPerson.m */,
 			);
 			name = People;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 				AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */,
 				AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */,
 				AAF43A1012835F9400F5CC92 /* TMDBRequest.h in Headers */,
+				AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +406,9 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Apoltix;
+			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "iTMDb" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -455,6 +465,7 @@
 				AAF438A012834E6600F5CC92 /* TMDBMovie.m in Sources */,
 				AAF43A1112835F9400F5CC92 /* TMDBRequest.m in Sources */,
 				AAFA3EB412863A78002B9E38 /* TMDBImage.m in Sources */,
+				AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

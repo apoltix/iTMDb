@@ -9,6 +9,7 @@
 #import "TMDB.h"
 #import "TMDBMovie.h"
 #import "TMDBImage.h"
+#import "TMDBPerson.h"
 
 @interface TMDBMovie ()
 
@@ -33,7 +34,18 @@
             homepage=_homepage,
             imdbID=_imdbID,
             posters=_posters,
-            backdrops=_backdrops;
+            backdrops=_backdrops,
+			language=_language,
+			translated=_translated,
+			adult=_adult,
+			url=_url,
+			votes=_votes,
+			certification=_certification,
+			categories=_categories,
+			keywords=_keywords,
+			languagesSpoken=_languagesSpoken,
+			countries=_countries,
+			cast=_cast;
 
 #pragma mark -
 #pragma mark Constructors
@@ -77,6 +89,21 @@
 		_trailer = nil;
 		_studios = nil;
 		_originalName = nil;
+		_alternativeName = nil;
+		_popularity = 0;
+		_translated = NO;
+		_adult = NO;
+		_language = nil;
+		_url = nil;
+		_votes = 0;
+		_certification = nil;
+		_categories = nil;
+		_keywords = nil;
+		_languagesSpoken = nil;
+		_countries = nil;
+		_cast = nil;
+		_version = 0;
+		_modified = nil;
 		
 		// Initialize the fetch request
 		_request = [TMDBRequest requestWithURL:url delegate:self];
@@ -89,6 +116,7 @@
 {
 	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.getInfo/%@/json/%@/%li",
 									   API_VERSION, aContext.language, aContext.apiKey, anID]];
+	isSearchingOnly = NO;
 	return [self initWithURL:url context:aContext];
 }
 
@@ -97,6 +125,7 @@
 	NSString *aNameEscaped = [aName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.search/%@/json/%@/%@",
 									   API_VERSION, aContext.language, aContext.apiKey, aNameEscaped]];
+	isSearchingOnly = YES;
 	return [self initWithURL:url context:aContext userData:[NSDictionary dictionaryWithObject:aName forKey:@"title"]];
 }
 
@@ -153,13 +182,57 @@
 
 	// SIMPLE DATA
 
-	_id       = [(NSNumber *)[d objectForKey:@"name"] integerValue];
+	_id       = [(NSNumber *)[d objectForKey:@"id"] integerValue];
 	_title    = [[d objectForKey:@"name"] copy];
 	_overview = [[d objectForKey:@"overview"] copy];
 	_tagline  = [[d objectForKey:@"tagline"] copy];
 	_imdbID   = [[d objectForKey:@"imdb_id"] copy];
 
 	// COMPLEX DATA
+
+	// Original name
+	if ([d objectForKey:@"original_name"])
+		_originalName = [[d objectForKey:@"original_name"] copy];
+
+	// Alternative name
+	if ([d objectForKey:@"alternative_name"])
+		_alternativeName = [[d objectForKey:@"alternative_name"] copy];
+
+	// URL
+	if ([d objectForKey:@"url"])
+		_url = [[NSURL URLWithString:[d objectForKey:@"url"]] retain];
+
+	// Popularity
+	if ([d objectForKey:@"popularity"])
+		_popularity = [[d objectForKey:@"popularity"] integerValue];
+
+	// Votes
+	if ([d objectForKey:@"votes"])
+		_votes = [[d objectForKey:@"votes"] integerValue];
+
+	// Rating
+	if ([d objectForKey:@"rating"])
+		_rating = [[d objectForKey:@"rating"] floatValue];
+
+	// Certification
+	if ([d objectForKey:@"certifications"])
+		_certification = [[d objectForKey:@"certifications"] copy];
+
+	// Translated
+	if ([d objectForKey:@"translated"] && ![[d objectForKey:@"translated"] isKindOfClass:[NSNull class]])
+		_translated = [[d objectForKey:@"translated"] boolValue];
+
+	// Adult
+	if ([d objectForKey:@"adult"] && ![[d objectForKey:@"adult"] isKindOfClass:[NSNull class]])
+		_adult = [[d objectForKey:@"adult"] boolValue];
+
+	// Language
+	if ([d objectForKey:@"language"])
+		_language = [[d objectForKey:@"language"] copy];
+
+	// Version
+	if ([d objectForKey:@"version"])
+		_version = [[d objectForKey:@"version"] integerValue];
 
 	// Release date
 	if ([d objectForKey:@"released"])
@@ -190,6 +263,18 @@
 	if ([d objectForKey:@"backdrops"])
 		_backdrops = [[self arrayWithImages:[d objectForKey:@"backdrops"] ofType:TMDBImageTypeBackdrop] retain];
 	//NSLog(@"BACKDROPS %@", _backdrops);
+
+	// Cast
+	_cast = nil;
+	if ([d objectForKey:@"cast"])
+		_cast = [TMDBPerson personsWithMovie:self personsInfo:[d objectForKey:@"cast"]];
+
+	if (isSearchingOnly)
+	{
+		isSearchingOnly = NO;
+		[self initWithID:_id context:_context];
+		return;
+	}
 
 	// Notify the context that the movie info has been loaded
 	if (_context)

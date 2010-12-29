@@ -15,10 +15,18 @@
 
 - (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate
 {
+	return [self initWithAPIKey:apiKey delegate:delegate language:@"en"];
+}
+
+- (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate language:(NSString *)language
+{
 	self.delegate = delegate;
 	self.apiKey = apiKey;
 	token = nil;
-	_language = @"en";
+	if (!language)
+		_language = @"en";
+	else
+		_language = language;
 
 	return self;
 }

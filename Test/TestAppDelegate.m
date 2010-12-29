@@ -16,7 +16,10 @@
 {
 	tmdb = nil;
 
-	[allDataTextView setFont:[NSFont fontWithName:@"Lucida Console" size:11.0]];
+	NSFont *font = [NSFont fontWithName:@"Lucida Console" size:11.0];
+	if (!font)
+		font = [NSFont fontWithName:@"Courier" size:11.0];
+	[allDataTextView setFont:font];
 }
 
 #pragma mark -

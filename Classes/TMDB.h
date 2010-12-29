@@ -27,6 +27,7 @@
 @property (nonatomic, retain, readonly) TMDBToken *token;
 
 - (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate;
+- (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate language:(NSString *)language;
 
 #pragma mark -
 #pragma mark Notifications

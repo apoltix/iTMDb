@@ -15,3 +15,4 @@
 #import "TMDBRequestDelegate.h"
 #import "TMDBMovie.h"
 #import "TMDBImage.h"
+#import "TMDBPerson.h"

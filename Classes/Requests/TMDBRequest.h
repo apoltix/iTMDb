@@ -14,12 +14,16 @@
 	NSMutableData *data;
 	
 	id<TMDBRequestDelegate> delegate;
+
+	void (^completionBlock)(NSDictionary *parsedData);
 }
 
 @property (nonatomic, retain) NSMutableData *data;
 @property (nonatomic, assign) id<TMDBRequestDelegate> delegate;
+@property (copy) void (^completionBlock)(NSDictionary *parsedData);
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
++ (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(void (^)(NSDictionary *parsedData))block;
 
 - (NSDictionary *)parsedData;
 
