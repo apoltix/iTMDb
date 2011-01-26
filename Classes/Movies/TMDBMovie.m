@@ -153,7 +153,7 @@
 {
 	if (error)
 	{
-		NSLog(@"iTMDb: TMDBMovie request failed: %@", [error description]);
+		//NSLog(@"iTMDb: TMDBMovie request failed: %@", [error description]);
 		if (_context)
 			[_context movieDidFailLoading:self error:error];
 		return;
@@ -185,7 +185,8 @@
 	_id       = [(NSNumber *)[d objectForKey:@"id"] integerValue];
 	_title    = [[d objectForKey:@"name"] copy];
 	_overview = [[d objectForKey:@"overview"] copy];
-	_tagline  = [[d objectForKey:@"tagline"] copy];
+	if ([d objectForKey:@"tagline"] && [[d objectForKey:@"tagline"] isKindOfClass:[NSString class]])
+		_tagline  = [[d objectForKey:@"tagline"] copy];
 	_imdbID   = [[d objectForKey:@"imdb_id"] copy];
 
 	// COMPLEX DATA
@@ -247,7 +248,7 @@
 		_runtime  = [[d objectForKey:@"runtime"] unsignedIntegerValue];
 
 	// Homepage
-	if ([d objectForKey:@"homepage"])
+	if ([d objectForKey:@"homepage"] && [[d objectForKey:@"homepage"] isKindOfClass:[NSString class]])
 		_homepage = [[NSURL URLWithString:[d objectForKey:@"homepage"]] retain];
 	else
 		_homepage = nil;
@@ -266,7 +267,7 @@
 
 	// Cast
 	_cast = nil;
-	if ([d objectForKey:@"cast"])
+	if ([d objectForKey:@"cast"] && ![d isKindOfClass:[NSNull class]])
 		_cast = [TMDBPerson personsWithMovie:self personsInfo:[d objectForKey:@"cast"]];
 
 	if (isSearchingOnly)
@@ -281,6 +282,8 @@
 		[_context movieDidFinishLoading:self];
 }
 
+#pragma mark -
+#pragma mark Helper methods
 - (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType {
 	NSMutableArray *imageObjects = [[NSMutableArray arrayWithCapacity:0] retain];
 

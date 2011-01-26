@@ -26,13 +26,13 @@
 
 @property (nonatomic, retain, readonly) TMDBToken *token;
 
-- (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate;
-- (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate language:(NSString *)language;
+- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate;
+- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate language:(NSString *)aLanguage;
 
 #pragma mark -
 #pragma mark Notifications
-- (void)movieDidFinishLoading:(TMDBMovie *)movie;
-- (void)movieDidFailLoading:(TMDBMovie *)movie error:(NSError *)error;
+- (void)movieDidFinishLoading:(TMDBMovie *)aMovie;
+- (void)movieDidFailLoading:(TMDBMovie *)aMovie error:(NSError *)error;
 
 #pragma mark -
 #pragma mark Shortcuts

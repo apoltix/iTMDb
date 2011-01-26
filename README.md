@@ -9,10 +9,14 @@ iTMDb is developed for **Mac OS X 10.6 Snow Leopard**, but it should work fine w
 
 Please remember to read the TMDb API Terms of Use.
 
+You can safely submit your apps using iTMDb to the App Store (it's been approved for use with [Collection][]).
+
+iTMDb does not yet cover the entire TMDb API, but movie search and lookup works. Things like authentication is not implemented.
+
 How to use
 ==========
 
-You can check out the included test target (iTMDbTest) within the Xcode project for code samples.
+You can check out the included test target (iTMDbTest) within the Xcode project for code samples. All iTMDb classes are prefixed with <code>TMDB</code>, and the main class, from which most common operations can be made, just called <code>TMDB</code>, is known as the "context".
 
 1. Add the framework to your project like any other framework (use Google if you don't know how to do this).
 
@@ -39,7 +43,7 @@ You can check out the included test target (iTMDbTest) within the Xcode project 
 Documentation
 =============
 
-Documentation is in the works. Please see the test application (available in the Xcode project) for code samples.
+Documentation is in the works. The framework was built to be as easy and intuitive to use, so looking at the header files should give you an idea of how it is structured. Please see the test application (available in the Xcode project) for code samples.
 
 Support for Garbage Collection
 ==============================
@@ -55,4 +59,5 @@ iTMDb includes the following third-party code:
 
 I appreciate their contribution to the open source community.
 
-[JSON]: http://code.google.com/p/json-framework/
+[JSON]: https://github.com/stig/json-framework
+[Collection]: http://collectionapp.com/

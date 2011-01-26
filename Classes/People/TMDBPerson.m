@@ -41,13 +41,18 @@
 
 - (NSString *)description
 {
-	if (_movie && _character && [_character length] > 0 && _name && [_name length] > 0)
+	if (_movie      &&
+		_character  && ![_character isKindOfClass:[NSNull class]] && [_character length] > 0 &&
+		_name       && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0)
 		return [NSString stringWithFormat:@"<%@: %@ as \"%@\" in %@>", [self class], _name, _character, _movie.title, nil];
-	else if (_movie && _name && [_name length] > 0 && _job && [_job length] > 0)
+	else if (_movie &&
+			 _name  && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0      &&
+			 _job   && ![_job isKindOfClass:[NSNull class]]       && [_job length] > 0)
 		return [NSString stringWithFormat:@"<%@: %@ as %@ of %@>", [self class], _name, _job, _movie.title, nil];
-	else if (_movie && _name && [_name length] > 0)
+	else if (_movie &&
+			 _name  && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0)
 		return [NSString stringWithFormat:@"<%@: %@ in %@>", [self class], _name, _movie.title, nil];
-	else if (_name && [_name length] > 0)
+	else if (_name  && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0)
 		return [NSString stringWithFormat:@"<%@: %@>", [self class], _name, nil];
 
 	return [NSString stringWithFormat:@"<%@>", [self class]];

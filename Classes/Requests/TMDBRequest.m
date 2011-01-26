@@ -32,7 +32,7 @@
 	}
 	else
 	{
-		NSLog(@"TMDBRequest: Connection failed.\n");
+		//NSLog(@"TMDBRequest: Connection failed.\n");
 		[vlreq release];
 	}
 
@@ -77,8 +77,8 @@
 		[delegate request:self didFinishLoading:error];
 	else if (completionBlock)
 		completionBlock(nil);
-	else
-		NSLog(@"TMDBRequest did fail with error: %@", error);
+	//else
+	//	NSLog(@"TMDBRequest did fail with error: %@", error);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -90,8 +90,8 @@
 		[delegate request:self didFinishLoading:nil];
 	else if (completionBlock)
 		completionBlock([self parsedData]);
-	else
-		NSLog(@"TMDBRequest: Neither a delegate nor a block was set.");
+	//else
+	//	NSLog(@"TMDBRequest: Neither a delegate nor a block was set.");
 }
 
 #pragma mark -

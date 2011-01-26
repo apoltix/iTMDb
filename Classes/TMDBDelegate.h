@@ -11,7 +11,7 @@
 @class TMDB;
 @class TMDBMovie;
 
-@protocol TMDBDelegate
+@protocol TMDBDelegate <NSObject>
 
 @required
 

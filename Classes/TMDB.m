@@ -13,38 +13,36 @@
 @dynamic apiKey;
 @synthesize delegate=_delegate, language=_language, token;
 
-- (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate
+- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate
 {
-	return [self initWithAPIKey:apiKey delegate:delegate language:@"en"];
+	return [self initWithAPIKey:anApiKey delegate:aDelegate language:nil];
 }
 
-- (id)initWithAPIKey:(NSString *)apiKey delegate:(id <TMDBDelegate>)delegate language:(NSString *)language
+- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate language:(NSString *)aLanguage
 {
-	self.delegate = delegate;
-	self.apiKey = apiKey;
+	_delegate = [aDelegate retain];
+	_apiKey = [anApiKey copy];
 	token = nil;
-	if (!language)
-		_language = @"en";
+	if (!aLanguage || [aLanguage length] == 0)
+		_language = [@"en" retain];
 	else
-		_language = language;
+		_language = [aLanguage copy];
 
 	return self;
 }
 
 #pragma mark -
 #pragma mark Notifications
-- (void)movieDidFinishLoading:(TMDBMovie *)movie
+- (void)movieDidFinishLoading:(TMDBMovie *)aMovie
 {
-	//printf("Movie did finish loading: %s\n", [movie.title UTF8String]);
-
 	if (_delegate)
-		[_delegate tmdb:self didFinishLoadingMovie:movie];
+		[_delegate tmdb:self didFinishLoadingMovie:aMovie];
 }
 
-- (void)movieDidFailLoading:(TMDBMovie *)movie error:(NSError *)error
+- (void)movieDidFailLoading:(TMDBMovie *)aMovie error:(NSError *)error
 {
 	if (_delegate)
-		[_delegate tmdb:self didFailLoadingMovie:movie error:error];
+		[_delegate tmdb:self didFailLoadingMovie:aMovie error:error];
 }
 
 #pragma mark -
@@ -70,6 +68,16 @@
 {
 	// TODO: Invalidate active token
 	_apiKey = [newKey copy];
+}
+
+#pragma mark -
+- (void)dealloc
+{
+	[_delegate release];
+	[_apiKey release];
+	[_language release];
+
+	[super dealloc];
 }
 
 @end

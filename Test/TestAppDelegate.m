@@ -12,6 +12,17 @@
 
 @synthesize window;
 
++ (void)initialize
+{
+	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
+							  @"", @"appKey",
+							  [NSNumber numberWithInteger:0], @"movieID",
+							  @"", @"movieName",
+							  @"", @"language",
+							  nil];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
 - (void)awakeFromNib
 {
 	tmdb = nil;
@@ -25,6 +36,8 @@
 #pragma mark -
 - (IBAction)go:(id)sender
 {
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
 	if (!([[apiKey stringValue] length] > 0 && ([movieID integerValue] > 0 || [[movieName stringValue] length] > 0)))
 	{
 		NSAlert *alert = [NSAlert alertWithMessageText:@"Missing either API key, movie ID or title"
@@ -44,6 +57,12 @@
 
 	if (!tmdb)
 		tmdb = [[[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self] retain];
+
+	NSString *lang = [language stringValue];
+	if (lang && [lang length] >= 0)
+		[tmdb setLanguage:lang];
+	else
+		[tmdb setLanguage:@"en"];
 
 	if ([movieID integerValue] > 0)
 		[tmdb movieWithID:[movieID integerValue]];
@@ -115,6 +134,12 @@
 
 	[viewAllDataButton setEnabled:NO];
 
+}
+
+#pragma mark -
+- (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
