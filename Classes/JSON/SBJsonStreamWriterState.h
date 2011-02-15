@@ -32,27 +32,44 @@
 
 #import <Foundation/Foundation.h>
 
-/**
- @brief Allows generation of JSON for otherwise unsupported classes.
- 
- If you have a custom class that you want to create a JSON representation for you can implement
- this method in your class. It should return a representation of your object defined
- in terms of objects that can be translated into JSON. For example, a Person
- object might implement it like this:
- 
- @code
- - (id)proxyForJson {
- return [NSDictionary dictionaryWithObjectsAndKeys:
- name, @"name",
- phone, @"phone",
- email, @"email",
- nil];
- }
- @endcode
- 
- */
-@interface NSObject (SBProxyForJson)
+@class SBJsonStreamWriter;
 
-- (id)proxyForJson;
-
+@interface SBJsonStreamWriterState : NSObject
+- (BOOL)isInvalidState:(SBJsonStreamWriter*)writer;
+- (void)appendSeparator:(SBJsonStreamWriter*)writer;
+- (BOOL)expectingKey:(SBJsonStreamWriter*)writer;
+- (void)transitionState:(SBJsonStreamWriter*)writer;
+- (void)appendWhitespace:(SBJsonStreamWriter*)writer;
 @end
+
+@interface SBJsonStreamWriterStateObjectStart : SBJsonStreamWriterState
+@end
+
+@interface SBJsonStreamWriterStateObjectKey : SBJsonStreamWriterStateObjectStart
+@end
+
+@interface SBJsonStreamWriterStateObjectValue : SBJsonStreamWriterState
+@end
+
+@interface SBJsonStreamWriterStateArrayStart : SBJsonStreamWriterState
+@end
+
+@interface SBJsonStreamWriterStateArrayValue : SBJsonStreamWriterState
+@end
+
+@interface SBJsonStreamWriterStateStart : SBJsonStreamWriterState
++ (id)sharedInstance;
+@end
+
+@interface SBJsonStreamWriterStateComplete : SBJsonStreamWriterState
+@end
+
+@interface SBJsonStreamWriterStateError : SBJsonStreamWriterState
+@end
+
+extern SBJsonStreamWriterStateStart *kSBJsonStreamWriterStateStart;
+extern SBJsonStreamWriterStateComplete *kSBJsonStreamWriterStateComplete;
+extern SBJsonStreamWriterStateError *kSBJsonStreamWriterStateError;
+extern SBJsonStreamWriterStateObjectStart *kSBJsonStreamWriterStateObjectStart;
+extern SBJsonStreamWriterStateArrayStart *kSBJsonStreamWriterStateArrayStart;
+

@@ -52,12 +52,12 @@
 
 + (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)aContext
 {
-	return [[TMDBMovie alloc] initWithID:anID context:aContext];
+	return [[[TMDBMovie alloc] initWithID:anID context:aContext] autorelease];
 }
 
 + (TMDBMovie *)movieWithName:(NSString *)aName context:(TMDB *)aContext
 {
-	return [[TMDBMovie alloc] initWithName:aName context:aContext];
+	return [[[TMDBMovie alloc] initWithName:aName context:aContext] autorelease];
 }
 
 - (id)initWithURL:(NSURL *)url context:(TMDB *)aContext
@@ -216,8 +216,8 @@
 		_rating = [[d objectForKey:@"rating"] floatValue];
 
 	// Certification
-	if ([d objectForKey:@"certifications"])
-		_certification = [[d objectForKey:@"certifications"] copy];
+	if ([d objectForKey:@"certification"])
+		_certification = [[d objectForKey:@"certification"] copy];
 
 	// Translated
 	if ([d objectForKey:@"translated"] && ![[d objectForKey:@"translated"] isKindOfClass:[NSNull class]])
@@ -285,7 +285,7 @@
 #pragma mark -
 #pragma mark Helper methods
 - (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType {
-	NSMutableArray *imageObjects = [[NSMutableArray arrayWithCapacity:0] retain];
+	NSMutableArray *imageObjects = [NSMutableArray arrayWithCapacity:0];
 
 	TMDBImage *currentImage = nil;
 	// outerImageDict: the TMDb API wraps each image in a wrapper dictionary (e.g. each backdrop has an "images" dictionary)
@@ -316,7 +316,7 @@
 		// use !currentBackdrop instead of an else, as an object recovery (fetch) may have been performed
 		if (!currentImage)
 		{
-			currentImage = [[[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType] retain];
+			currentImage = [[[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType] autorelease];
 			allocatedNewObject = YES;
 		}
 
@@ -346,12 +346,28 @@
 	[_request release];
 	[_userData release];
 	[_rawResults release];
+
 	[_title release];
 	[_released release];
 	[_overview release];
 	[_tagline release];
 	[_homepage release];
 	[_imdbID release];
+	[_posters release];
+	[_backdrops release];
+	[_trailer release];
+	[_studios release];
+	[_originalName release];
+	[_alternativeName release];
+	[_language release];
+	[_url release];
+	[_certification release];
+	[_categories release];
+	[_keywords release];
+	[_languagesSpoken release];
+	[_countries release];
+	[_cast release];
+	[_modified release];
 
 	[super dealloc];
 }

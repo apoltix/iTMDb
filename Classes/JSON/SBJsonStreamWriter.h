@@ -32,37 +32,63 @@
 
 #import <Foundation/Foundation.h>
 
+/// Enable JSON writing for non-native objects
+@interface NSObject (SBProxyForJson)
+
+/**
+ @brief Allows generation of JSON for otherwise unsupported classes.
+ 
+ If you have a custom class that you want to create a JSON representation for you can implement this method in your class. It should return a representation of your object defined in terms of objects that can be translated into JSON. For example, a Person object might implement it like this:
+ 
+ @code
+ - (id)proxyForJson {
+	return [NSDictionary dictionaryWithObjectsAndKeys:
+	name, @"name",
+	phone, @"phone",
+	email, @"email",
+	nil];
+ }
+ @endcode
+ 
+ */
+- (id)proxyForJson;
+
+@end
+
 @class SBJsonStreamWriterState;
 
 /**
  @brief The Stream Writer class.
+
+ Accepts a stream of messages and writes JSON of these to an internal data object. At any time you can retrieve the amount of data up to now, for example if you want to start sending data to a file before you're finished generating the JSON.
  
- SBJsonStreamWriter accepts various messages and writes JSON text to an
- NSOutputStream designated at iniatilisation time. 
+ A range of high-, mid- and low-level methods. You can mix and match calls to these. For example, you may want to call -writeArrayOpen to start an array and then repeatedly call -writeObject: with an object.
  
- A range of high-, mid- and low-level methods. You can mix and match calls
- to these. For example, you may want to call -writeArrayOpen to start an
- array and then repeatedly call -writeObject: with an object.
+ In JSON the keys of an object must be strings. NSDictionary keys need not be, but attempting to convert an NSDictionary with non-string keys into JSON will result in an error.
  
- In JSON the keys of an object must be strings. NSDictionary keys need
- not be, but attempting to convert an NSDictionary with non-string keys
- into JSON will result in an error.
- 
- NSNumber instances created with the +initWithBool: method are
- converted into the JSON boolean "true" and "false" values, and vice
- versa. Any other NSNumber instances are converted to a JSON number the
- way you would expect.
+ NSNumber instances created with the +initWithBool: method are converted into the JSON boolean "true" and "false" values, and vice versa. Any other NSNumber instances are converted to a JSON number the way you would expect.
  
  */
 
 @interface SBJsonStreamWriter : NSObject {
-@private
 	NSString *error;
 	SBJsonStreamWriterState **states;
-	NSOutputStream *stream;
+	NSMutableData *data;
 	NSUInteger depth, maxDepth;
     BOOL sortKeys, humanReadable;
 }
+
+/**
+ @brief The data written to the stream so far.
+ 
+ This is a mutable object. This means that you can write a chunk of its
+ contents to an NSOutputStream, then chop as many bytes as you wrote off
+ the beginning of the buffer.
+ */
+@property(readonly) NSMutableData *data;
+
+@property(readonly) NSObject **states;
+@property(readonly) NSUInteger depth;
 
 /**
  @brief The maximum recursing depth.
@@ -94,18 +120,9 @@
 /**
  @brief Contains the error description after an error has occured.
  */
-@property (copy, readonly) NSString *error;
+@property (copy) NSString *error;
 
-/**
- @brief Initialise a stream writer.
- 
- You have to create an output stream first. You should not open/close the  stream
- manually; this class takes care of that.
- */
-- (id)initWithStream:(NSOutputStream*)stream;
-
-/**
- @brief Write an NSDictionary to the JSON stream.
+/** @brief Write an NSDictionary to the JSON stream.
  */
 - (BOOL)writeObject:(NSDictionary*)dict;
 
@@ -132,9 +149,6 @@
 /// Write a boolean to the stream
 - (BOOL)writeBool:(BOOL)x;
 
-//- (BOOL)writeInteger:(long)l;
-//- (BOOL)writeDouble:(double)d;
-
 /// Write a Number to the stream
 - (BOOL)writeNumber:(NSNumber*)n;
 
@@ -142,3 +156,8 @@
 - (BOOL)writeString:(NSString*)s;
 
 @end
+
+@interface SBJsonStreamWriter (Private)
+- (BOOL)writeValue:(id)v;
+@end
+

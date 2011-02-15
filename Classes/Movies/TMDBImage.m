@@ -21,7 +21,7 @@
 
 + (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type
 {
-	return [[TMDBImage alloc] initWithId:anID ofType:type];
+	return [[[TMDBImage alloc] initWithId:anID ofType:type] autorelease];
 }
 
 - (TMDBImage *)initWithId:(NSString *)anID ofType:(TMDBImageType)type

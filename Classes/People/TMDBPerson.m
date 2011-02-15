@@ -15,10 +15,10 @@
 
 + (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)personsInfo
 {
-	NSMutableArray *persons = [[NSMutableArray arrayWithCapacity:[personsInfo count]] retain];
+	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:[personsInfo count]];
 
 	for (NSDictionary *person in personsInfo)
-		[persons addObject:[[TMDBPerson alloc] initWithMovie:movie personInfo:person]];
+		[persons addObject:[[[TMDBPerson alloc] initWithMovie:movie personInfo:person] autorelease]];
 
 	return persons;
 }

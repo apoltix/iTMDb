@@ -58,6 +58,12 @@
 	if (!tmdb)
 		tmdb = [[[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self] retain];
 
+	if (allData)
+	{
+		[allData release];
+		allData = nil;
+	}
+
 	NSString *lang = [language stringValue];
 	if (lang && [lang length] >= 0)
 		[tmdb setLanguage:lang];
@@ -97,7 +103,7 @@
 	[movieOverview setString:movie.overview];
 	[movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", movie.runtime]];
 
-	NSDateFormatter *releaseDateFormatter = [[NSDateFormatter alloc] init];
+	NSDateFormatter *releaseDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[releaseDateFormatter setDateFormat:@"dd-MM-yyyy"];
 	[movieReleaseDate setStringValue:[releaseDateFormatter stringFromDate:movie.released]];
 

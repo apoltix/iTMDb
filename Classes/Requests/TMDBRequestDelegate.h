@@ -10,7 +10,7 @@
 
 @class TMDBRequest;
 
-@protocol TMDBRequestDelegate
+@protocol TMDBRequestDelegate <NSObject>
 
 @required
 

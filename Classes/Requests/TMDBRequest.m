@@ -16,7 +16,7 @@
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id <TMDBRequestDelegate>)aDelegate
 {
-	TMDBRequest *vlreq = [[[TMDBRequest alloc] init] retain];
+	TMDBRequest *vlreq = [[TMDBRequest alloc] init];
 
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url
 													   cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -27,7 +27,7 @@
 	if (conn)
 	{
 		vlreq.data = [[NSMutableData data] retain];
-		vlreq.delegate = aDelegate;
+		vlreq.delegate = [aDelegate retain];
 		return vlreq;
 	}
 	else
@@ -73,6 +73,8 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+	[data release];
+
 	if (delegate)
 		[delegate request:self didFinishLoading:error];
 	else if (completionBlock)
@@ -97,7 +99,6 @@
 #pragma mark -
 - (void)dealloc
 {
-	[data release];
 	completionBlock = nil;
 
 	[super dealloc];
