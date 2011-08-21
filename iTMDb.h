@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "TMDb.h"
+#import "TMDB.h"
 #import "TMDBDelegate.h"
 #import "TMDBToken.h"
 #import "TMDBRequest.h"

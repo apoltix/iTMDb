@@ -46,6 +46,7 @@
 			languagesSpoken=_languagesSpoken,
 			countries=_countries,
 			cast=_cast;
+@dynamic year;
 
 #pragma mark -
 #pragma mark Constructors
@@ -148,6 +149,14 @@
 }
 
 #pragma mark -
+- (NSUInteger)year
+{
+	NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
+	[df setDateFormat:@"YYYY"];
+	return [[df stringFromDate:self.released] integerValue];
+}
+
+#pragma mark -
 #pragma mark TMDBRequestDelegate
 - (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error
 {
@@ -159,6 +168,7 @@
 		return;
 	}
 
+	[_rawResults release];
 	_rawResults = [[NSArray alloc] initWithArray:(NSArray *)[request parsedData] copyItems:YES];
 
 	if (![[_rawResults objectAtIndex:0] isKindOfClass:[NSDictionary class]])
@@ -181,13 +191,13 @@
 	NSDictionary *d = [_rawResults objectAtIndex:0];
 
 	// SIMPLE DATA
-
 	_id       = [(NSNumber *)[d objectForKey:@"id"] integerValue];
 	_title    = [[d objectForKey:@"name"] copy];
 	_overview = [[d objectForKey:@"overview"] copy];
 	if ([d objectForKey:@"tagline"] && [[d objectForKey:@"tagline"] isKindOfClass:[NSString class]])
 		_tagline  = [[d objectForKey:@"tagline"] copy];
-	_imdbID   = [[d objectForKey:@"imdb_id"] copy];
+	if ([d objectForKey:@"imdb_id"] && [[d objectForKey:@"imdb_id"] isKindOfClass:[NSString class]])
+		_imdbID   = [[d objectForKey:@"imdb_id"] copy];
 
 	// COMPLEX DATA
 
@@ -198,6 +208,14 @@
 	// Alternative name
 	if ([d objectForKey:@"alternative_name"])
 		_alternativeName = [[d objectForKey:@"alternative_name"] copy];
+
+	// Keywords
+	if ([d objectForKey:@"keywords"] && [[d objectForKey:@"keywords"] isKindOfClass:[NSArray class]])
+	{
+		[_keywords release];
+		//_keywords = [[NSArray alloc] initWithArray:[d objectForKey:@"keywords"] copyItems:YES];
+		_keywords = [[d objectForKey:@"keywords"] copy];
+	}
 
 	// URL
 	if ([d objectForKey:@"url"])
@@ -236,7 +254,7 @@
 		_version = [[d objectForKey:@"version"] integerValue];
 
 	// Release date
-	if ([d objectForKey:@"released"])
+	if ([d objectForKey:@"released"] && [[d objectForKey:@"released"] isKindOfClass:[NSString class]])
 	{
 		NSDateFormatter *releasedFormatter = [[[NSDateFormatter alloc] init] autorelease];
 		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -268,7 +286,7 @@
 	// Cast
 	_cast = nil;
 	if ([d objectForKey:@"cast"] && ![d isKindOfClass:[NSNull class]])
-		_cast = [TMDBPerson personsWithMovie:self personsInfo:[d objectForKey:@"cast"]];
+		_cast = [[TMDBPerson personsWithMovie:self personsInfo:[d objectForKey:@"cast"]] retain];
 
 	if (isSearchingOnly)
 	{

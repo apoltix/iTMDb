@@ -22,10 +22,10 @@
 }
 
 @property (nonatomic, assign, readonly) NSUInteger id;
-@property (nonatomic, retain, readonly) NSString *name;
-@property (nonatomic, retain, readonly) NSString *character;
+@property (nonatomic, copy,   readonly) NSString *name;
+@property (nonatomic, copy,   readonly) NSString *character;
 @property (nonatomic, retain, readonly) TMDBMovie *movie;
-@property (nonatomic, retain, readonly) NSString *job;
+@property (nonatomic, copy,   readonly) NSString *job;
 @property (nonatomic, retain, readonly) NSURL *url;
 @property (nonatomic, assign, readonly) NSInteger order;
 @property (nonatomic, assign, readonly) NSInteger castID;

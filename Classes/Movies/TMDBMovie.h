@@ -61,6 +61,7 @@
 @property (nonatomic, assign, readonly) NSInteger		id;
 @property (nonatomic, retain, readonly) NSString		*title;
 @property (nonatomic, retain, readonly) NSDate			*released;
+@property (nonatomic, assign, readonly) NSUInteger		year;
 @property (nonatomic, retain, readonly) NSString		*overview;
 @property (nonatomic, assign, readonly) NSUInteger		runtime;
 @property (nonatomic, retain, readonly) NSString		*tagline;

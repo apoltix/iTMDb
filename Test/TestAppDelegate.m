@@ -65,7 +65,7 @@
 	}
 
 	NSString *lang = [language stringValue];
-	if (lang && [lang length] >= 0)
+	if (lang && [lang length] > 0)
 		[tmdb setLanguage:lang];
 	else
 		[tmdb setLanguage:@"en"];
@@ -102,6 +102,8 @@
 	[movieTitle setStringValue:movie.title];
 	[movieOverview setString:movie.overview];
 	[movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", movie.runtime]];
+
+	[movieKeywords setStringValue:[movie.keywords componentsJoinedByString:@", "]];
 
 	NSDateFormatter *releaseDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[releaseDateFormatter setDateFormat:@"dd-MM-yyyy"];

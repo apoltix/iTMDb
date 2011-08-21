@@ -26,6 +26,7 @@
 
 	IBOutlet NSTextField *movieTitle;
 	IBOutlet NSTextView  *movieOverview;
+	IBOutlet NSTokenField*movieKeywords;
 	IBOutlet NSTextField *movieRuntime;
 	IBOutlet NSTextField *movieReleaseDate;
 	IBOutlet NSTextField *moviePostersCount;

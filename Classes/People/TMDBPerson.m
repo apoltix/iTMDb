@@ -27,6 +27,7 @@
 {
 	if ((self = [super init]))
 	{
+		printf("%s\n", [[personInfo description] UTF8String]);
 		_movie = [aMovie retain];
 		_id = [[personInfo objectForKey:@"id"] integerValue];
 		_name = [[personInfo objectForKey:@"name"] copy];
@@ -44,14 +45,14 @@
 	if (_movie      &&
 		_character  && ![_character isKindOfClass:[NSNull class]] && [_character length] > 0 &&
 		_name       && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0)
-		return [NSString stringWithFormat:@"<%@: %@ as \"%@\" in %@>", [self class], _name, _character, _movie.title, nil];
+		return [NSString stringWithFormat:@"<%@: %@ as \"%@\" in \"%@\"%@>", [self class], _name, _character, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%i)", _movie.year] : @"", nil];
 	else if (_movie &&
 			 _name  && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0      &&
 			 _job   && ![_job isKindOfClass:[NSNull class]]       && [_job length] > 0)
-		return [NSString stringWithFormat:@"<%@: %@ as %@ of %@>", [self class], _name, _job, _movie.title, nil];
+		return [NSString stringWithFormat:@"<%@: %@ as %@ of \"%@\"%@>", [self class], _name, _job, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%i)", _movie.year] : @"", nil];
 	else if (_movie &&
 			 _name  && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0)
-		return [NSString stringWithFormat:@"<%@: %@ in %@>", [self class], _name, _movie.title, nil];
+		return [NSString stringWithFormat:@"<%@: %@ in \"%@\"%@>", [self class], _name, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%i)", _movie.year] : @"", nil];
 	else if (_name  && ![_name isKindOfClass:[NSNull class]]      && [_name length] > 0)
 		return [NSString stringWithFormat:@"<%@: %@>", [self class], _name, nil];
 
@@ -60,7 +61,10 @@
 
 - (void)dealloc
 {
+	[_name release];
+	[_character release];
 	[_movie release];
+	[_job release];
 	[_url release];
 
 	[super dealloc];
