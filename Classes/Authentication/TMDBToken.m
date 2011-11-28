@@ -15,7 +15,7 @@
 
 + (TMDBToken *)tokenWithContext:(TMDB *)context delegate:(id <TMDBRequestDelegate>)delegate
 {
-	return [[[TMDBToken alloc] initWithContext:(TMDB *)context delegate:delegate] autorelease];
+	return [[TMDBToken alloc] initWithContext:context delegate:delegate];
 }
 
 - (id)initWithContext:(TMDB *)context delegate:(id <TMDBRequestDelegate>)delegate

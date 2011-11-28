@@ -12,6 +12,7 @@
 
 @interface TestAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, TMDBDelegate> {
 	TMDB *tmdb;
+	TMDBMovie *movie;
 
 	NSArray *allData;
 
@@ -39,7 +40,7 @@
 	IBOutlet NSTextView *allDataTextView;
 }
 
-@property (nonatomic, retain, readonly) NSWindow *window;
+@property (nonatomic, strong, readonly) NSWindow *window;
 
 - (IBAction)go:(id)sender;
 - (IBAction)viewAllData:(id)sender;

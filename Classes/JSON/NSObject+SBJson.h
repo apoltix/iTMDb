@@ -27,34 +27,41 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "NSObject+JSON.h"
-#import "SBJsonWriter.h"
-#import "SBJsonParser.h"
+#import <Foundation/Foundation.h>
 
-@implementation NSObject (NSObject_SBJsonWriting)
+#pragma mark JSON Writing
 
-- (NSString *)JSONRepresentation {
-    SBJsonWriter *jsonWriter = [SBJsonWriter new];    
-    NSString *json = [jsonWriter stringWithObject:self];
-    if (!json)
-        NSLog(@"-JSONRepresentation failed. Error is: %@", jsonWriter.error);
-    [jsonWriter release];
-    return json;
-}
+/// Adds JSON generation to NSObject
+@interface NSObject (NSObject_SBJsonWriting)
+
+/**
+ @brief Encodes the receiver into a JSON string
+ 
+ Although defined as a category on NSObject it is only defined for NSArray and NSDictionary.
+ 
+ @return the receiver encoded in JSON, or nil on error.
+ 
+ @see @ref objc2json
+ */
+- (NSString *)JSONRepresentation;
+
+@end
+
+
+#pragma mark JSON Parsing
+
+/// Adds JSON parsing methods to NSString
+@interface NSString (NSString_SBJsonParsing)
+
+/**
+ @brief Decodes the receiver's JSON text
+ 
+ @return the NSDictionary or NSArray represented by the receiver, or nil on error.
+ 
+ @see @ref json2objc
+ */
+- (id)JSONValue;
 
 @end
 
 
-
-@implementation NSString (NSString_SBJsonParsing)
-
-- (id)JSONValue {
-    SBJsonParser *jsonParser = [SBJsonParser new];
-    id repr = [jsonParser objectWithString:self];
-    if (!repr)
-        NSLog(@"-JSONValue failed. Error is: %@", jsonParser.error);
-    [jsonParser release];
-    return repr;
-}
-
-@end

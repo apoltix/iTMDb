@@ -53,12 +53,12 @@
 
 + (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)aContext
 {
-	return [[[TMDBMovie alloc] initWithID:anID context:aContext] autorelease];
+	return [[TMDBMovie alloc] initWithID:anID context:aContext];
 }
 
 + (TMDBMovie *)movieWithName:(NSString *)aName context:(TMDB *)aContext
 {
-	return [[[TMDBMovie alloc] initWithName:aName context:aContext] autorelease];
+	return [[TMDBMovie alloc] initWithName:aName context:aContext];
 }
 
 - (id)initWithURL:(NSURL *)url context:(TMDB *)aContext
@@ -75,7 +75,7 @@
 		_rawResults = nil;
 
 		_id = 0;
-		_userData = [userData retain];
+		_userData = userData;
 		_title = nil;
 		_released = nil;
 		_overview = nil;
@@ -143,7 +143,6 @@
 	NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 	NSDateComponents *weekdayComponents = [cal components:NSYearCalendarUnit fromDate:self.released];
 	NSInteger year = [weekdayComponents year];
-	[cal release];
 
 	return [NSString stringWithFormat:@"<%@: %@ (%i)>", [self class], self.title, year, nil];
 }
@@ -151,7 +150,7 @@
 #pragma mark -
 - (NSUInteger)year
 {
-	NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	[df setDateFormat:@"YYYY"];
 	return [[df stringFromDate:self.released] integerValue];
 }
@@ -168,10 +167,9 @@
 		return;
 	}
 
-	[_rawResults release];
 	_rawResults = [[NSArray alloc] initWithArray:(NSArray *)[request parsedData] copyItems:YES];
 
-	if (![[_rawResults objectAtIndex:0] isKindOfClass:[NSDictionary class]])
+	if (!_rawResults || ![_rawResults count] > 0 || ![[_rawResults objectAtIndex:0] isKindOfClass:[NSDictionary class]])
 	{
 		//NSLog(@"iTMDb: Returned data is NOT a dictionary!\n%@", _rawResults);
 		if (_context)
@@ -193,7 +191,12 @@
 	// SIMPLE DATA
 	_id       = [(NSNumber *)[d objectForKey:@"id"] integerValue];
 	_title    = [[d objectForKey:@"name"] copy];
-	_overview = [[d objectForKey:@"overview"] copy];
+
+	if ([d objectForKey:@"overview"] && [[d objectForKey:@"overview"] isKindOfClass:[NSString class]])
+		_overview = [[d objectForKey:@"overview"] copy];
+	else
+		_overview = nil;
+
 	if ([d objectForKey:@"tagline"] && [[d objectForKey:@"tagline"] isKindOfClass:[NSString class]])
 		_tagline  = [[d objectForKey:@"tagline"] copy];
 	if ([d objectForKey:@"imdb_id"] && [[d objectForKey:@"imdb_id"] isKindOfClass:[NSString class]])
@@ -212,14 +215,13 @@
 	// Keywords
 	if ([d objectForKey:@"keywords"] && [[d objectForKey:@"keywords"] isKindOfClass:[NSArray class]])
 	{
-		[_keywords release];
 		//_keywords = [[NSArray alloc] initWithArray:[d objectForKey:@"keywords"] copyItems:YES];
 		_keywords = [[d objectForKey:@"keywords"] copy];
 	}
 
 	// URL
 	if ([d objectForKey:@"url"])
-		_url = [[NSURL URLWithString:[d objectForKey:@"url"]] retain];
+		_url = [NSURL URLWithString:[d objectForKey:@"url"]];
 
 	// Popularity
 	if ([d objectForKey:@"popularity"])
@@ -256,9 +258,9 @@
 	// Release date
 	if ([d objectForKey:@"released"] && [[d objectForKey:@"released"] isKindOfClass:[NSString class]])
 	{
-		NSDateFormatter *releasedFormatter = [[[NSDateFormatter alloc] init] autorelease];
+		NSDateFormatter *releasedFormatter = [[NSDateFormatter alloc] init];
 		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
-		_released = [[releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]] retain];
+		_released = [releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]];
 	}
 
 	// Runtime
@@ -267,26 +269,26 @@
 
 	// Homepage
 	if ([d objectForKey:@"homepage"] && [[d objectForKey:@"homepage"] isKindOfClass:[NSString class]])
-		_homepage = [[NSURL URLWithString:[d objectForKey:@"homepage"]] retain];
+		_homepage = [NSURL URLWithString:[d objectForKey:@"homepage"]];
 	else
 		_homepage = nil;
 
 	// Posters
 	_posters = nil;
 	if ([d objectForKey:@"posters"])
-		_posters = [[self arrayWithImages:[d objectForKey:@"posters"] ofType:TMDBImageTypePoster] retain];
+		_posters = [self arrayWithImages:[d objectForKey:@"posters"] ofType:TMDBImageTypePoster];
 	//NSLog(@"POSTERS %@", _posters);
 
 	// Backdrops
 	_backdrops = nil;
 	if ([d objectForKey:@"backdrops"])
-		_backdrops = [[self arrayWithImages:[d objectForKey:@"backdrops"] ofType:TMDBImageTypeBackdrop] retain];
+		_backdrops = [self arrayWithImages:[d objectForKey:@"backdrops"] ofType:TMDBImageTypeBackdrop];
 	//NSLog(@"BACKDROPS %@", _backdrops);
 
 	// Cast
 	_cast = nil;
 	if ([d objectForKey:@"cast"] && ![d isKindOfClass:[NSNull class]])
-		_cast = [[TMDBPerson personsWithMovie:self personsInfo:[d objectForKey:@"cast"]] retain];
+		_cast = [TMDBPerson personsWithMovie:self personsInfo:[d objectForKey:@"cast"]];
 
 	if (isSearchingOnly)
 	{
@@ -300,8 +302,7 @@
 		[_context movieDidFinishLoading:self];
 }
 
-#pragma mark -
-#pragma mark Helper methods
+#pragma mark - Helper methods
 - (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType {
 	NSMutableArray *imageObjects = [NSMutableArray arrayWithCapacity:0];
 
@@ -334,7 +335,7 @@
 		// use !currentBackdrop instead of an else, as an object recovery (fetch) may have been performed
 		if (!currentImage)
 		{
-			currentImage = [[[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType] autorelease];
+			currentImage = [[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType];
 			allocatedNewObject = YES;
 		}
 
@@ -359,35 +360,5 @@
 }
 
 #pragma mark -
-- (void)dealloc {
-	//printf("iTMDb: TMDBMovie dealloc\n");
-	[_request release];
-	[_userData release];
-	[_rawResults release];
-
-	[_title release];
-	[_released release];
-	[_overview release];
-	[_tagline release];
-	[_homepage release];
-	[_imdbID release];
-	[_posters release];
-	[_backdrops release];
-	[_trailer release];
-	[_studios release];
-	[_originalName release];
-	[_alternativeName release];
-	[_language release];
-	[_url release];
-	[_certification release];
-	[_categories release];
-	[_keywords release];
-	[_languagesSpoken release];
-	[_countries release];
-	[_cast release];
-	[_modified release];
-
-	[super dealloc];
-}
 
 @end

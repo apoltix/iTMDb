@@ -20,6 +20,9 @@ typedef enum {
 	TMDBImageSizeThumb    = 1 << 4
 } TMDBImageSize;
 
+/**
+ * A `TMDBImage` object represents an image in one-to-many sizes.
+ */
 @interface TMDBImage : NSObject {
 	NSString *_id;
 	TMDBImageType _type;
@@ -28,7 +31,7 @@ typedef enum {
 
 @property (nonatomic, assign, readonly) TMDBImageType type;
 @property (nonatomic, assign, readonly) TMDBImageSize sizes;
-@property (nonatomic, retain, readonly) NSString *id;
+@property (nonatomic, strong, readonly) NSString *id;
 
 + (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type;
 

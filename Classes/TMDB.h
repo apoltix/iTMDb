@@ -13,30 +13,53 @@
 #import "TMDBMovie.h"
 
 @interface TMDB : NSObject {
-	id <TMDBDelegate> _delegate;
+@protected
+	id<TMDBDelegate> __unsafe_unretained _delegate;
 	NSString *_apiKey;
 	NSString *_language;
 
-	TMDBToken *token;
+	TMDBToken *_token;
 }
 
-@property (nonatomic, retain) id <TMDBDelegate> delegate;
-@property (nonatomic, retain) NSString *apiKey;
-@property (nonatomic, retain) NSString *language;
+@property (nonatomic, unsafe_unretained) id<TMDBDelegate> delegate;
+@property (nonatomic, strong) NSString *apiKey;
+@property (nonatomic, strong) NSString *language;
 
-@property (nonatomic, retain, readonly) TMDBToken *token;
+@property (nonatomic, strong, readonly) TMDBToken *token;
 
-- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate;
-- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate language:(NSString *)aLanguage;
+/** @name Creating an Instance */
 
-#pragma mark -
-#pragma mark Notifications
+/**
+ * 
+ */
+- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id<TMDBDelegate>)aDelegate language:(NSString *)aLanguage;
+
+/** @name Notifications */
+/**
+ * 
+ */
 - (void)movieDidFinishLoading:(TMDBMovie *)aMovie;
+/**
+ * 
+ */
 - (void)movieDidFailLoading:(TMDBMovie *)aMovie error:(NSError *)error;
 
-#pragma mark -
-#pragma mark Shortcuts
+/** @name Convenience Methods */
+/**
+ * Fetches information about the movie with the given TMDb ID.
+ *
+ * @param anID The ID of the movie to fetch information about.
+ * @return A TMDBMovie instance with the current information from the TMDb website.
+ */
 - (TMDBMovie *)movieWithID:(NSInteger)anID;
+
+/**
+ * Fetches information about the movie with the given name.
+ *
+ * As several movies share the same name, you can pass the year the movie was released to narrow down the search, e.g. "Charlotte's Web (2006)" to get the remake from 2006, rather than the original from 1973.
+ *
+ * @param aName The name of the movie to fetch information about.
+ */
 - (TMDBMovie *)movieWithName:(NSString *)aName;
 
 @end

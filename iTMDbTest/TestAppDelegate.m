@@ -56,11 +56,10 @@
 	[viewAllDataButton setEnabled:NO];
 
 	if (!tmdb)
-		tmdb = [[[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self] retain];
+		tmdb = [[TMDB alloc] initWithAPIKey:[apiKey stringValue] delegate:self language:nil];
 
 	if (allData)
 	{
-		[allData release];
 		allData = nil;
 	}
 
@@ -71,9 +70,9 @@
 		[tmdb setLanguage:@"en"];
 
 	if ([movieID integerValue] > 0)
-		[tmdb movieWithID:[movieID integerValue]];
+		movie = [tmdb movieWithID:[movieID integerValue]];
 	else
-		[tmdb movieWithName:[movieName stringValue]];
+		movie = [tmdb movieWithName:[movieName stringValue]];
 }
 
 - (IBAction)viewAllData:(id)sender
@@ -89,44 +88,38 @@
 #pragma mark -
 #pragma mark TMDBDelegate
 
-- (void)tmdb:(TMDB *)context didFinishLoadingMovie:(TMDBMovie *)movie
+- (void)tmdb:(TMDB *)context didFinishLoadingMovie:(TMDBMovie *)aMovie
 {
-	printf("%s\n", [[movie description] UTF8String]);
+	printf("%s\n", [[aMovie description] UTF8String]);
 
 	[throbber stopAnimation:self];
 	[goButton setEnabled:YES];
 	[viewAllDataButton setEnabled:YES];
 
-	allData = [[NSArray alloc] initWithArray:movie.rawResults copyItems:YES];
+	allData = [[NSArray alloc] initWithArray:aMovie.rawResults copyItems:YES];
 
-	[movieTitle setStringValue:movie.title];
-	[movieOverview setString:movie.overview];
-	[movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", movie.runtime]];
+	[movieTitle setStringValue:aMovie.title ? : @""];
+	[movieOverview setString:aMovie.overview ? : @""];
+	[movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", aMovie.runtime] ? : @""];
 
-	[movieKeywords setStringValue:[movie.keywords componentsJoinedByString:@", "]];
+	[movieKeywords setStringValue:[aMovie.keywords componentsJoinedByString:@", "] ? : @""];
 
-	NSDateFormatter *releaseDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	NSDateFormatter *releaseDateFormatter = [[NSDateFormatter alloc] init];
 	[releaseDateFormatter setDateFormat:@"dd-MM-yyyy"];
-	[movieReleaseDate setStringValue:[releaseDateFormatter stringFromDate:movie.released]];
+	[movieReleaseDate setStringValue:[releaseDateFormatter stringFromDate:aMovie.released] ? : @""];
 
 	NSUInteger posterSizeCount = 0;
-	for (TMDBImage *poster in movie.posters)
+	for (TMDBImage *poster in aMovie.posters)
 		posterSizeCount += [poster sizeCount];
-	[moviePostersCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [movie.posters count], posterSizeCount]];
+	[moviePostersCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.posters count], posterSizeCount]];
 	NSUInteger backdropSizeCount = 0;
-	for (TMDBImage *backdrop in movie.backdrops)
+	for (TMDBImage *backdrop in aMovie.backdrops)
 		backdropSizeCount += [backdrop sizeCount];
-	[movieBackdropsCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [movie.backdrops count], backdropSizeCount]];
-
-	//[context release];
-	//[movie release];
+	[movieBackdropsCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], backdropSizeCount]];
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error
 {
-	//[context release];
-	//[movie release];
-
 	NSAlert *alert = [NSAlert alertWithError:error];
 	[alert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 

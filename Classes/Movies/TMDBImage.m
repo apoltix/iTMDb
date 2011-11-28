@@ -21,7 +21,7 @@
 
 + (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type
 {
-	return [[[TMDBImage alloc] initWithId:anID ofType:type] autorelease];
+	return [[TMDBImage alloc] initWithId:anID ofType:type];
 }
 
 - (TMDBImage *)initWithId:(NSString *)anID ofType:(TMDBImageType)type
@@ -29,7 +29,7 @@
 	_id   = anID;
 	_type = type;
 
-	_data  = [[NSMutableDictionary dictionaryWithCapacity:1] retain];
+	_data  = [NSMutableDictionary dictionaryWithCapacity:1];
 
 	return self;
 }
@@ -90,11 +90,5 @@
 }
 
 #pragma mark -
-- (void)dealloc
-{
-	[_data release];
-
-	[super dealloc];
-}
 
 @end

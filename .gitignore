@@ -1,2 +1,7 @@
 build
 iTMDb.xcodeproj/christian.*
+iTMDb.xcodeproj/xcuserdata/*
+iTMDb.xcodeproj/project.xcworkspace/xcuserdata/*
+iTMDb.xcworkspace/xcuserdata/*
+iTMDbTest.xcodeproj/xcuserdata/*
+Documentation/*

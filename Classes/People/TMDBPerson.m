@@ -11,14 +11,14 @@
 
 @implementation TMDBPerson
 
-@synthesize id=_id, name=_name, character=_character, movie=_movie, job=_job, url=_url, order=_order, castID=_castID;
+@synthesize id=_id, name=_name, character=_character, movie=_movie, job=_job, url=_url, order=_order, castID=_castID, profileURL=_profileURL;
 
 + (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)personsInfo
 {
 	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:[personsInfo count]];
 
 	for (NSDictionary *person in personsInfo)
-		[persons addObject:[[[TMDBPerson alloc] initWithMovie:movie personInfo:person] autorelease]];
+		[persons addObject:[[TMDBPerson alloc] initWithMovie:movie personInfo:person]];
 
 	return persons;
 }
@@ -27,15 +27,15 @@
 {
 	if ((self = [super init]))
 	{
-		printf("%s\n", [[personInfo description] UTF8String]);
-		_movie = [aMovie retain];
+		_movie = aMovie;
 		_id = [[personInfo objectForKey:@"id"] integerValue];
 		_name = [[personInfo objectForKey:@"name"] copy];
 		_character = [[personInfo objectForKey:@"character"] copy];
 		_job = [[personInfo objectForKey:@"job"] copy];
-		_url = [[NSURL URLWithString:[personInfo objectForKey:@"url"]] retain];
+		_url = [NSURL URLWithString:[personInfo objectForKey:@"url"]];
 		_order = [[personInfo objectForKey:@"order"] integerValue];
 		_castID = [[personInfo objectForKey:@"cast_id"] integerValue];
+		_profileURL = [NSURL URLWithString:[personInfo objectForKey:@"profile"]];
 	}
 	return self;
 }
@@ -59,15 +59,5 @@
 	return [NSString stringWithFormat:@"<%@>", [self class]];
 }
 
-- (void)dealloc
-{
-	[_name release];
-	[_character release];
-	[_movie release];
-	[_job release];
-	[_url release];
-
-	[super dealloc];
-}
 
 @end

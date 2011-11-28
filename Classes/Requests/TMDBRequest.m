@@ -8,47 +8,68 @@
 
 #import "TMDBRequest.h"
 
-#import "JSON.h"
+#import "SBJson.h"
 
 @implementation TMDBRequest
 
-@synthesize data, delegate, completionBlock;
+@synthesize delegate=_delegate;
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id <TMDBRequestDelegate>)aDelegate
 {
-	TMDBRequest *vlreq = [[[TMDBRequest alloc] init] autorelease];
-
-	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url
-													   cachePolicy:NSURLRequestReloadIgnoringCacheData
-												   timeoutInterval:30.0];
-
-	NSURLConnection *conn = [NSURLConnection connectionWithRequest:req delegate:vlreq];
-	
-	if (conn)
-	{
-		vlreq.data = [NSMutableData data];
-		vlreq.delegate = aDelegate;
-		return vlreq;
-	}
-	return nil;
+	return [[TMDBRequest alloc] initWithURL:url delegate:aDelegate];
 }
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(void (^)(NSDictionary *parsedData))block
 {
-	TMDBRequest *req = [TMDBRequest requestWithURL:url delegate:nil];
-	req.completionBlock = block;
-	return req;
+	return [[TMDBRequest alloc] initWithURL:url completionBlock:block];
+}
+
+- (id)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate
+{
+	if ((self = [super init]))
+	{
+		NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
+		
+		if ([NSURLConnection connectionWithRequest:req delegate:self])
+		{
+			_data = [NSMutableData data];
+			_delegate = delegate;
+		}
+	}
+	return self;
+}
+
+- (id)initWithURL:(NSURL *)url completionBlock:(void (^)(NSDictionary *parsedData))block
+{
+	if ((self = [super init]))
+	{
+		NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
+		
+		if ([NSURLConnection connectionWithRequest:req delegate:self])
+		{
+			_data = [NSMutableData data];
+			_completionBlock = [block copy];
+		}
+	}
+	return self;
 }
 
 #pragma mark -
 - (NSDictionary *)parsedData
 {
-	NSString *parsedDataString = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
-	NSDictionary *jsonData = (NSDictionary *)[parsedDataString JSONValue];
+	NSDictionary *jsonData = nil;
+
+	if (NSClassFromString(@"NSJSONSerialization"))
+	{
+		jsonData = [NSJSONSerialization JSONObjectWithData:_data options:0 error:NULL];
+	}
+	else
+	{
+		NSString *parsedDataString = [[NSString alloc] initWithData:_data encoding:NSUTF8StringEncoding];
+		jsonData = (NSDictionary *)[parsedDataString JSONValue];
+	}
 	//if (!jsonData)
 	//	NSLog(@"parsedDataString = %@", parsedDataString);
-
-	[parsedDataString release];
 
 	return jsonData;
 }
@@ -57,45 +78,38 @@
 #pragma mark NSURLConnection delegate
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	[self.data setLength:0];
+	[_data setLength:0];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)thedata
 {
-	[self.data appendData:thedata];
+	[_data appendData:thedata];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	self.data = nil;
+	_data = nil;
 
-	if (delegate)
-		[delegate request:self didFinishLoading:error];
-	else if (completionBlock)
-		completionBlock(nil);
+	if (self.delegate && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)])
+		[self.delegate request:self didFinishLoading:error];
+	if (_completionBlock)
+		_completionBlock(nil);
 	//else
 	//	NSLog(@"TMDBRequest did fail with error: %@", error);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	if (delegate)
-		[delegate request:self didFinishLoading:nil];
-	else if (completionBlock)
-		completionBlock([self parsedData]);
+	if (self.delegate && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)])
+		[self.delegate request:self didFinishLoading:nil];
+	if (_completionBlock)
+		_completionBlock([self parsedData]);
 	//else
 	//	NSLog(@"TMDBRequest: Neither a delegate nor a block was set.");
 
-	self.data = nil;
+	_data = nil;
 }
 
 #pragma mark -
-- (void)dealloc
-{
-	self.data = nil;
-	self.completionBlock = nil;
-
-	[super dealloc];
-}
 
 @end

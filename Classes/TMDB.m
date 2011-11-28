@@ -11,20 +11,15 @@
 @implementation TMDB
 
 @dynamic apiKey;
-@synthesize delegate=_delegate, language=_language, token;
+@synthesize delegate=_delegate, language=_language, token=_token;
 
-- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate
+- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id<TMDBDelegate>)aDelegate language:(NSString *)aLanguage
 {
-	return [self initWithAPIKey:anApiKey delegate:aDelegate language:nil];
-}
-
-- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id <TMDBDelegate>)aDelegate language:(NSString *)aLanguage
-{
-	_delegate = [aDelegate retain];
+	_delegate = aDelegate;
 	_apiKey = [anApiKey copy];
-	token = nil;
+	_token = nil;
 	if (!aLanguage || [aLanguage length] == 0)
-		_language = [@"en" retain];
+		_language = @"en";
 	else
 		_language = [aLanguage copy];
 
@@ -71,13 +66,5 @@
 }
 
 #pragma mark -
-- (void)dealloc
-{
-	[_delegate release];
-	[_apiKey release];
-	[_language release];
-
-	[super dealloc];
-}
 
 @end
