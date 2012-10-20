@@ -16,9 +16,6 @@
 
 @implementation TMDBImage
 
-@synthesize id=_id, type=_type;//, urls=_urls;
-@dynamic sizes;
-
 + (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type
 {
 	return [[TMDBImage alloc] initWithId:anID ofType:type];
@@ -37,13 +34,13 @@
 #pragma mark -
 - (NSMutableDictionary *)imageDataForSize:(TMDBImageSize)size
 {
-	return [_data objectForKey:[NSNumber numberWithInt:size]];
+	return _data[@(size)];
 }
 
 #pragma mark URLs
 - (NSURL *)urlForSize:(TMDBImageSize)size
 {
-	return [[self imageDataForSize:size] objectForKey:@"url"];
+	return [self imageDataForSize:size][@"url"];
 }
 
 - (void)setURL:(NSURL *)url forSize:(TMDBImageSize)size
@@ -52,13 +49,13 @@
 	if (!imageData)
 	{
 		imageData = [NSMutableDictionary dictionaryWithCapacity:3];
-		[imageData setObject:[NSNumber numberWithFloat:0.0f] forKey:@"width"];
-		[imageData setObject:[NSNumber numberWithFloat:0.0f] forKey:@"height"];
+		imageData[@"width"] = @0;
+		imageData[@"height"] = @0;
 
-		[_data setObject:imageData forKey:[NSNumber numberWithInt:size]];
+		_data[@(size)] = imageData;
 	}
 
-	[imageData setObject:url forKey:@"url"];
+	imageData[@"url"] = url;
 }
 
 #pragma mark Sizes
@@ -67,7 +64,7 @@
 	NSDictionary *imageData = [self imageDataForSize:size];
 	if (!imageData)
 		return CGSizeZero;
-	return CGSizeMake((CGFloat)[[imageData objectForKey:@"width"] floatValue], (CGFloat)[[imageData objectForKey:@"height"] floatValue]);
+	return CGSizeMake((CGFloat)[imageData[@"width"] floatValue], (CGFloat)[imageData[@"height"] floatValue]);
 }
 
 - (TMDBImageSize)sizes
@@ -86,9 +83,7 @@
 #pragma mark -
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: %@ (%i sizes)>", [self class], _id, [_data count], nil];
+	return [NSString stringWithFormat:@"<%@ %p: %@ (%li sizes)>", [self class], self, _id, [_data count], nil];
 }
-
-#pragma mark -
 
 @end

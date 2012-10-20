@@ -28,6 +28,7 @@
 	NSArray			*_rawResults;
 	NSString		*_title;
 	NSDate			*_released;
+	NSInteger        _year;
 	NSString		*_overview;
 	NSUInteger		_runtime;
 	NSString		*_tagline;

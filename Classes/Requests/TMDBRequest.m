@@ -8,8 +8,6 @@
 
 #import "TMDBRequest.h"
 
-#import "SBJson.h"
-
 @implementation TMDBRequest
 
 @synthesize delegate=_delegate;
@@ -57,21 +55,7 @@
 #pragma mark -
 - (NSDictionary *)parsedData
 {
-	NSDictionary *jsonData = nil;
-
-	if (NSClassFromString(@"NSJSONSerialization"))
-	{
-		jsonData = [NSJSONSerialization JSONObjectWithData:_data options:0 error:NULL];
-	}
-	else
-	{
-		NSString *parsedDataString = [[NSString alloc] initWithData:_data encoding:NSUTF8StringEncoding];
-		jsonData = (NSDictionary *)[parsedDataString JSONValue];
-	}
-	//if (!jsonData)
-	//	NSLog(@"parsedDataString = %@", parsedDataString);
-
-	return jsonData;
+	return [NSJSONSerialization JSONObjectWithData:_data options:0 error:NULL];
 }
 
 #pragma mark -

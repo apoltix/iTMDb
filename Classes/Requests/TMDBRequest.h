@@ -13,11 +13,11 @@
 @interface TMDBRequest : NSObject {
 @protected
 	NSMutableData *_data;
-	id<TMDBRequestDelegate> __unsafe_unretained _delegate;
+	__weak id<TMDBRequestDelegate> _delegate;
 	void (^_completionBlock)(NSDictionary *parsedData);
 }
 
-@property (nonatomic, unsafe_unretained, readonly) id<TMDBRequestDelegate> delegate;
+@property (nonatomic, weak, readonly) id<TMDBRequestDelegate> delegate;
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
 + (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(void (^)(NSDictionary *parsedData))block;

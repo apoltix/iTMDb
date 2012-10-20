@@ -22,34 +22,7 @@
 
 @implementation TMDBMovie
 
-@synthesize context=_context,
-            rawResults=_rawResults,
-            id=_id,
-			userData=_userData,
-            title=_title,
-            released=_released,
-            overview=_overview,
-            runtime=_runtime,
-            tagline=_tagline,
-            homepage=_homepage,
-            imdbID=_imdbID,
-            posters=_posters,
-            backdrops=_backdrops,
-			language=_language,
-			translated=_translated,
-			adult=_adult,
-			url=_url,
-			votes=_votes,
-			certification=_certification,
-			categories=_categories,
-			keywords=_keywords,
-			languagesSpoken=_languagesSpoken,
-			countries=_countries,
-			cast=_cast;
-@dynamic year;
-
-#pragma mark -
-#pragma mark Constructors
+#pragma mark - Constructors
 
 + (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)aContext
 {
@@ -63,7 +36,7 @@
 
 - (id)initWithURL:(NSURL *)url context:(TMDB *)aContext
 {
-	return [self initWithURL:url context:aContext userData:nil];
+	return (self = [self initWithURL:url context:aContext userData:nil]);
 }
 
 - (id)initWithURL:(NSURL *)url context:(TMDB *)aContext userData:(NSDictionary *)userData
@@ -118,7 +91,7 @@
 	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.getInfo/%@/json/%@/%li",
 									   API_VERSION, aContext.language, aContext.apiKey, anID]];
 	isSearchingOnly = NO;
-	return [self initWithURL:url context:aContext];
+	return (self = [self initWithURL:url context:aContext]);
 }
 
 - (id)initWithName:(NSString *)aName context:(TMDB *)aContext
@@ -127,36 +100,53 @@
 	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.search/%@/json/%@/%@",
 									   API_VERSION, aContext.language, aContext.apiKey, aNameEscaped]];
 	isSearchingOnly = YES;
-	return [self initWithURL:url context:aContext userData:[NSDictionary dictionaryWithObject:aName forKey:@"title"]];
+	return (self = [self initWithURL:url context:aContext userData:@{@"title": aName}]);
 }
 
 #pragma mark -
-
 - (NSString *)description
 {
 	if (!self.title)
-		return [NSString stringWithFormat:@"<%@>", [self class], nil];
+		return [NSString stringWithFormat:@"<%@ %p>", [self class], self, nil];
 
 	if (!self.released)
-		return [NSString stringWithFormat:@"<%@: %@>", [self class], self.title, nil];
+		return [NSString stringWithFormat:@"<%@ %p: %@>", [self class], self, self.title, nil];
 
 	NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 	NSDateComponents *weekdayComponents = [cal components:NSYearCalendarUnit fromDate:self.released];
 	NSInteger year = [weekdayComponents year];
 
-	return [NSString stringWithFormat:@"<%@: %@ (%i)>", [self class], self.title, year, nil];
+	return [NSString stringWithFormat:@"<%@ %p: %@ (%li)>", [self class], self, self.title, year, nil];
 }
 
 #pragma mark -
 - (NSUInteger)year
 {
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	[df setDateFormat:@"YYYY"];
-	return [[df stringFromDate:self.released] integerValue];
+	if (_year > 0)
+		return _year;
+
+	static NSDateFormatter *df; // NSDateFormatters are expensive to create
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		df = [[NSDateFormatter alloc] init];
+		[df setDateFormat:@"YYYY"];
+	});
+
+	_year = [[df stringFromDate:self.released] integerValue];
+	return _year;
 }
 
-#pragma mark -
-#pragma mark TMDBRequestDelegate
+- (void)setReleased:(NSDate *)released
+{
+	[self willChangeValueForKey:@"released"];
+	[self willChangeValueForKey:@"year"];
+	_released = released;
+	_year = 0; // invalidate cached value
+	[self didChangeValueForKey:@"released"];
+	[self didChangeValueForKey:@"year"];
+}
+
+#pragma mark - TMDBRequestDelegate
 - (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error
 {
 	if (error)
@@ -169,15 +159,12 @@
 
 	_rawResults = [[NSArray alloc] initWithArray:(NSArray *)[request parsedData] copyItems:YES];
 
-	if (!_rawResults || ![_rawResults count] > 0 || ![[_rawResults objectAtIndex:0] isKindOfClass:[NSDictionary class]])
+	if (!_rawResults || ![_rawResults count] > 0 || ![_rawResults[0] isKindOfClass:[NSDictionary class]])
 	{
 		//NSLog(@"iTMDb: Returned data is NOT a dictionary!\n%@", _rawResults);
 		if (_context)
 		{
-			NSDictionary *errorDict = [NSDictionary dictionaryWithObjectsAndKeys:
-									   [NSString stringWithFormat:@"The data source (themoviedb) returned invalid data: %@", _rawResults],
-									   NSLocalizedDescriptionKey,
-									   nil];
+			NSDictionary *errorDict = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"The data source (themoviedb) returned invalid data: %@", _rawResults]};
 			NSError *failError = [NSError errorWithDomain:@"Invalid data"
 													 code:0
 												 userInfo:errorDict];
@@ -186,114 +173,119 @@
 		return;
 	}
 
-	NSDictionary *d = [_rawResults objectAtIndex:0];
+	NSDictionary *d = _rawResults[0];
 
 	// SIMPLE DATA
-	_id       = [(NSNumber *)[d objectForKey:@"id"] integerValue];
-	_title    = [[d objectForKey:@"name"] copy];
+	_id       = [(NSNumber *)d[@"id"] integerValue];
+	_title    = [d[@"name"] copy];
 
-	if ([d objectForKey:@"overview"] && [[d objectForKey:@"overview"] isKindOfClass:[NSString class]])
-		_overview = [[d objectForKey:@"overview"] copy];
+	if (d[@"overview"] && [d[@"overview"] isKindOfClass:[NSString class]])
+		_overview = [d[@"overview"] copy];
 	else
 		_overview = nil;
 
-	if ([d objectForKey:@"tagline"] && [[d objectForKey:@"tagline"] isKindOfClass:[NSString class]])
-		_tagline  = [[d objectForKey:@"tagline"] copy];
-	if ([d objectForKey:@"imdb_id"] && [[d objectForKey:@"imdb_id"] isKindOfClass:[NSString class]])
-		_imdbID   = [[d objectForKey:@"imdb_id"] copy];
+	if (d[@"tagline"] && [d[@"tagline"] isKindOfClass:[NSString class]])
+		_tagline  = [d[@"tagline"] copy];
+	if (d[@"imdb_id"] && [d[@"imdb_id"] isKindOfClass:[NSString class]])
+		_imdbID   = [d[@"imdb_id"] copy];
 
 	// COMPLEX DATA
 
 	// Original name
-	if ([d objectForKey:@"original_name"])
-		_originalName = [[d objectForKey:@"original_name"] copy];
+	if (d[@"original_name"])
+		_originalName = [d[@"original_name"] copy];
 
 	// Alternative name
-	if ([d objectForKey:@"alternative_name"])
-		_alternativeName = [[d objectForKey:@"alternative_name"] copy];
+	if (d[@"alternative_name"])
+		_alternativeName = [d[@"alternative_name"] copy];
 
 	// Keywords
-	if ([d objectForKey:@"keywords"] && [[d objectForKey:@"keywords"] isKindOfClass:[NSArray class]])
+	if (d[@"keywords"] && [d[@"keywords"] isKindOfClass:[NSArray class]])
 	{
 		//_keywords = [[NSArray alloc] initWithArray:[d objectForKey:@"keywords"] copyItems:YES];
-		_keywords = [[d objectForKey:@"keywords"] copy];
+		_keywords = [d[@"keywords"] copy];
 	}
 
 	// URL
-	if ([d objectForKey:@"url"])
-		_url = [NSURL URLWithString:[d objectForKey:@"url"]];
+	if (d[@"url"])
+		_url = [NSURL URLWithString:d[@"url"]];
 
 	// Popularity
-	if ([d objectForKey:@"popularity"])
-		_popularity = [[d objectForKey:@"popularity"] integerValue];
+	if (d[@"popularity"])
+		_popularity = [d[@"popularity"] integerValue];
 
 	// Votes
-	if ([d objectForKey:@"votes"])
-		_votes = [[d objectForKey:@"votes"] integerValue];
+	if (d[@"votes"])
+		_votes = [d[@"votes"] integerValue];
 
 	// Rating
-	if ([d objectForKey:@"rating"])
-		_rating = [[d objectForKey:@"rating"] floatValue];
+	if (d[@"rating"])
+		_rating = [d[@"rating"] floatValue];
 
 	// Certification
-	if ([d objectForKey:@"certification"])
-		_certification = [[d objectForKey:@"certification"] copy];
+	if (d[@"certification"])
+		_certification = [d[@"certification"] copy];
 
 	// Translated
-	if ([d objectForKey:@"translated"] && ![[d objectForKey:@"translated"] isKindOfClass:[NSNull class]])
-		_translated = [[d objectForKey:@"translated"] boolValue];
+	if (d[@"translated"] && ![d[@"translated"] isKindOfClass:[NSNull class]])
+		_translated = [d[@"translated"] boolValue];
 
 	// Adult
-	if ([d objectForKey:@"adult"] && ![[d objectForKey:@"adult"] isKindOfClass:[NSNull class]])
-		_adult = [[d objectForKey:@"adult"] boolValue];
+	if (d[@"adult"] && ![d[@"adult"] isKindOfClass:[NSNull class]])
+		_adult = [d[@"adult"] boolValue];
 
 	// Language
-	if ([d objectForKey:@"language"])
-		_language = [[d objectForKey:@"language"] copy];
+	if (d[@"language"])
+		_language = [d[@"language"] copy];
 
 	// Version
-	if ([d objectForKey:@"version"])
-		_version = [[d objectForKey:@"version"] integerValue];
+	if (d[@"version"])
+		_version = [d[@"version"] integerValue];
 
 	// Release date
-	if ([d objectForKey:@"released"] && [[d objectForKey:@"released"] isKindOfClass:[NSString class]])
+	if (d[@"released"] && [d[@"released"] isKindOfClass:[NSString class]])
 	{
-		NSDateFormatter *releasedFormatter = [[NSDateFormatter alloc] init];
-		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
-		_released = [releasedFormatter dateFromString:(NSString *)[d objectForKey:@"released"]];
+		static NSDateFormatter *releasedFormatter;
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken, ^{
+			releasedFormatter = [[NSDateFormatter alloc] init];
+			[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
+		});
+		_released = [releasedFormatter dateFromString:(NSString *)d[@"released"]];
 	}
 
 	// Runtime
-	if (!([d objectForKey:@"runtime"] == nil || [[d objectForKey:@"runtime"] isKindOfClass:[NSNull class]]))
-		_runtime  = [[d objectForKey:@"runtime"] unsignedIntegerValue];
+	if (!(d[@"runtime"] == nil || [d[@"runtime"] isKindOfClass:[NSNull class]]))
+		_runtime  = [d[@"runtime"] unsignedIntegerValue];
 
 	// Homepage
-	if ([d objectForKey:@"homepage"] && [[d objectForKey:@"homepage"] isKindOfClass:[NSString class]])
-		_homepage = [NSURL URLWithString:[d objectForKey:@"homepage"]];
+	if (d[@"homepage"] && [d[@"homepage"] isKindOfClass:[NSString class]])
+		_homepage = [NSURL URLWithString:d[@"homepage"]];
 	else
 		_homepage = nil;
 
 	// Posters
 	_posters = nil;
-	if ([d objectForKey:@"posters"])
-		_posters = [self arrayWithImages:[d objectForKey:@"posters"] ofType:TMDBImageTypePoster];
+	if (d[@"posters"])
+		_posters = [self arrayWithImages:d[@"posters"] ofType:TMDBImageTypePoster];
 	//NSLog(@"POSTERS %@", _posters);
 
 	// Backdrops
 	_backdrops = nil;
-	if ([d objectForKey:@"backdrops"])
-		_backdrops = [self arrayWithImages:[d objectForKey:@"backdrops"] ofType:TMDBImageTypeBackdrop];
+	if (d[@"backdrops"])
+		_backdrops = [self arrayWithImages:d[@"backdrops"] ofType:TMDBImageTypeBackdrop];
 	//NSLog(@"BACKDROPS %@", _backdrops);
 
 	// Cast
 	_cast = nil;
-	if ([d objectForKey:@"cast"] && ![d isKindOfClass:[NSNull class]])
-		_cast = [TMDBPerson personsWithMovie:self personsInfo:[d objectForKey:@"cast"]];
+	if (d[@"cast"] && ![d isKindOfClass:[NSNull class]])
+		_cast = [TMDBPerson personsWithMovie:self personsInfo:d[@"cast"]];
 
 	if (isSearchingOnly)
 	{
 		isSearchingOnly = NO;
-		[self initWithID:_id context:_context];
+		if ([self initWithID:_id context:_context])
+			; // NOOP to suppress compiler warning, probably not a good idea
 		return;
 	}
 
@@ -303,7 +295,8 @@
 }
 
 #pragma mark - Helper methods
-- (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType {
+- (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType
+{
 	NSMutableArray *imageObjects = [NSMutableArray arrayWithCapacity:0];
 
 	TMDBImage *currentImage = nil;
@@ -311,23 +304,23 @@
 	for (NSDictionary *outerImageDict in theImages)
 	{
 		// innerImageDict: the image info (see outerImageDict)
-		NSDictionary *innerImageDict = [outerImageDict objectForKey:@"image"];
+		NSDictionary *innerImageDict = outerImageDict[@"image"];
 
 		// Fetch the existing image (if any)
 		BOOL allocatedNewObject = NO;
-		if (currentImage && ![currentImage.id isEqualToString:[innerImageDict objectForKey:@"id"]])
+		if (currentImage && ![currentImage.id isEqualToString:innerImageDict[@"id"]])
 		{
 			// Warning: This hasn't actually been tested yet
 			NSIndexSet *passed = [imageObjects indexesOfObjectsPassingTest:^(id obj, NSUInteger idx, BOOL *stop) {
 				TMDBImage *lookupImage = (TMDBImage *)obj;
-				BOOL passed = [lookupImage.id isEqualToString:[innerImageDict objectForKey:@"id"]];
+				BOOL passed = [lookupImage.id isEqualToString:innerImageDict[@"id"]];
 				if (passed) // we only need one object
 					*(stop) = YES;
 				return passed;
 			}];
 
 			if ([passed count] > 0 && imageObjects)
-				currentImage = [imageObjects objectAtIndex:[passed firstIndex]];
+				currentImage = imageObjects[[passed firstIndex]];
 			else
 				currentImage = nil;
 		}
@@ -335,12 +328,12 @@
 		// use !currentBackdrop instead of an else, as an object recovery (fetch) may have been performed
 		if (!currentImage)
 		{
-			currentImage = [[TMDBImage alloc] initWithId:[innerImageDict objectForKey:@"id"] ofType:aType];
+			currentImage = [[TMDBImage alloc] initWithId:innerImageDict[@"id"] ofType:aType];
 			allocatedNewObject = YES;
 		}
 
 		TMDBImageSize imgSize = -1;
-		NSString *imgSizeString = [innerImageDict objectForKey:@"size"];
+		NSString *imgSizeString = innerImageDict[@"size"];
 		if ([imgSizeString isEqualToString:@"original"])
 			imgSize = TMDBImageSizeOriginal;
 		else if ([imgSizeString isEqualToString:@"mid"])
@@ -350,7 +343,7 @@
 		else if ([imgSizeString isEqualToString:@"thumb"])
 			imgSize = TMDBImageSizeThumb;
 
-		[currentImage setURL:[NSURL URLWithString:[innerImageDict objectForKey:@"url"]] forSize:imgSize];
+		[currentImage setURL:[NSURL URLWithString:innerImageDict[@"url"]] forSize:imgSize];
 
 		// Add object if it doesn't already exist
 		if (allocatedNewObject)
@@ -358,7 +351,5 @@
 	}
 	return imageObjects;
 }
-
-#pragma mark -
 
 @end

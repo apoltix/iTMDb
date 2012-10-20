@@ -26,8 +26,7 @@
 	return self;
 }
 
-#pragma mark -
-#pragma mark Notifications
+#pragma mark - Notifications
 - (void)movieDidFinishLoading:(TMDBMovie *)aMovie
 {
 	if (_delegate)
@@ -40,8 +39,7 @@
 		[_delegate tmdb:self didFailLoadingMovie:aMovie error:error];
 }
 
-#pragma mark -
-#pragma mark Shortcuts
+#pragma mark - Shortcuts
 - (TMDBMovie *)movieWithID:(NSInteger)anID
 {
 	return [TMDBMovie movieWithID:anID context:self];
@@ -52,8 +50,7 @@
 	return [TMDBMovie movieWithName:aName context:self];
 }
 
-#pragma mark -
-#pragma mark Getters and setters
+#pragma mark - Getters and setters
 - (NSString *)apiKey
 {
 	return _apiKey;
@@ -64,7 +61,5 @@
 	// TODO: Invalidate active token
 	_apiKey = [newKey copy];
 }
-
-#pragma mark -
 
 @end

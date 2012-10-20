@@ -14,12 +14,12 @@
 
 + (void)initialize
 {
-	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
-							  @"", @"appKey",
-							  [NSNumber numberWithInteger:0], @"movieID",
-							  @"", @"movieName",
-							  @"", @"language",
-							  nil];
+	NSDictionary *defaults = @{
+		@"appKey": @"",
+		@"movieID": @0,
+		@"movieName": @"",
+		@"language": @""
+	};
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 

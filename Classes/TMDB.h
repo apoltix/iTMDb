@@ -14,14 +14,14 @@
 
 @interface TMDB : NSObject {
 @protected
-	id<TMDBDelegate> __unsafe_unretained _delegate;
+	__weak id<TMDBDelegate> _delegate;
 	NSString *_apiKey;
 	NSString *_language;
 
 	TMDBToken *_token;
 }
 
-@property (nonatomic, unsafe_unretained) id<TMDBDelegate> delegate;
+@property (nonatomic, weak) id<TMDBDelegate> delegate;
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *language;
 
