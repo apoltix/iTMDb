@@ -9,23 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 #import "TMDBDelegate.h"
-#import "TMDBToken.h"
 #import "TMDBMovie.h"
 
-@interface TMDB : NSObject {
-@protected
-	__weak id<TMDBDelegate> _delegate;
-	NSString *_apiKey;
-	NSString *_language;
-
-	TMDBToken *_token;
-}
+@interface TMDB : NSObject
 
 @property (nonatomic, weak) id<TMDBDelegate> delegate;
-@property (nonatomic, strong) NSString *apiKey;
-@property (nonatomic, strong) NSString *language;
-
-@property (nonatomic, strong, readonly) TMDBToken *token;
+@property (nonatomic, copy) NSString *apiKey;
+@property (nonatomic, copy) NSString *language;
 
 /** @name Creating an Instance */
 

@@ -13,97 +13,78 @@
 
 @interface TMDBMovie ()
 
-- (id)initWithURL:(NSURL *)url context:(TMDB *)context;
-- (id)initWithURL:(NSURL *)url context:(TMDB *)context userData:(NSDictionary *)userData;
-
 - (NSArray *)arrayWithImages:(NSArray *)images ofType:(TMDBImageType)type;
 
 @end
 
-@implementation TMDBMovie
+@implementation TMDBMovie {
+@private
+	TMDB			*_context;
+	TMDBRequest		*_request;
+
+	NSInteger        _year;
+	float			_rating;
+	NSInteger		_revenue;
+	NSURL			*_trailer;
+	NSArray			*_studios;
+	NSInteger		_popularity;
+	NSUInteger		_version;
+	NSDate			*_modified;
+
+	BOOL			_isSearchingOnly;
+}
 
 #pragma mark - Constructors
 
-+ (TMDBMovie *)movieWithID:(NSInteger)anID context:(TMDB *)aContext
++ (TMDBMovie *)movieWithID:(NSInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	return [[TMDBMovie alloc] initWithID:anID context:aContext];
+	return [[TMDBMovie alloc] initWithID:anID options:options context:context];
 }
 
-+ (TMDBMovie *)movieWithName:(NSString *)aName context:(TMDB *)aContext
++ (TMDBMovie *)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	return [[TMDBMovie alloc] initWithName:aName context:aContext];
+	return [[TMDBMovie alloc] initWithName:aName options:options context:context];
 }
 
-- (id)initWithURL:(NSURL *)url context:(TMDB *)aContext
+- (id)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	return (self = [self initWithURL:url context:aContext userData:nil]);
+	return (self = [self initWithURL:url options:options context:context userData:nil]);
 }
 
-- (id)initWithURL:(NSURL *)url context:(TMDB *)aContext userData:(NSDictionary *)userData
+- (id)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context userData:(NSDictionary *)userData
 {
-	if ((self = [self init]))
-	{
-		_context = aContext;
+	if (!(self = [self init]))
+		return nil;
 
-		_rawResults = nil;
+	_context = context;
+	_options = options;
+	_rawResults = nil;
 
-		_id = 0;
-		_userData = userData;
-		_title = nil;
-		_released = nil;
-		_overview = nil;
-		_runtime = 0;
-		_tagline = nil;
-		_homepage = nil;
-		_imdbID = nil;
-		_posters = nil;
-		_backdrops = nil;
-		_rating = 0;
-		_revenue = 0;
-		_trailer = nil;
-		_studios = nil;
-		_originalName = nil;
-		_alternativeName = nil;
-		_popularity = 0;
-		_translated = NO;
-		_adult = NO;
-		_language = nil;
-		_url = nil;
-		_votes = 0;
-		_certification = nil;
-		_categories = nil;
-		_keywords = nil;
-		_languagesSpoken = nil;
-		_countries = nil;
-		_cast = nil;
-		_version = 0;
-		_modified = nil;
-		
-		// Initialize the fetch request
-		_request = [TMDBRequest requestWithURL:url delegate:self];
-	}
+	// Initialize the fetch request
+	_request = [TMDBRequest requestWithURL:url delegate:self];
 
 	return self;
 }
 
-- (id)initWithID:(NSInteger)anID context:(TMDB *)aContext
+- (id)initWithID:(NSInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.getInfo/%@/json/%@/%li",
-									   API_VERSION, aContext.language, aContext.apiKey, anID]];
-	isSearchingOnly = NO;
-	return (self = [self initWithURL:url context:aContext]);
+	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%@/movie/%li?api_key=%@&language=%@",
+									   API_VERSION, anID, context.apiKey, context.language]];
+	_isSearchingOnly = NO;
+	return (self = [self initWithURL:url options:options context:context]);
 }
 
-- (id)initWithName:(NSString *)aName context:(TMDB *)aContext
+- (id)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	NSString *aNameEscaped = [aName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%.1f/Movie.search/%@/json/%@/%@",
-									   API_VERSION, aContext.language, aContext.apiKey, aNameEscaped]];
-	isSearchingOnly = YES;
-	return (self = [self initWithURL:url context:aContext userData:@{@"title": aName}]);
+	NSString *aNameEscaped = [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@&language=%@",
+									   API_VERSION, context.apiKey, aNameEscaped, context.language]];
+	_isSearchingOnly = YES;
+	return (self = [self initWithURL:url options:options context:context userData:@{@"title": name}]);
 }
 
 #pragma mark -
+
 - (NSString *)description
 {
 	if (!self.title)
@@ -120,6 +101,7 @@
 }
 
 #pragma mark -
+
 - (NSUInteger)year
 {
 	if (_year > 0)
@@ -138,15 +120,14 @@
 
 - (void)setReleased:(NSDate *)released
 {
-	[self willChangeValueForKey:@"released"];
 	[self willChangeValueForKey:@"year"];
 	_released = released;
 	_year = 0; // invalidate cached value
-	[self didChangeValueForKey:@"released"];
 	[self didChangeValueForKey:@"year"];
 }
 
 #pragma mark - TMDBRequestDelegate
+
 - (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error
 {
 	if (error)
@@ -157,9 +138,9 @@
 		return;
 	}
 
-	_rawResults = [[NSArray alloc] initWithArray:(NSArray *)[request parsedData] copyItems:YES];
+	_rawResults = _isSearchingOnly ? (NSArray *)((NSDictionary *)[request parsedData])[@"results"] : (NSDictionary *)[request parsedData];
 
-	if (!_rawResults || ![_rawResults count] > 0 || ![_rawResults[0] isKindOfClass:[NSDictionary class]])
+	if (!_rawResults || (_isSearchingOnly ? ![_rawResults count] > 0 || ![_rawResults[0] isKindOfClass:[NSDictionary class]] : NO))
 	{
 		//NSLog(@"iTMDb: Returned data is NOT a dictionary!\n%@", _rawResults);
 		if (_context)
@@ -173,11 +154,11 @@
 		return;
 	}
 
-	NSDictionary *d = _rawResults[0];
+	NSDictionary *d = _isSearchingOnly ? _rawResults[0] : _rawResults;
 
 	// SIMPLE DATA
-	_id       = [(NSNumber *)d[@"id"] integerValue];
-	_title    = [d[@"name"] copy];
+	_id = [(NSNumber *)d[@"id"] integerValue];
+	_title = [d[@"title"] copy];
 
 	if (d[@"overview"] && [d[@"overview"] isKindOfClass:[NSString class]])
 		_overview = [d[@"overview"] copy];
@@ -192,12 +173,12 @@
 	// COMPLEX DATA
 
 	// Original name
-	if (d[@"original_name"])
-		_originalName = [d[@"original_name"] copy];
+	if (d[@"original_title"])
+		_originalTitle = [d[@"original_title"] copy];
 
 	// Alternative name
-	if (d[@"alternative_name"])
-		_alternativeName = [d[@"alternative_name"] copy];
+//	if (d[@"alternative_name"])
+//		_alternativeName = [d[@"alternative_name"] copy];
 
 	// Keywords
 	if (d[@"keywords"] && [d[@"keywords"] isKindOfClass:[NSArray class]])
@@ -281,10 +262,10 @@
 	if (d[@"cast"] && ![d isKindOfClass:[NSNull class]])
 		_cast = [TMDBPerson personsWithMovie:self personsInfo:d[@"cast"]];
 
-	if (isSearchingOnly)
+	if (_isSearchingOnly)
 	{
-		isSearchingOnly = NO;
-		if ([self initWithID:_id context:_context])
+		_isSearchingOnly = NO;
+		if ([self initWithID:_id options:_options context:_context])
 			; // NOOP to suppress compiler warning, probably not a good idea
 		return;
 	}
@@ -295,6 +276,7 @@
 }
 
 #pragma mark - Helper methods
+
 - (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType
 {
 	NSMutableArray *imageObjects = [NSMutableArray arrayWithCapacity:0];

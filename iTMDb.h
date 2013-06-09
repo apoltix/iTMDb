@@ -10,7 +10,6 @@
 
 #import "TMDB.h"
 #import "TMDBDelegate.h"
-#import "TMDBToken.h"
 #import "TMDBRequest.h"
 #import "TMDBRequestDelegate.h"
 #import "TMDBMovie.h"

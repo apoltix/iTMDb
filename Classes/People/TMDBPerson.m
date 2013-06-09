@@ -23,18 +23,19 @@
 
 - (id)initWithMovie:(TMDBMovie *)aMovie personInfo:(NSDictionary *)personInfo
 {
-	if ((self = [super init]))
-	{
-		_movie = aMovie;
-		_id = [personInfo[@"id"] integerValue];
-		_name = [personInfo[@"name"] copy];
-		_character = [personInfo[@"character"] copy];
-		_job = [personInfo[@"job"] copy];
-		_url = [NSURL URLWithString:personInfo[@"url"]];
-		_order = [personInfo[@"order"] integerValue];
-		_castID = [personInfo[@"cast_id"] integerValue];
-		_profileURL = [NSURL URLWithString:personInfo[@"profile"]];
-	}
+	if (!(self = [super init]))
+		return nil;
+
+	_movie = aMovie;
+	_id = [personInfo[@"id"] integerValue];
+	_name = [personInfo[@"name"] copy];
+	_character = [personInfo[@"character"] copy];
+	_job = [personInfo[@"job"] copy];
+	_url = [NSURL URLWithString:personInfo[@"url"]];
+	_order = [personInfo[@"order"] integerValue];
+	_castID = [personInfo[@"cast_id"] integerValue];
+	_profileURL = [NSURL URLWithString:personInfo[@"profile"]];
+
 	return self;
 }
 

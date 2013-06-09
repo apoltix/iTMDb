@@ -10,14 +10,14 @@
 
 @implementation TMDB
 
-@dynamic apiKey;
-@synthesize delegate=_delegate, language=_language, token=_token;
-
 - (id)initWithAPIKey:(NSString *)anApiKey delegate:(id<TMDBDelegate>)aDelegate language:(NSString *)aLanguage
 {
+	if (!(self = [super init]))
+		return nil;
+
 	_delegate = aDelegate;
 	_apiKey = [anApiKey copy];
-	_token = nil;
+
 	if (!aLanguage || [aLanguage length] == 0)
 		_language = @"en";
 	else
@@ -27,6 +27,7 @@
 }
 
 #pragma mark - Notifications
+
 - (void)movieDidFinishLoading:(TMDBMovie *)aMovie
 {
 	if (_delegate)
@@ -40,21 +41,18 @@
 }
 
 #pragma mark - Shortcuts
+
 - (TMDBMovie *)movieWithID:(NSInteger)anID
 {
-	return [TMDBMovie movieWithID:anID context:self];
+	return [TMDBMovie movieWithID:anID options:TMDBMovieFetchOptionBasic context:self];
 }
 
-- (TMDBMovie *)movieWithName:(NSString *)aName
+- (TMDBMovie *)movieWithName:(NSString *)name
 {
-	return [TMDBMovie movieWithName:aName context:self];
+	return [TMDBMovie movieWithName:name options:TMDBMovieFetchOptionBasic context:self];
 }
 
 #pragma mark - Getters and setters
-- (NSString *)apiKey
-{
-	return _apiKey;
-}
 
 - (void)setApiKey:(NSString *)newKey
 {

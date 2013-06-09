@@ -10,21 +10,18 @@
 
 #import "TMDBRequestDelegate.h"
 
-@interface TMDBRequest : NSObject {
-@protected
-	NSMutableData *_data;
-	__weak id<TMDBRequestDelegate> _delegate;
-	void (^_completionBlock)(NSDictionary *parsedData);
-}
+typedef void (^TMDBRequestCompletionBlock)(id parsedData);
+
+@interface TMDBRequest : NSObject
 
 @property (nonatomic, weak, readonly) id<TMDBRequestDelegate> delegate;
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
-+ (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(void (^)(NSDictionary *parsedData))block;
++ (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
 
 - (id)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
-- (id)initWithURL:(NSURL *)url completionBlock:(void (^)(NSDictionary *parsedData))block;
+- (id)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
 
-- (NSDictionary *)parsedData;
+- (id)parsedData;
 
 @end

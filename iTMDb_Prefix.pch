@@ -14,4 +14,4 @@
 /**
  * A string value indicating the version of the API to be used.
  */
-#define API_VERSION 2.1
+#define API_VERSION @"3"

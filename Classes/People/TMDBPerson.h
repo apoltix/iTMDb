@@ -15,17 +15,7 @@
  *
  * This class does not interact with the TMDb API itself and thus instances are immutable model objects.
  */
-@interface TMDBPerson : NSObject {
-	NSUInteger _id;
-	NSString *_name;
-	NSString *_character;
-	TMDBMovie *_movie;
-	NSString *_job;
-	NSURL *_url;
-	NSInteger _order;
-	NSInteger _castID;
-	NSURL *_profileURL;
-}
+@interface TMDBPerson : NSObject
 
 /** @name Batch Processsing */
 /**
@@ -49,31 +39,31 @@
 
 /** @name Basic Information */
 /** The TMDb ID of the person. */
-@property (nonatomic, assign, readonly) NSUInteger id;
+@property (nonatomic, readonly) NSUInteger id;
 
 /** The name of the person. */
-@property (nonatomic, copy,   readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *name;
 
 /** The name of the character the person played in the movie. */
-@property (nonatomic, copy,   readonly) NSString *character;
+@property (nonatomic, copy, readonly) NSString *character;
 
 /** The movie in which the person played a character or was part of a crew. */
 @property (nonatomic, strong, readonly) TMDBMovie *movie;
 
 /** The job position of the person in this movie. */
-@property (nonatomic, copy,   readonly) NSString *job;
+@property (nonatomic, copy, readonly) NSString *job;
 
 /** The order in which the person should be listed in the Cast and Crew list for the movie. */
-@property (nonatomic, assign, readonly) NSInteger order;
+@property (nonatomic, readonly) NSInteger order;
 
 /** The */
-@property (nonatomic, assign, readonly) NSInteger castID;
+@property (nonatomic, readonly) NSInteger castID;
 
 /** @name External Resources */
 /** A URL to an official website of this person. */
-@property (nonatomic, strong, readonly) NSURL *url;
+@property (nonatomic, copy, readonly) NSURL *url;
 
 /** A URL to the TMDb profile page of this person. */
-@property (nonatomic, strong, readonly) NSURL *profileURL;
+@property (nonatomic, copy, readonly) NSURL *profileURL;
 
 @end

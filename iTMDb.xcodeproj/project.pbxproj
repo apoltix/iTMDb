@@ -13,11 +13,9 @@
 		AA985848128309AA0074F570 /* iTMDb.h in Headers */ = {isa = PBXBuildFile; fileRef = AA985847128309AA0074F570 /* iTMDb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AABB1F7A12833F9800F84FEB /* TMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = AABB1F6512833F5300F84FEB /* TMDB.m */; };
 		AAF437F61283464D00F5CC92 /* TMDBRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF437F51283464D00F5CC92 /* TMDBRequestDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AAF4385712834B7600F5CC92 /* TMDBToken.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF437ED1283450900F5CC92 /* TMDBToken.m */; };
 		AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF4389D12834E6600F5CC92 /* TMDBMovie.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAF438A012834E6600F5CC92 /* TMDBMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF4389E12834E6600F5CC92 /* TMDBMovie.m */; };
 		AAF438B012834F6400F5CC92 /* TMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = AABB1F6412833F5300F84FEB /* TMDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AAF438C712834FC400F5CC92 /* TMDBToken.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF437EC1283450900F5CC92 /* TMDBToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAF4398D12835AE000F5CC92 /* iTMDb_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32DBCF5E0370ADEE00C91783 /* iTMDb_Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAF43A1012835F9400F5CC92 /* TMDBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF43A0E12835F9400F5CC92 /* TMDBRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAF43A1112835F9400F5CC92 /* TMDBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF43A0F12835F9400F5CC92 /* TMDBRequest.m */; };
@@ -40,8 +38,6 @@
 		AA98586D12830B680074F570 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		AABB1F6412833F5300F84FEB /* TMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDB.h; path = Classes/TMDB.h; sourceTree = "<group>"; };
 		AABB1F6512833F5300F84FEB /* TMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDB.m; path = Classes/TMDB.m; sourceTree = "<group>"; };
-		AAF437EC1283450900F5CC92 /* TMDBToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBToken.h; path = Classes/Authentication/TMDBToken.h; sourceTree = "<group>"; };
-		AAF437ED1283450900F5CC92 /* TMDBToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBToken.m; path = Classes/Authentication/TMDBToken.m; sourceTree = "<group>"; };
 		AAF437F51283464D00F5CC92 /* TMDBRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBRequestDelegate.h; path = Classes/Requests/TMDBRequestDelegate.h; sourceTree = "<group>"; };
 		AAF4389D12834E6600F5CC92 /* TMDBMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBMovie.h; path = Classes/Movies/TMDBMovie.h; sourceTree = "<group>"; };
 		AAF4389E12834E6600F5CC92 /* TMDBMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBMovie.m; path = Classes/Movies/TMDBMovie.m; sourceTree = "<group>"; };
@@ -141,15 +137,6 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		AA98583C1283080F0074F570 /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				AAF437EC1283450900F5CC92 /* TMDBToken.h */,
-				AAF437ED1283450900F5CC92 /* TMDBToken.m */,
-			);
-			name = Authentication;
-			sourceTree = "<group>";
-		};
 		AA98583D128308130074F570 /* Media */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,7 +193,6 @@
 		AAF437F01283455E00F5CC92 /* TMDb API */ = {
 			isa = PBXGroup;
 			children = (
-				AA98583C1283080F0074F570 /* Authentication */,
 				AA98583D128308130074F570 /* Media */,
 				AA98583E128308180074F570 /* Movies */,
 				AA985840128308360074F570 /* People */,
@@ -235,7 +221,6 @@
 				AA985848128309AA0074F570 /* iTMDb.h in Headers */,
 				AAF43A21128361C400F5CC92 /* TMDBDelegate.h in Headers */,
 				AAF438B012834F6400F5CC92 /* TMDB.h in Headers */,
-				AAF438C712834FC400F5CC92 /* TMDBToken.h in Headers */,
 				AAF437F61283464D00F5CC92 /* TMDBRequestDelegate.h in Headers */,
 				AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */,
 				AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */,
@@ -272,8 +257,9 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = Apoltix;
+				CLASSPREFIX = TMDB;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Devify;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "iTMDb" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -311,7 +297,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AABB1F7A12833F9800F84FEB /* TMDB.m in Sources */,
-				AAF4385712834B7600F5CC92 /* TMDBToken.m in Sources */,
 				AAF438A012834E6600F5CC92 /* TMDBMovie.m in Sources */,
 				AAF43A1112835F9400F5CC92 /* TMDBRequest.m in Sources */,
 				AAFA3EB412863A78002B9E38 /* TMDBImage.m in Sources */,
@@ -377,10 +362,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -392,9 +382,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;

@@ -8,13 +8,10 @@
 
 #import "TMDBImage.h"
 
-@interface TMDBImage ()
-
-- (NSMutableDictionary *)imageDataForSize:(TMDBImageSize)size;
-
-@end
-
-@implementation TMDBImage
+@implementation TMDBImage {
+@private
+	NSMutableDictionary *_data;
+}
 
 + (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type
 {
@@ -23,6 +20,9 @@
 
 - (TMDBImage *)initWithId:(NSString *)anID ofType:(TMDBImageType)type
 {
+	if (!(self = [super init]))
+		return nil;
+
 	_id   = anID;
 	_type = type;
 
@@ -32,12 +32,14 @@
 }
 
 #pragma mark -
+
 - (NSMutableDictionary *)imageDataForSize:(TMDBImageSize)size
 {
 	return _data[@(size)];
 }
 
-#pragma mark URLs
+#pragma mark - URLs
+
 - (NSURL *)urlForSize:(TMDBImageSize)size
 {
 	return [self imageDataForSize:size][@"url"];
@@ -58,7 +60,8 @@
 	imageData[@"url"] = url;
 }
 
-#pragma mark Sizes
+#pragma mark - Sizes
+
 - (CGSize)sizeForSize:(TMDBImageSize)size
 {
 	NSDictionary *imageData = [self imageDataForSize:size];
@@ -71,7 +74,7 @@
 {
 	TMDBImageSize theSizes = 0;
 	for (NSNumber *aSize in [_data allKeys])
-		theSizes = theSizes | [aSize intValue];
+		theSizes |= [aSize integerValue];
 	return theSizes;
 }
 
@@ -81,9 +84,10 @@
 }
 
 #pragma mark -
+
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ %p: %@ (%li sizes)>", [self class], self, _id, [_data count], nil];
+	return [NSString stringWithFormat:@"<%@ %p: %@ (%li sizes)>", NSStringFromClass([self class]), self, _id, [_data count]];
 }
 
 @end

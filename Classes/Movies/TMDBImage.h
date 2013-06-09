@@ -8,30 +8,26 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, TMDBImageType) {
 	TMDBImageTypePoster,
 	TMDBImageTypeBackdrop
-} TMDBImageType;
+};
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 	TMDBImageSizeOriginal = 1 << 1,
 	TMDBImageSizeMid      = 1 << 2,
 	TMDBImageSizeCover    = 1 << 3,
 	TMDBImageSizeThumb    = 1 << 4
-} TMDBImageSize;
+};
 
 /**
  * A `TMDBImage` object represents an image in one-to-many sizes.
  */
-@interface TMDBImage : NSObject {
-	NSString *_id;
-	TMDBImageType _type;
-	NSMutableDictionary *_data;
-}
+@interface TMDBImage : NSObject
 
-@property (nonatomic, assign, readonly) TMDBImageType type;
-@property (nonatomic, assign, readonly) TMDBImageSize sizes;
-@property (nonatomic, strong, readonly) NSString *id;
+@property (nonatomic, readonly) TMDBImageType type;
+@property (nonatomic, readonly) TMDBImageSize sizes;
+@property (nonatomic, copy, readonly) NSString *id;
 
 + (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type;
 
