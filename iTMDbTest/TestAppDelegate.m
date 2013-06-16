@@ -79,9 +79,9 @@
 		[_tmdb setLanguage:@"en"];
 
 	if ([_movieID integerValue] > 0)
-		_movie = [_tmdb movieWithID:[_movieID integerValue]];
+		_movie = [TMDBMovie movieWithID:[_movieID integerValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
 	else
-		_movie = [_tmdb movieWithName:[_movieName stringValue]];
+		_movie = [TMDBMovie movieWithName:[_movieName stringValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
 }
 
 - (IBAction)viewAllData:(id)sender

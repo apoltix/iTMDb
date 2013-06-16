@@ -8,6 +8,8 @@
 
 #import "TMDBPerson.h"
 #import "TMDBMovie.h"
+#import "TMDB.h"
+#import "TMDBRequest.h"
 
 @implementation TMDBPerson
 
@@ -21,20 +23,25 @@
 	return [NSArray arrayWithArray:persons];
 }
 
-- (id)initWithMovie:(TMDBMovie *)aMovie personInfo:(NSDictionary *)personInfo
+- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)personInfo
 {
 	if (!(self = [super init]))
 		return nil;
 
-	_movie = aMovie;
-	_id = [personInfo[@"id"] integerValue];
-	_name = [personInfo[@"name"] copy];
-	_character = [personInfo[@"character"] copy];
-	_job = [personInfo[@"job"] copy];
-	_url = [NSURL URLWithString:personInfo[@"url"]];
-	_order = [personInfo[@"order"] integerValue];
-	_castID = [personInfo[@"cast_id"] integerValue];
-	_profileURL = [NSURL URLWithString:personInfo[@"profile"]];
+	_movie = movie;
+	self.context = movie.context;
+
+	if (personInfo != nil)
+	{
+		_id = [personInfo[@"id"] unsignedIntegerValue];
+		_name = [personInfo[@"name"] copy];
+		_character = [personInfo[@"character"] copy];
+		_job = [personInfo[@"job"] copy];
+		_url = [NSURL URLWithString:personInfo[@"url"]];
+		_order = [personInfo[@"order"] integerValue];
+		_castID = [personInfo[@"cast_id"] integerValue];
+		_profileURL = [NSURL URLWithString:personInfo[@"profile"]];
+	}
 
 	return self;
 }

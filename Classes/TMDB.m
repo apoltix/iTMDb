@@ -8,56 +8,60 @@
 
 #import "TMDB.h"
 
+NSString * const TMDBAPIURLBase = @"http://api.themoviedb.org/";
+NSString * const TMDBAPIVersion = @"3";
+
+NSString * const TMDBDidFinishLoadingMovieNotification = @"TMDBDidFinishLoadingMovieNotification";
+NSString * const TMDBDidFailLoadingMovieNotification = @"TMDBDidFailLoadingMovieNotification";
+
+NSString * const TMDBMovieUserInfoKey = @"TMDBMovieUserInfoKey";
+NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
+
 @implementation TMDB
 
-- (id)initWithAPIKey:(NSString *)anApiKey delegate:(id<TMDBDelegate>)aDelegate language:(NSString *)aLanguage
+- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language
 {
 	if (!(self = [super init]))
 		return nil;
 
-	_delegate = aDelegate;
-	_apiKey = [anApiKey copy];
+	self.delegate = delegate;
+	self.apiKey = apiKey;
+	self.language = language;
 
-	if (!aLanguage || [aLanguage length] == 0)
-		_language = @"en";
-	else
-		_language = [aLanguage copy];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDidFinishLoading:) name:TMDBDidFinishLoadingMovieNotification object:self];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDidFailLoading:)   name:TMDBDidFailLoadingMovieNotification   object:self];
 
 	return self;
 }
 
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:TMDBDidFinishLoadingMovieNotification object:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:TMDBDidFailLoadingMovieNotification   object:self];
+}
+
 #pragma mark - Notifications
 
-- (void)movieDidFinishLoading:(TMDBMovie *)aMovie
+- (void)movieDidFinishLoading:(NSNotification *)n
 {
 	if (_delegate)
-		[_delegate tmdb:self didFinishLoadingMovie:aMovie];
+		[_delegate tmdb:self didFinishLoadingMovie:n.userInfo[TMDBMovieUserInfoKey]];
 }
 
-- (void)movieDidFailLoading:(TMDBMovie *)aMovie error:(NSError *)error
+- (void)movieDidFailLoading:(NSNotification *)n
 {
 	if (_delegate)
-		[_delegate tmdb:self didFailLoadingMovie:aMovie error:error];
-}
-
-#pragma mark - Shortcuts
-
-- (TMDBMovie *)movieWithID:(NSInteger)anID
-{
-	return [TMDBMovie movieWithID:anID options:TMDBMovieFetchOptionBasic context:self];
-}
-
-- (TMDBMovie *)movieWithName:(NSString *)name
-{
-	return [TMDBMovie movieWithName:name options:TMDBMovieFetchOptionBasic context:self];
+		[_delegate tmdb:self didFailLoadingMovie:n.userInfo[TMDBMovieUserInfoKey] error:n.userInfo[TMDBErrorUserInfoKey]];
 }
 
 #pragma mark - Getters and setters
 
-- (void)setApiKey:(NSString *)newKey
+- (void)setLanguage:(NSString *)language
 {
-	// TODO: Invalidate active token
-	_apiKey = [newKey copy];
+	if (!language || [language length] == 0)
+		_language = @"en";
+	else
+		_language = [language copy];
 }
 
 @end

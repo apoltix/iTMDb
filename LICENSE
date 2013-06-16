@@ -1,11 +1,11 @@
-This software is dual-licensed (pick either one you want): MIT License or New BSD License. Thus, attribution from within your application is not required, but it is appreciated.
+This software is dual-licensed (pick either one you want): MIT License or New BSD License.
 
 Please be advised that third-party code is not bound by this license, but has its own (see README.md).
 
 ---
 MIT License:
 
-Copyright (C) 2010-2011 by Christian Rasmussen
+Copyright (C) 2010-2013 by Christian Rasmussen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ THE SOFTWARE.
 ---
 New BSD License:
 
-Copyright (c) 2010-2011, Christian Rasmussen
+Copyright (c) 2010-2013, Christian Rasmussen
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

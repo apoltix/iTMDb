@@ -9,7 +9,7 @@
 #import "TMDBRequest.h"
 
 @implementation TMDBRequest {
-@protected
+@private
 	NSMutableData *_data;
 	id _parsedData;
 	void (^_completionBlock)(id parsedData);

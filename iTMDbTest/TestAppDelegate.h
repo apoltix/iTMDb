@@ -22,7 +22,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *language;
 
 @property (nonatomic, weak) IBOutlet NSTextField *movieTitle;
-@property (nonatomic, strong) IBOutlet NSTextView  *movieOverview;
+@property (nonatomic, strong) IBOutlet NSTextView *movieOverview;
 @property (nonatomic, weak) IBOutlet NSTokenField*movieKeywords;
 @property (nonatomic, weak) IBOutlet NSTextField *movieRuntime;
 @property (nonatomic, weak) IBOutlet NSTextField *movieReleaseDate;

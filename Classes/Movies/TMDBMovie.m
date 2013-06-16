@@ -10,8 +10,10 @@
 #import "TMDBMovie.h"
 #import "TMDBImage.h"
 #import "TMDBPerson.h"
+#import "TMDBRequest.h"
+#import "TMDBRequestDelegate.h"
 
-@interface TMDBMovie ()
+@interface TMDBMovie () <TMDBRequestDelegate>
 
 - (NSArray *)arrayWithImages:(NSArray *)images ofType:(TMDBImageType)type;
 
@@ -19,7 +21,6 @@
 
 @implementation TMDBMovie {
 @private
-	TMDB			*_context;
 	TMDBRequest		*_request;
 
 	NSInteger        _year;
@@ -34,9 +35,11 @@
 	BOOL			_isSearchingOnly;
 }
 
+@synthesize adult=_isAdult, translated=_isTranslated;
+
 #pragma mark - Constructors
 
-+ (TMDBMovie *)movieWithID:(NSInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
++ (TMDBMovie *)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
 	return [[TMDBMovie alloc] initWithID:anID options:options context:context];
 }
@@ -66,10 +69,10 @@
 	return self;
 }
 
-- (id)initWithID:(NSInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
+- (id)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%@/movie/%li?api_key=%@&language=%@",
-									   API_VERSION, anID, context.apiKey, context.language]];
+	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/movie/%lu?api_key=%@&language=%@",
+									   TMDBAPIVersion, anID, context.apiKey, context.language]];
 	_isSearchingOnly = NO;
 	return (self = [self initWithURL:url options:options context:context]);
 }
@@ -77,8 +80,8 @@
 - (id)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
 	NSString *aNameEscaped = [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	NSURL *url = [NSURL URLWithString:[API_URL_BASE stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@&language=%@",
-									   API_VERSION, context.apiKey, aNameEscaped, context.language]];
+	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@&language=%@",
+									   TMDBAPIVersion, context.apiKey, aNameEscaped, context.language]];
 	_isSearchingOnly = YES;
 	return (self = [self initWithURL:url options:options context:context userData:@{@"title": name}]);
 }
@@ -120,8 +123,9 @@
 
 - (void)setReleased:(NSDate *)released
 {
-	[self willChangeValueForKey:@"year"];
 	_released = released;
+
+	[self willChangeValueForKey:@"year"];
 	_year = 0; // invalidate cached value
 	[self didChangeValueForKey:@"year"];
 }
@@ -134,7 +138,13 @@
 	{
 		//NSLog(@"iTMDb: TMDBMovie request failed: %@", [error description]);
 		if (_context)
-			[_context movieDidFailLoading:self error:error];
+		{
+			NSDictionary *userInfo = @{
+				TMDBMovieUserInfoKey: self,
+				TMDBErrorUserInfoKey: error
+			};
+			[[NSNotificationCenter defaultCenter] postNotificationName:TMDBDidFailLoadingMovieNotification object:_context userInfo:userInfo];
+		}
 		return;
 	}
 
@@ -145,11 +155,18 @@
 		//NSLog(@"iTMDb: Returned data is NOT a dictionary!\n%@", _rawResults);
 		if (_context)
 		{
-			NSDictionary *errorDict = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"The data source (themoviedb) returned invalid data: %@", _rawResults]};
-			NSError *failError = [NSError errorWithDomain:@"Invalid data"
-													 code:0
+			NSDictionary *errorDict = @{
+				NSLocalizedDescriptionKey: [NSString stringWithFormat:@"The data source (themoviedb) returned invalid data: %@", _rawResults]
+			};
+
+			NSError *failError = [NSError errorWithDomain:TMDBErrorDomain
+													 code:TMDBErrorCodeReceivedInvalidData
 												 userInfo:errorDict];
-			[_context movieDidFailLoading:self error:failError];
+			NSDictionary *userInfo = @{
+				TMDBMovieUserInfoKey: self,
+				TMDBErrorUserInfoKey: failError
+			};
+			[[NSNotificationCenter defaultCenter] postNotificationName:TMDBDidFailLoadingMovieNotification object:_context userInfo:userInfo];
 		}
 		return;
 	}
@@ -209,11 +226,11 @@
 
 	// Translated
 	if (d[@"translated"] && ![d[@"translated"] isKindOfClass:[NSNull class]])
-		_translated = [d[@"translated"] boolValue];
+		_isTranslated = [d[@"translated"] boolValue];
 
 	// Adult
 	if (d[@"adult"] && ![d[@"adult"] isKindOfClass:[NSNull class]])
-		_adult = [d[@"adult"] boolValue];
+		_isAdult = [d[@"adult"] boolValue];
 
 	// Language
 	if (d[@"language"])
@@ -272,7 +289,12 @@
 
 	// Notify the context that the movie info has been loaded
 	if (_context)
-		[_context movieDidFinishLoading:self];
+	{
+		NSDictionary *userInfo = @{
+			TMDBMovieUserInfoKey: self
+		};
+		[[NSNotificationCenter defaultCenter] postNotificationName:TMDBDidFinishLoadingMovieNotification object:_context userInfo:userInfo];
+	}
 }
 
 #pragma mark - Helper methods

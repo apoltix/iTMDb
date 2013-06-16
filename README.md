@@ -1,12 +1,12 @@
 # iTMDb
 
-iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb.org/) v2.1 API. © Christian Rasmussen, 2010–2012.
+iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb.org/) v3.0 API. © Christian Rasmussen, 2010–2013.
 
 This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. See the `LICENSE` file. If you would like to use a different license, please contact me.
 
 iTMDb is developed for **Mac OS X** 10.7 Snow Leopard and OS X 10.8 Mountain Lion, but it should work fine with iOS 5 and up (though not tested — and the use of the Cocoa framework in the demo app will have to be replaced with Cocoa Touch).
 
-**You need Xcode 4.5 and LLVM Clang 4.1 to build the project.**
+**You need Xcode 4.6 and LLVM Clang 4.2 or higher to build the project.**
 
 Please remember to read the TMDb API [Terms of Use](http://api.themoviedb.org/2.1/terms-of-use).
 
@@ -16,11 +16,11 @@ You can safely submit your apps using iTMDb to the App Store (it's been approved
 
 Development of this project has more or less stopped, and no major work on it will be made. It is, however, still working and is useful if you need movie, cast and crew information from TMDb.
 
-Since the release of this framework, TMDb has a newer API, [version 3](http://docs.themoviedb.apiary.io/), that they encurage developers to use instead of version 2.1, which this framework uses.
+It has been updated for support with version 3.0 of the API after version 2.1 was deprecated by TMDb. Support for a few new APIs have also been added.
 
 ## Documentation
 
-Most of the classes are documented using [appledoc](https://github.com/tomaz/appledoc). A generated copy of the documentation can be found [here](http://docs.apoltix.com/itmdb/).
+Most of the classes are documented using [appledoc](https://github.com/tomaz/appledoc). A generated copy of the documentation can be found [here](http://docs.apoltix.com/itmdb/). The documentation is also parseable by and usable in Xcode 5.
 
 Certain classes have no specific documentation, but they are internal classes used by other classes, and are not intended to be interacted with directly.
 
@@ -62,14 +62,14 @@ You can check out the included test project (`iTMDbTest`) within the Xcode works
 	-[movieTitleTextField setStringValue:movie.title];
 	```
 
-## ARC Support
+## Integration
 
-iTMDb was originally developed using classic retain/release, but it has since switched to using ARC. There is no support for garbage collection.
+iTMDb uses Automatic Reference Counting (ARC).
 
 If you need to integrate the source directly into your project that is not using ARC, you can specify the ``-fobjc-arc`` compiler flag for each ``.m`` file in the *Compile Sources* section of the *Build Phases* tab of the target.
 
 ## What's missing
 
-iTMDb does not yet cover the entire TMDb API, but movie search and lookup works. Things like authentication is not implemented.
+iTMDb does not cover the entire TMDb API, and only movie search and lookup works – including Cast & Crew and Posters. Things like authentication is not implemented.
 
 If you are up for it, feel free to develop on the framework and submit a pull request.

@@ -9,20 +9,25 @@
 #import <Cocoa/Cocoa.h>
 
 @class TMDBMovie;
+@class TMDB;
 
 /**
- * A `TMDBPerson` object contains information about a person associated with a `TMDBMovie` object.
+ * A `TMDBPerson` object contains information about a person associated with a
+ * `TMDBMovie` object.
  *
- * This class does not interact with the TMDb API itself and thus instances are immutable model objects.
+ * This class does not interact with the TMDb API itself and thus instances are
+ * immutable model objects.
  */
 @interface TMDBPerson : NSObject
 
 /** @name Batch Processsing */
 /**
- * Returns an array of `TMDBPerson` objects with the information provided in the personsInfo array.
+ * Returns an array of `TMDBPerson` objects with the information provided in the
+ * personsInfo array.
  *
  * @param movie The movie with which the persons should be associated.
- * @param personInfo An array of NSDictionary objects with information about the persons for which objects are to be created.
+ * @param personInfo An array of NSDictionary objects with information about the
+ * persons for which objects are to be created.
  * @return An array of `TMDBPerson` objects.
  */
 + (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)personsInfo;
@@ -33,9 +38,12 @@
  *
  * @param movie The movie object with which the person should be associated.
  * @param personInfo A dictionary containing information about the person.
- * @return An immutable person object populated with the provided person information.
+ * @return An immutable person object populated with the provided person
+ * information.
  */
-- (id)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)personInfo;
+- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)personInfo;
+
+@property (nonatomic, strong) TMDB *context;
 
 /** @name Basic Information */
 /** The TMDb ID of the person. */
@@ -53,7 +61,10 @@
 /** The job position of the person in this movie. */
 @property (nonatomic, copy, readonly) NSString *job;
 
-/** The order in which the person should be listed in the Cast and Crew list for the movie. */
+/**
+ * The order in which the person should be listed in the Cast and Crew list for
+ * the movie.
+ */
 @property (nonatomic, readonly) NSInteger order;
 
 /** The */

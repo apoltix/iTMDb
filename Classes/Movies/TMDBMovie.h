@@ -10,9 +10,6 @@
 
 @class TMDB;
 
-#import "TMDBRequest.h"
-#import "TMDBRequestDelegate.h"
-
 typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 	TMDBMovieFetchOptionBasic = 1 << 1,
 	TMDBMovieFetchOptionKeywords = 1 << 2,
@@ -20,28 +17,37 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 };
 
 /**
- * A `TMDBMovie` object represents information about a movie from the [TMDb](http://themoviedb.org/) website. It is responsible for updating itself.
+ * A `TMDBMovie` object represents information about a movie from the
+ * [TMDb](http://themoviedb.org/) website. It is responsible for updating 
+ * itself.
  *
- * All properties are readonly, as the iTMDb framework does not support editing the TMDb website. Your application should fetch movie information using the TMDBMovie class and then use or copy the results to your own model objects.
+ * All properties are readonly, as the iTMDb framework does not support editing
+ * the TMDb website. Your application should fetch movie information using the
+ * TMDBMovie class and then use or copy the results to your own model objects.
  */
-@interface TMDBMovie : NSObject <TMDBRequestDelegate>
+@interface TMDBMovie : NSObject
 
 /** @name Creating an Instance */
+
 /**
- * Creates a fetch request for the movie with the provided TMDb ID, and returns an object representing that movie.
+ * Creates a fetch request for the movie with the provided TMDb ID, and returns
+ * an object representing that movie.
  *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie object has finished loading.
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
  *
  * @param anID The TMDb ID of the movie to be looked up.
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (TMDBMovie *)movieWithID:(NSInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
++ (TMDBMovie *)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
- * Creates a fetch request for the movie with the provided name, and returns an object representing that movie.
+ * Creates a fetch request for the movie with the provided name, and returns an
+ * object representing that movie.
  *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie object has finished loading.
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
  *
  * @param aName The TMDb ID of the movie to be looked up.
  * @param context The IMDb context from which the lookup should be made.
@@ -50,20 +56,24 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 + (TMDBMovie *)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
- * Creates a fetch request for the movie with the provided TMDb ID, and returns an object representing that movie.
+ * Creates a fetch request for the movie with the provided TMDb ID, and returns
+ * an object representing that movie.
  *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie object has finished loading.
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
  *
  * @param anID The TMDb ID of the movie to be looked up.
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (id)initWithID:(NSInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (id)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
- * Creates a fetch request for the movie with the provided name, and returns an object representing that movie.
+ * Creates a fetch request for the movie with the provided name, and returns an
+ * object representing that movie.
  *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie object has finished loading.
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
  *
  * @param aName The TMDb ID of the movie to be looked up.
  * @param context The IMDb context from which the lookup should be made.
@@ -129,15 +139,22 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 /**
  * The raw contents from the API itself.
  *
- * You can use this property to extract values that iTMDb does not already wrap in the TMDBMovie object.
+ * You can use this property to extract values that iTMDb does not already wrap
+ * in the TMDBMovie object.
  */
 @property (nonatomic, strong, readonly) id rawResults;
 
 /** @name Imagery */
-/** An array of TMDBImage objects that represent the posters used for this movie. */
+/**
+ * An array of TMDBImage objects that represent the posters used for this
+ * movie.
+ */
 @property (nonatomic, strong, readonly) NSArray *posters;
 
-/** An array of TMDBImage objects that represent the backdrops used on the TMDb website. */
+/**
+ * An array of TMDBImage objects that represent the backdrops used on the TMDb
+ * website.
+ */
 @property (nonatomic, strong, readonly) NSArray *backdrops;
 
 /** @name External Resources */
@@ -155,25 +172,33 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 @property (nonatomic, copy, readonly) NSString *imdbID;
 
 /** @name Metadata */
+
 /** A Boolean value indicating if the movie information has been translated. */
 @property (nonatomic, readonly, getter=isTranslated) BOOL translated;
 
 /** @name Localization */
+
 /** The original language of the movie. */
 @property (nonatomic, copy, readonly) NSString *language;
 
 /**
  * An array of NSStrings representing the languages spoken in the movie.
  *
- * The values of this array can represent either the languages spoken in the original language track, or the different language tracks available for the movie. Either is not specified.
+ * The values of this array can represent either the languages spoken in the
+ * original language track, or the different language tracks available for the
+ * movie. Either is not specified.
  */
 @property (nonatomic, strong, readonly) NSArray *languagesSpoken;
 
-/** An array of NSStrings representing the countries that have either co-produced the movie or the countries in which the movie was shot. */
+/**
+ * An array of NSStrings representing the countries that have either co-produced
+ * the movie or the countries in which the movie was shot. */
 @property (nonatomic, strong, readonly) NSArray *countries;
 
 /** @name Getting the Cast and Crew */
-/** An array of `TMDBPerson` objects representing the cast and crew of the movie. */
+/**
+ * An array of `TMDBPerson` objects representing the cast and crew of the movie.
+ */
 @property (nonatomic, strong, readonly) NSArray *cast;
 
 @end
