@@ -40,7 +40,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (TMDBMovie *)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
++ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -49,11 +49,25 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
  * object has finished loading.
  *
- * @param aName The TMDb ID of the movie to be looked up.
+ * @param aName The name of the movie to be looked up.
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (TMDBMovie *)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
++ (instancetype)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+
+/**
+ * Creates a fetch request for the movie with the provided name, and returns an
+ * object representing that movie.
+ *
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
+ *
+ * @param aName The name of the movie to be looked up.
+ * @param aYear The year the movie was released. This is only a hint and not a
+ * @param context The IMDb context from which the lookup should be made.
+ * @return An object representing the movie.
+ */
++ (instancetype)movieWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
  * Creates a fetch request for the movie with the provided TMDb ID, and returns
@@ -66,7 +80,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (id)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -75,11 +89,26 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
  * object has finished loading.
  *
- * @param aName The TMDb ID of the movie to be looked up.
+ * @param aName The name of the movie to be looked up.
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (id)initWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (instancetype)initWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+
+/**
+ * Creates a fetch request for the movie with the provided name, and returns an
+ * object representing that movie.
+ *
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
+ *
+ * @param aName The name of the movie to be looked up.
+ * @param aYear The year the movie was released. This is only a hint and not a
+ * requirement for the returned movie.
+ * @param context The IMDb context from which the lookup should be made.
+ * @return An object representing the movie.
+ */
+- (instancetype)initWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /** @name Basic Information */
 

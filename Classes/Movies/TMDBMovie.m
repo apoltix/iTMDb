@@ -33,28 +33,34 @@
 	NSDate			*_modified;
 
 	BOOL			_isSearchingOnly;
+	NSUInteger		_expectedYear;
 }
 
 @synthesize adult=_isAdult, translated=_isTranslated;
 
 #pragma mark - Constructors
 
-+ (TMDBMovie *)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
++ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
 	return [[TMDBMovie alloc] initWithID:anID options:options context:context];
 }
 
-+ (TMDBMovie *)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context
++ (instancetype)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
 	return [[TMDBMovie alloc] initWithName:aName options:options context:context];
 }
 
-- (id)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context
++ (instancetype)movieWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context
+{
+	return [[TMDBMovie alloc] initWithName:aName year:aYear options:options context:context];
+}
+
+- (instancetype)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
 	return (self = [self initWithURL:url options:options context:context userData:nil]);
 }
 
-- (id)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context userData:(NSDictionary *)userData
+- (instancetype)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context userData:(NSDictionary *)userData
 {
 	if (!(self = [self init]))
 		return nil;
@@ -69,7 +75,7 @@
 	return self;
 }
 
-- (id)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
+- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
 	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/movie/%lu?api_key=%@&language=%@",
 									   TMDBAPIVersion, anID, context.apiKey, context.language]];
@@ -77,13 +83,23 @@
 	return (self = [self initWithURL:url options:options context:context]);
 }
 
-- (id)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context
+- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
 	NSString *aNameEscaped = [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@&language=%@",
 									   TMDBAPIVersion, context.apiKey, aNameEscaped, context.language]];
 	_isSearchingOnly = YES;
 	return (self = [self initWithURL:url options:options context:context userData:@{@"title": name}]);
+}
+
+- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context
+{
+	NSString *aNameEscaped = [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@&language=%@",
+									   TMDBAPIVersion, context.apiKey, aNameEscaped, context.language]];
+	_isSearchingOnly = YES;
+	_expectedYear = year;
+	return (self = [self initWithURL:url options:options context:context userData:@{@"title": name, @"year": @(year)}]);
 }
 
 #pragma mark -
@@ -110,14 +126,8 @@
 	if (_year > 0)
 		return _year;
 
-	static NSDateFormatter *df; // NSDateFormatters are expensive to create
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		df = [[NSDateFormatter alloc] init];
-		[df setDateFormat:@"YYYY"];
-	});
+	_year = [self yearFromDate:self.released];
 
-	_year = [[df stringFromDate:self.released] integerValue];
 	return _year;
 }
 
@@ -126,7 +136,8 @@
 	_released = released;
 
 	[self willChangeValueForKey:@"year"];
-	_year = 0; // invalidate cached value
+	_year = 0; // invalidate cached value first
+	_year = [self year];
 	[self didChangeValueForKey:@"year"];
 }
 
@@ -171,7 +182,28 @@
 		return;
 	}
 
-	NSDictionary *d = _isSearchingOnly ? _rawResults[0] : _rawResults;
+	NSDictionary *d = nil;
+
+	// If there are multiple results, and the user specified an expected year
+	// of release iterate over the search results and find the one matching
+	// said year, if any.
+	if (_isSearchingOnly && _expectedYear != 0)
+	{
+		for (NSDictionary *result in (NSArray *)_rawResults)
+		{
+			NSDate *releaseDate = [self dateFromString:(NSString *)result[@"release_date"]];
+			NSUInteger releaseYear = [self yearFromDate:releaseDate];
+
+			if (releaseYear == _expectedYear)
+			{
+				d = result;
+				break;
+			}
+		}
+	}
+
+	if (d == nil)
+		d = _isSearchingOnly ? ((NSArray *)_rawResults)[0] : _rawResults;
 
 	// SIMPLE DATA
 	_id = [(NSNumber *)d[@"id"] integerValue];
@@ -243,13 +275,7 @@
 	// Release date
 	if (d[@"released"] && [d[@"released"] isKindOfClass:[NSString class]])
 	{
-		static NSDateFormatter *releasedFormatter;
-		static dispatch_once_t onceToken;
-		dispatch_once(&onceToken, ^{
-			releasedFormatter = [[NSDateFormatter alloc] init];
-			[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
-		});
-		_released = [releasedFormatter dateFromString:(NSString *)d[@"released"]];
+		_released = [self dateFromString:(NSString *)d[@"released"]];
 	}
 
 	// Runtime
@@ -298,6 +324,28 @@
 }
 
 #pragma mark - Helper methods
+
+- (NSUInteger)yearFromDate:(NSDate *)date
+{
+	static NSDateFormatter *df; // NSDateFormatters are expensive to create
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		df = [[NSDateFormatter alloc] init];
+		[df setDateFormat:@"YYYY"];
+	});
+	return [[df stringFromDate:date] integerValue];
+}
+
+- (NSDate *)dateFromString:(NSString *)dateString
+{
+	static NSDateFormatter *releasedFormatter;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		releasedFormatter = [[NSDateFormatter alloc] init];
+		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
+	});
+	return [releasedFormatter dateFromString:dateString];
+}
 
 - (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType
 {

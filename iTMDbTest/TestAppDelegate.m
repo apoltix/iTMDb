@@ -80,6 +80,8 @@
 
 	if ([_movieID integerValue] > 0)
 		_movie = [TMDBMovie movieWithID:[_movieID integerValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
+	else if ([_movieYear integerValue] > 0)
+		_movie = [TMDBMovie movieWithName:[_movieName stringValue] year:(NSUInteger)[_movieYear integerValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
 	else
 		_movie = [TMDBMovie movieWithName:[_movieName stringValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
 }

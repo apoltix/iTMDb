@@ -22,6 +22,7 @@ typedef void (^TMDBRequestCompletionBlock)(id parsedData);
 - (id)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
 - (id)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
 
+@property (nonatomic, copy, readonly) NSURLResponse *response;
 - (id)parsedData;
 
 @end

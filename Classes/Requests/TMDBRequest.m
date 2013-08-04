@@ -80,6 +80,7 @@
 {
 	_parsedData = nil;
 	[_data setLength:0];
+	_response = [response copy];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)thedata
