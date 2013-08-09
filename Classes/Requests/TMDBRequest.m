@@ -12,7 +12,7 @@
 @private
 	NSMutableData *_data;
 	id _parsedData;
-	void (^_completionBlock)(id parsedData);
+	TMDBRequestCompletionBlock _completionBlock;
 }
 
 + (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)aDelegate

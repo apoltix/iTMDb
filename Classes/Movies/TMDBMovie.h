@@ -11,9 +11,14 @@
 @class TMDB;
 
 typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
-	TMDBMovieFetchOptionBasic = 1 << 1,
-	TMDBMovieFetchOptionKeywords = 1 << 2,
-	TMDBMovieFetchOptionCasts = 1 << 3
+	TMDBMovieFetchOptionBasic    = 1 << 1,
+	TMDBMovieFetchOptionCasts    = 1 << 2,
+	TMDBMovieFetchOptionKeywords = 1 << 3,
+	TMDBMovieFetchOptionImages   = 1 << 4,
+	TMDBMovieFetchOptionAll      = TMDBMovieFetchOptionBasic    |
+								   TMDBMovieFetchOptionCasts    |
+								   TMDBMovieFetchOptionKeywords |
+								   TMDBMovieFetchOptionImages
 };
 
 /**
@@ -64,6 +69,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  *
  * @param aName The name of the movie to be looked up.
  * @param aYear The year the movie was released. This is only a hint and not a
+ * requirement for the returned movie.
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */

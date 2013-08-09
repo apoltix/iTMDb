@@ -2,7 +2,7 @@
 
 iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb.org/) v3.0 API. © Christian Rasmussen, 2010–2013.
 
-This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. See the `LICENSE` file. If you would like to use a different license, please contact me.
+This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. See the `LICENSE` file. If you would like to use a different license, please contact me at code at devify dot dk.
 
 iTMDb is developed for **Mac OS X** 10.7 Snow Leopard and OS X 10.8 Mountain Lion, but it should work fine with iOS 5 and up (though not tested — and the use of the Cocoa framework in the demo app will have to be replaced with Cocoa Touch).
 
@@ -12,11 +12,7 @@ Please remember to read the TMDb API [Terms of Use](http://api.themoviedb.org/2.
 
 You can safely submit your apps using iTMDb to the App Store (it's been approved for use with [Collection](http://collectionapp.com/)).
 
-## Discontinuation notice
-
-Development of this project has more or less stopped, and no major work on it will be made. It is, however, still working and is useful if you need movie, cast and crew information from TMDb.
-
-It has been updated for support with version 3.0 of the API after version 2.1 was deprecated by TMDb. Support for a few new APIs have also been added.
+Originally made for version 2.1, the framework has been updated for support with version 3.0 of the API after version 2.1 was deprecated by TMDb. Support for a few new APIs have also been added.
 
 ## Documentation
 
@@ -28,7 +24,7 @@ The framework was built to be as easy and intuitive to use, so looking at the he
 
 ## How to use
 
-You can check out the included test project (`iTMDbTest`) within the Xcode workspace for an example of how to use the framework. All iTMDb classes are prefixed with `TMDB`, and the main class, from which most common operations can be made, just called `TMDB`, is known as the "context".
+You can check out the included test project (`iTMDbTest`) within the Xcode workspace for an example of how to use the framework. All iTMDb classes are prefixed with `TMDB`, and the main class, just called `TMDB`, is known as the "context" in many API calls.
 
 1. Add the framework to your project like any other framework (use Google if you don't know how to do this).
 
@@ -67,6 +63,10 @@ You can check out the included test project (`iTMDbTest`) within the Xcode works
 iTMDb uses Automatic Reference Counting (ARC).
 
 If you need to integrate the source directly into your project that is not using ARC, you can specify the ``-fobjc-arc`` compiler flag for each ``.m`` file in the *Compile Sources* section of the *Build Phases* tab of the target.
+
+## Dependencies
+
+There are no third-party dependencies; only system-available Apple frameworks are used in iTMDb.
 
 ## What's missing
 

@@ -1,8 +1,17 @@
-This software is dual-licensed (pick either one you want): MIT License or New BSD License.
+As both a user of supporter of good and usable open source software I chose to
+release this software under very liberal licenses that allow developers to
+actually use it. In any way you want. Just as long as you follow one of the
+two following licenses.
 
-Please be advised that third-party code is not bound by this license, but has its own (see README.md).
+This software is dual-licensed (pick either one you want):
+
+MIT License
+New BSD License.
+
+If you would like to use a different license, please contact me at code at devify dot dk.
 
 ---
+
 MIT License:
 
 Copyright (C) 2010-2013 by Christian Rasmussen
@@ -26,6 +35,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ---
+
 New BSD License:
 
 Copyright (c) 2010-2013, Christian Rasmussen
@@ -38,7 +48,7 @@ modification, are permitted provided that the following conditions are met:
     * Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-    * Neither the name of Christian Rasmussen nor the
+    * Neither the name of Christian Rasmussen, Apoltix or Devify, nor the
       names of its contributors may be used to endorse or promote products
       derived from this software without specific prior written permission.
 

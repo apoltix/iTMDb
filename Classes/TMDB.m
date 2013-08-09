@@ -31,6 +31,8 @@ NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDidFinishLoading:) name:TMDBDidFinishLoadingMovieNotification object:self];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDidFailLoading:)   name:TMDBDidFailLoadingMovieNotification   object:self];
 
+	_configuration = [[TMDBConfiguration alloc] initWithContext:self];
+
 	return self;
 }
 

@@ -11,6 +11,7 @@
 #import "TMDBDelegate.h"
 #import "TMDBMovie.h"
 #import "TMDBError.h"
+#import "TMDBConfiguration.h"
 
 /**
  * A string value indicating the URL base of the API.
@@ -86,5 +87,9 @@ extern NSString * const TMDBErrorUserInfoKey;
  * proper API design. Use `-[TMDBMovie movieWithName:options:context:]` instead.
  */
 - (TMDBMovie *)movieWithName:(NSString *)aName __attribute__((unavailable("This method has been deprecated and removed as it doesn't follow proper API design. Use `-[TMDBMovie movieWithName:options:context:]` instead.")));
+
+/** @name Getting Configuration */
+
+@property (nonatomic, strong, readonly) TMDBConfiguration *configuration;
 
 @end
