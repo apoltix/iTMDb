@@ -21,6 +21,9 @@
 @property (nonatomic, weak) IBOutlet NSTextField *movieName;
 @property (nonatomic, weak) IBOutlet NSTextField *movieYear;
 @property (nonatomic, weak) IBOutlet NSTextField *language;
+@property (nonatomic, weak) IBOutlet NSButton *fetchCastAndCrewCheckbox;
+@property (nonatomic, weak) IBOutlet NSButton *fetchKeywordsCheckbox;
+@property (nonatomic, weak) IBOutlet NSButton *fetchImageURLsCheckbox;
 
 @property (nonatomic, weak) IBOutlet NSTextField *movieTitle;
 @property (nonatomic, strong) IBOutlet NSTextView *movieOverview;

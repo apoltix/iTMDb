@@ -6,7 +6,7 @@
 //  Copyright 2010 Apoltix. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 #import "TMDBDelegate.h"
 #import "TMDBMovie.h"
@@ -19,7 +19,7 @@
 extern NSString * const TMDBAPIURLBase;
 
 /**
- * A string value indicating the version of the API to be used.
+ * A string value indicating the version of the API used.
  */
 extern NSString * const TMDBAPIVersion;
 
@@ -65,6 +65,14 @@ extern NSString * const TMDBErrorUserInfoKey;
  */
 - (instancetype)initWithAPIKey:(NSString *)anApiKey delegate:(id<TMDBDelegate>)aDelegate language:(NSString *)aLanguage;
 
+/** @name Getting Configuration */
+
+@property (nonatomic, strong, readonly) TMDBConfiguration *configuration;
+
+@end
+
+@interface TMDB (DeprecatedMethods)
+
 /** @name Deprecated methods */
 
 /**
@@ -87,9 +95,5 @@ extern NSString * const TMDBErrorUserInfoKey;
  * proper API design. Use `-[TMDBMovie movieWithName:options:context:]` instead.
  */
 - (TMDBMovie *)movieWithName:(NSString *)aName __attribute__((unavailable("This method has been deprecated and removed as it doesn't follow proper API design. Use `-[TMDBMovie movieWithName:options:context:]` instead.")));
-
-/** @name Getting Configuration */
-
-@property (nonatomic, strong, readonly) TMDBConfiguration *configuration;
 
 @end

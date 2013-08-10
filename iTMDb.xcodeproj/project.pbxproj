@@ -15,6 +15,10 @@
 		AA985848128309AA0074F570 /* iTMDb.h in Headers */ = {isa = PBXBuildFile; fileRef = AA985847128309AA0074F570 /* iTMDb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA9D9B7217B51EAA0016B954 /* TMDBConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7017B51EAA0016B954 /* TMDBConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA9D9B7317B51EAA0016B954 /* TMDBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7117B51EAA0016B954 /* TMDBConfiguration.m */; };
+		AA9D9B7717B61E380016B954 /* TMDBHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7517B61E380016B954 /* TMDBHelpers.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AA9D9B7817B61E380016B954 /* TMDBHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7617B61E380016B954 /* TMDBHelpers.m */; };
+		AA9D9B7C17B62E1B0016B954 /* TMDBLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7A17B62E1B0016B954 /* TMDBLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA9D9B7D17B62E1B0016B954 /* TMDBLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7B17B62E1B0016B954 /* TMDBLanguage.m */; };
 		AABB1F7A12833F9800F84FEB /* TMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = AABB1F6512833F5300F84FEB /* TMDB.m */; };
 		AAF437F61283464D00F5CC92 /* TMDBRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF437F51283464D00F5CC92 /* TMDBRequestDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF4389D12834E6600F5CC92 /* TMDBMovie.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -44,6 +48,10 @@
 		AA9D9B7017B51EAA0016B954 /* TMDBConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBConfiguration.h; path = Classes/Configuration/TMDBConfiguration.h; sourceTree = "<group>"; };
 		AA9D9B7117B51EAA0016B954 /* TMDBConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBConfiguration.m; path = Classes/Configuration/TMDBConfiguration.m; sourceTree = "<group>"; };
 		AA9D9B7417B5263B0016B954 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		AA9D9B7517B61E380016B954 /* TMDBHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBHelpers.h; path = Classes/TMDBHelpers.h; sourceTree = "<group>"; };
+		AA9D9B7617B61E380016B954 /* TMDBHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBHelpers.m; path = Classes/TMDBHelpers.m; sourceTree = "<group>"; };
+		AA9D9B7A17B62E1B0016B954 /* TMDBLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBLanguage.h; path = Classes/Languages/TMDBLanguage.h; sourceTree = "<group>"; };
+		AA9D9B7B17B62E1B0016B954 /* TMDBLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBLanguage.m; path = Classes/Languages/TMDBLanguage.m; sourceTree = "<group>"; };
 		AABB1F6412833F5300F84FEB /* TMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDB.h; path = Classes/TMDB.h; sourceTree = "<group>"; };
 		AABB1F6512833F5300F84FEB /* TMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDB.m; path = Classes/TMDB.m; sourceTree = "<group>"; };
 		AAF437F51283464D00F5CC92 /* TMDBRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBRequestDelegate.h; path = Classes/Requests/TMDBRequestDelegate.h; sourceTree = "<group>"; };
@@ -151,6 +159,8 @@
 			children = (
 				AA65EA8F176E665300D8C4D5 /* TMDBError.h */,
 				AA65EA90176E665300D8C4D5 /* TMDBError.m */,
+				AA9D9B7517B61E380016B954 /* TMDBHelpers.h */,
+				AA9D9B7617B61E380016B954 /* TMDBHelpers.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -194,6 +204,15 @@
 			name = Configuration;
 			sourceTree = "<group>";
 		};
+		AA9D9B7917B62D970016B954 /* Languages */ = {
+			isa = PBXGroup;
+			children = (
+				AA9D9B7A17B62E1B0016B954 /* TMDBLanguage.h */,
+				AA9D9B7B17B62E1B0016B954 /* TMDBLanguage.m */,
+			);
+			name = Languages;
+			sourceTree = "<group>";
+		};
 		AAF437EF1283455400F5CC92 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +229,7 @@
 				AA9D9B6F17B51E940016B954 /* Configuration */,
 				AA98583E128308180074F570 /* Movies */,
 				AA985840128308360074F570 /* People */,
+				AA9D9B7917B62D970016B954 /* Languages */,
 			);
 			name = "TMDb API";
 			sourceTree = "<group>";
@@ -236,8 +256,10 @@
 				AAF43A21128361C400F5CC92 /* TMDBDelegate.h in Headers */,
 				AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */,
 				AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */,
+				AA9D9B7C17B62E1B0016B954 /* TMDBLanguage.h in Headers */,
 				AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */,
 				AA65EA93176E69A800D8C4D5 /* TMDBError.h in Headers */,
+				AA9D9B7717B61E380016B954 /* TMDBHelpers.h in Headers */,
 				AAF43A1012835F9400F5CC92 /* TMDBRequest.h in Headers */,
 				AAF437F61283464D00F5CC92 /* TMDBRequestDelegate.h in Headers */,
 			);
@@ -312,10 +334,12 @@
 			files = (
 				AABB1F7A12833F9800F84FEB /* TMDB.m in Sources */,
 				AAF438A012834E6600F5CC92 /* TMDBMovie.m in Sources */,
+				AA9D9B7817B61E380016B954 /* TMDBHelpers.m in Sources */,
 				AAF43A1112835F9400F5CC92 /* TMDBRequest.m in Sources */,
 				AA9D9B7317B51EAA0016B954 /* TMDBConfiguration.m in Sources */,
 				AA65EA92176E698E00D8C4D5 /* TMDBError.m in Sources */,
 				AAFA3EB412863A78002B9E38 /* TMDBImage.m in Sources */,
+				AA9D9B7D17B62E1B0016B954 /* TMDBLanguage.m in Sources */,
 				AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

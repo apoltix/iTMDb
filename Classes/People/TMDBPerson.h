@@ -6,7 +6,7 @@
 //  Copyright 2010 Apoltix. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 @class TMDBMovie;
 @class TMDB;

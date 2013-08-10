@@ -6,13 +6,14 @@
 //  Copyright 2010 Apoltix. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 @class TMDB;
 @class TMDBMovie;
 
 /**
- * An instance that acts as a delegate of `TMDB` objects must implement the `TMDBDelegate` protocol.
+ * An instance that acts as a delegate of `TMDB` objects must implement the
+ * `TMDBDelegate` protocol.
  */
 @protocol TMDBDelegate <NSObject>
 

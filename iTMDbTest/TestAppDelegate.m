@@ -47,7 +47,9 @@
 {
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
-	if (!([[_apiKey stringValue] length] > 0 && ([_movieID integerValue] > 0 || [[_movieName stringValue] length] > 0)))
+	NSString *apiKey = [self.apiKey stringValue];
+
+	if (!([apiKey length] > 0 && ([self.movieID integerValue] > 0 || [[self.movieName stringValue] length] > 0)))
 	{
 		NSAlert *alert = [NSAlert alertWithMessageText:@"Missing either API key, movie ID or title"
 										 defaultButton:@"OK"
@@ -60,30 +62,39 @@
 		return;
 	}
 
-	[_throbber startAnimation:self];
-	[_goButton setEnabled:NO];
-	[_viewAllDataButton setEnabled:NO];
+	[self.throbber startAnimation:self];
+	self.goButton.enabled = NO;
+	self.viewAllDataButton.enabled = NO;
 
-	if (!_tmdb)
-		_tmdb = [[TMDB alloc] initWithAPIKey:[_apiKey stringValue] delegate:self language:nil];
+	if (!_tmdb || ![_tmdb.apiKey isEqualToString:apiKey])
+		_tmdb = [[TMDB alloc] initWithAPIKey:apiKey delegate:self language:nil];
 
 	if (_allData)
-	{
 		_allData = nil;
-	}
 
-	NSString *lang = [_language stringValue];
+	NSString *lang = [self.language stringValue];
 	if (lang && [lang length] > 0)
-		[_tmdb setLanguage:lang];
+		_tmdb.language = lang;
 	else
-		[_tmdb setLanguage:@"en"];
+		_tmdb.language = @"en";
 
-	if ([_movieID integerValue] > 0)
-		_movie = [TMDBMovie movieWithID:[_movieID integerValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
-	else if ([_movieYear integerValue] > 0)
-		_movie = [TMDBMovie movieWithName:[_movieName stringValue] year:(NSUInteger)[_movieYear integerValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
+	TMDBMovieFetchOptions fetchOptions = TMDBMovieFetchOptionBasic;
+
+	if (self.fetchCastAndCrewCheckbox.state == NSOnState)
+		fetchOptions |= TMDBMovieFetchOptionCasts;
+
+	if (self.fetchKeywordsCheckbox.state == NSOnState)
+		fetchOptions |= TMDBMovieFetchOptionKeywords;
+
+	if (self.fetchImageURLsCheckbox.state == NSOnState)
+		fetchOptions |= TMDBMovieFetchOptionImages;
+
+	if ([self.movieID integerValue] > 0)
+		self.movie = [[TMDBMovie alloc] initWithID:[self.movieID integerValue] options:fetchOptions context:_tmdb];
+	else if ([self.movieYear integerValue] > 0)
+		self.movie = [[TMDBMovie alloc] initWithName:[self.movieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions context:_tmdb];
 	else
-		_movie = [TMDBMovie movieWithName:[_movieName stringValue] options:TMDBMovieFetchOptionBasic context:_tmdb];
+		self.movie = [[TMDBMovie alloc] initWithName:[self.movieName stringValue] options:fetchOptions context:_tmdb];
 }
 
 - (IBAction)viewAllData:(id)sender
@@ -91,41 +102,48 @@
 	if (!_allData)
 		return;
 
-	[_allDataTextView setString:[_allData description]];
+	self.allDataTextView.string = [_allData description];
 
-	[_allDataWindow makeKeyAndOrderFront:self];
+	[self.allDataWindow makeKeyAndOrderFront:self];
 }
 
 #pragma mark - TMDBDelegate
 
 - (void)tmdb:(TMDB *)context didFinishLoadingMovie:(TMDBMovie *)aMovie
 {
-	printf("%s\n", [[aMovie description] UTF8String]);
+	NSLog(@"Loaded %@", aMovie);
 
-	[_throbber stopAnimation:self];
-	[_goButton setEnabled:YES];
-	[_viewAllDataButton setEnabled:YES];
+	[self.throbber stopAnimation:self];
+	self.goButton.enabled = YES;
+	self.viewAllDataButton.enabled = YES;
 
 	_allData = [aMovie.rawResults copy];
 
-	[_movieTitle setStringValue:aMovie.title ? : @""];
-	[_movieOverview setString:aMovie.overview ? : @""];
-	[_movieRuntime setStringValue:[NSString stringWithFormat:@"%lu", aMovie.runtime] ? : @""];
+	self.movieTitle.stringValue = aMovie.title ? : @"";
+	self.movieOverview.string = aMovie.overview ? : @"";
+	self.movieRuntime.stringValue = [NSString stringWithFormat:@"%lu", aMovie.runtime] ? : @"";
 
-	[_movieKeywords setStringValue:[aMovie.keywords componentsJoinedByString:@", "] ? : @""];
+	self.movieKeywords.stringValue = [aMovie.keywords componentsJoinedByString:@", "] ? : @"";
 
-	NSDateFormatter *releaseDateFormatter = [[NSDateFormatter alloc] init];
-	[releaseDateFormatter setDateFormat:@"dd-MM-yyyy"];
-	[_movieReleaseDate setStringValue:[releaseDateFormatter stringFromDate:aMovie.released] ? : @""];
+	static NSDateFormatter *releaseDateFormatter;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		releaseDateFormatter = [[NSDateFormatter alloc] init];
+		[releaseDateFormatter setDateFormat:@"dd-MM-yyyy"];
+	});
+	self.movieReleaseDate.stringValue = [releaseDateFormatter stringFromDate:aMovie.released] ? : @"";
 
 	NSUInteger posterSizeCount = 0;
 	for (TMDBImage *poster in aMovie.posters)
 		posterSizeCount += [poster sizeCount];
-	[_moviePostersCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.posters count], posterSizeCount]];
+
+	self.moviePostersCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.posters count], posterSizeCount];
+
 	NSUInteger backdropSizeCount = 0;
 	for (TMDBImage *backdrop in aMovie.backdrops)
 		backdropSizeCount += [backdrop sizeCount];
-	[_movieBackdropsCount setStringValue:[NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], backdropSizeCount]];
+
+	self.movieBackdropsCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], backdropSizeCount];
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error
@@ -133,17 +151,16 @@
 	NSAlert *alert = [NSAlert alertWithError:error];
 	[alert beginSheetModalForWindow:_window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 
-	[_movieTitle setStringValue:@""];
-	[_movieOverview setString:@""];
-	[_movieRuntime setStringValue:@"0"];
-	[_movieReleaseDate setStringValue:@"00-00-0000"];
-	[_moviePostersCount setStringValue:@"0 (0 sizes total)"];
-	[_movieBackdropsCount setStringValue:@"0 (0 sizes total)"];
+	self.movieTitle.stringValue = @"";
+	self.movieOverview.string = @"";
+	self.movieRuntime.stringValue = @"0";
+	self.movieReleaseDate.stringValue = @"00-00-0000";
+	self.moviePostersCount.stringValue = @"0 (0 sizes total)";
+	self.movieBackdropsCount.stringValue = @"0 (0 sizes total)";
 
 	[_throbber stopAnimation:self];
-	[_goButton setEnabled:YES];
-
-	[_viewAllDataButton setEnabled:NO];
+	self.goButton.enabled = YES;
+	self.viewAllDataButton.enabled = NO;
 }
 
 #pragma mark -

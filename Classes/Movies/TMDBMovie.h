@@ -6,7 +6,7 @@
 //  Copyright 2010 Apoltix. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 @class TMDB;
 
@@ -33,47 +33,6 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 @interface TMDBMovie : NSObject
 
 /** @name Creating an Instance */
-
-/**
- * Creates a fetch request for the movie with the provided TMDb ID, and returns
- * an object representing that movie.
- *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
- * object has finished loading.
- *
- * @param anID The TMDb ID of the movie to be looked up.
- * @param context The IMDb context from which the lookup should be made.
- * @return An object representing the movie.
- */
-+ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
-
-/**
- * Creates a fetch request for the movie with the provided name, and returns an
- * object representing that movie.
- *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
- * object has finished loading.
- *
- * @param aName The name of the movie to be looked up.
- * @param context The IMDb context from which the lookup should be made.
- * @return An object representing the movie.
- */
-+ (instancetype)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
-
-/**
- * Creates a fetch request for the movie with the provided name, and returns an
- * object representing that movie.
- *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
- * object has finished loading.
- *
- * @param aName The name of the movie to be looked up.
- * @param aYear The year the movie was released. This is only a hint and not a
- * requirement for the returned movie.
- * @param context The IMDb context from which the lookup should be made.
- * @return An object representing the movie.
- */
-+ (instancetype)movieWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
  * Creates a fetch request for the movie with the provided TMDb ID, and returns
@@ -166,9 +125,6 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 /** The number of votes for this movie from users on the TMDb website. */
 @property (nonatomic, readonly) NSInteger votes;
 
-/** The censorship certification for this movie. */
-@property (nonatomic, copy, readonly) NSString *certification;
-
 @property (nonatomic, strong, readonly) NSDictionary *userData;
 
 /**
@@ -202,32 +158,22 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 /**
  * The ID of the movie on IMDb.
  *
- * The value of this string includes the "<code>tt</code>" prefix used by IMDb.
+ * The value of this string includes the `tt` prefix used by IMDb.
  */
 @property (nonatomic, copy, readonly) NSString *imdbID;
 
-/** @name Metadata */
-
-/** A Boolean value indicating if the movie information has been translated. */
-@property (nonatomic, readonly, getter=isTranslated) BOOL translated;
-
 /** @name Localization */
 
-/** The original language of the movie. */
-@property (nonatomic, copy, readonly) NSString *language;
-
 /**
- * An array of NSStrings representing the languages spoken in the movie.
- *
- * The values of this array can represent either the languages spoken in the
- * original language track, or the different language tracks available for the
- * movie. Either is not specified.
+ * An array of `TMDBLanguage` objects representing the languages spoken in the
+ * movie.
  */
 @property (nonatomic, strong, readonly) NSArray *languagesSpoken;
 
 /**
  * An array of NSStrings representing the countries that have either co-produced
- * the movie or the countries in which the movie was shot. */
+ * the movie or the countries in which the movie was shot.
+ */
 @property (nonatomic, strong, readonly) NSArray *countries;
 
 /** @name Getting the Cast and Crew */
@@ -235,5 +181,63 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * An array of `TMDBPerson` objects representing the cast and crew of the movie.
  */
 @property (nonatomic, strong, readonly) NSArray *cast;
+
+@end
+
+@interface TMDBMovie (DeprecatedMethods)
+
+/**
+ * Creates a fetch request for the movie with the provided TMDb ID, and returns
+ * an object representing that movie.
+ *
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
+ *
+ * @param anID The TMDb ID of the movie to be looked up.
+ * @param context The IMDb context from which the lookup should be made.
+ * @return An object representing the movie.
+ */
++ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
+
+/**
+ * Creates a fetch request for the movie with the provided name, and returns an
+ * object representing that movie.
+ *
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
+ *
+ * @param aName The name of the movie to be looked up.
+ * @param context The IMDb context from which the lookup should be made.
+ * @return An object representing the movie.
+ */
++ (instancetype)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
+
+/**
+ * Creates a fetch request for the movie with the provided name, and returns an
+ * object representing that movie.
+ *
+ * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
+ * object has finished loading.
+ *
+ * @param aName The name of the movie to be looked up.
+ * @param aYear The year the movie was released. This is only a hint and not a
+ * requirement for the returned movie.
+ * @param context The IMDb context from which the lookup should be made.
+ * @return An object representing the movie.
+ */
++ (instancetype)movieWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
+
+@end
+
+@interface TMDBMovie (UnavailableProperties)
+
+/** The original language of the movie. */
+@property (nonatomic, copy, readonly) NSString *language UNAVAILABLE_ATTRIBUTE;
+
+/** The censorship certification for this movie. */
+@property (nonatomic, copy, readonly) NSString *certification UNAVAILABLE_ATTRIBUTE;
+
+/** A Boolean value indicating if the movie information has been translated. */
+@property (nonatomic, readonly, getter=isTranslated) BOOL translated UNAVAILABLE_ATTRIBUTE;
 
 @end
