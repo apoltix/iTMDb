@@ -38,3 +38,8 @@ inline NSArray *TMDB_NSArrayOrNil(NSArray *arrayOrNil)
 {
 	return TMDB_ObjectOfClassOrNil(arrayOrNil, [NSArray class]);
 }
+
+inline NSDictionary *TMDB_NSDictionaryOrNil(NSDictionary *dictionaryOrNil)
+{
+	return TMDB_ObjectOfClassOrNil(dictionaryOrNil, [NSDictionary class]);
+}

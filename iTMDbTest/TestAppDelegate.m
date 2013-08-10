@@ -133,17 +133,8 @@
 	});
 	self.movieReleaseDate.stringValue = [releaseDateFormatter stringFromDate:aMovie.released] ? : @"";
 
-	NSUInteger posterSizeCount = 0;
-	for (TMDBImage *poster in aMovie.posters)
-		posterSizeCount += [poster sizeCount];
-
-	self.moviePostersCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.posters count], posterSizeCount];
-
-	NSUInteger backdropSizeCount = 0;
-	for (TMDBImage *backdrop in aMovie.backdrops)
-		backdropSizeCount += [backdrop sizeCount];
-
-	self.movieBackdropsCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], backdropSizeCount];
+	self.moviePostersCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.posters count], [context.configuration.imagesPosterSizes count]];
+	self.movieBackdropsCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], [context.configuration.imagesBackdropSizes count]];
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error

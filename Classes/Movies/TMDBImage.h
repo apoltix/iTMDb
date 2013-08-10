@@ -8,36 +8,49 @@
 
 #import <Foundation/Foundation.h>
 
+@class TMDB;
+
 typedef NS_ENUM(NSUInteger, TMDBImageType) {
 	TMDBImageTypePoster,
 	TMDBImageTypeBackdrop
 };
 
-typedef NS_ENUM(NSUInteger, TMDBImageSize) {
-	TMDBImageSizeOriginal = 1 << 1,
-	TMDBImageSizeMid      = 1 << 2,
-	TMDBImageSizeCover    = 1 << 3,
-	TMDBImageSizeThumb    = 1 << 4
-};
+// Don't use CGRect/NSRect to avoid dependency to Core Graphics.
+typedef struct {
+	float width;
+	float height;
+} TMDBSize;
 
 /**
  * A `TMDBImage` object represents an image in one-to-many sizes.
  */
 @interface TMDBImage : NSObject
 
+@property (nonatomic, strong, readonly) TMDB *context;
+
 @property (nonatomic, readonly) TMDBImageType type;
-@property (nonatomic, readonly) TMDBImageSize sizes;
-@property (nonatomic, copy, readonly) NSString *id;
+@property (nonatomic, readonly) TMDBSize originalSize;
+@property (nonatomic, readonly) float aspectRatio; // This is actually unnecessary
+@property (nonatomic, copy, readonly) NSString *iso639_1;
 
-+ (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type;
+@property (nonatomic, readonly) float voteAverage;
+@property (nonatomic, readonly) NSUInteger voteCount;
 
-- (TMDBImage *)initWithId:(NSString *)anID ofType:(TMDBImageType)type;
++ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType context:(TMDB *)context;
 
-- (NSURL *)urlForSize:(TMDBImageSize)size;
-- (void)setURL:(NSURL *)url forSize:(TMDBImageSize)size;
+- (instancetype)initWithDictionary:(NSDictionary *)rawImageData type:(TMDBImageType)type context:(TMDB *)context;
 
-- (CGSize)sizeForSize:(TMDBImageSize)size;
+- (NSURL *)urlForSize:(NSString *)size;
 
-- (NSUInteger)sizeCount;
+- (TMDBSize)sizeForSize:(NSString *)size UNAVAILABLE_ATTRIBUTE; // Not yet updated
+
+@end
+
+@interface TMDBImage (UnavailableMethods)
+
+@property (nonatomic, copy, readonly) NSString *id UNAVAILABLE_ATTRIBUTE;
+
++ (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithID:(NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
 
 @end

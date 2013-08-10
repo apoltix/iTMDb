@@ -13,3 +13,4 @@ NSString *TMDB_NSStringOrNil(NSString *stringOrNil);
 NSNumber *TMDB_NSNumberOrNil(NSNumber *numberOrNil);
 NSURL *TMDB_NSURLOrNilFromStringOrNil(NSString *urlString);
 NSArray *TMDB_NSArrayOrNil(NSArray *arrayOrNil);
+NSDictionary *TMDB_NSDictionaryOrNil(NSDictionary *dictionaryOrNil);

@@ -16,8 +16,6 @@
 
 @interface TMDBMovie () <TMDBRequestDelegate>
 
-- (NSArray *)arrayWithImages:(NSArray *)images ofType:(TMDBImageType)type;
-
 @end
 
 @implementation TMDBMovie {
@@ -279,17 +277,21 @@
 	// Homepage
 	_homepage = TMDB_NSURLOrNilFromStringOrNil(d[@"homepage"]);
 
+	// Images
+	NSDictionary *images = TMDB_NSDictionaryOrNil(d[@"images"]);
+
 	// Posters
-	_posters = nil;
-	if (d[@"posters"])
-		_posters = [self arrayWithImages:d[@"posters"] ofType:TMDBImageTypePoster];
-	//NSLog(@"POSTERS %@", _posters);
+	if (images != nil && images[@"posters"] != nil)
+		_posters = [TMDBImage imageArrayWithRawImageDictionaries:images[@"posters"] ofType:TMDBImageTypePoster context:_context];
+	else
+		_posters = nil;
 
 	// Backdrops
-	_backdrops = nil;
-	if (d[@"backdrops"])
-		_backdrops = [self arrayWithImages:d[@"backdrops"] ofType:TMDBImageTypeBackdrop];
-	//NSLog(@"BACKDROPS %@", _backdrops);
+	if (images != nil && images[@"backdrops"] != nil)
+		_backdrops = [TMDBImage imageArrayWithRawImageDictionaries:images[@"backdrops"] ofType:TMDBImageTypeBackdrop context:_context];
+	else
+		_backdrops = nil;
+	NSLog(@"BACKDROPS %@", _backdrops);
 
 	// Cast
 	_cast = nil;
@@ -336,63 +338,6 @@
 		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
 	});
 	return [releasedFormatter dateFromString:dateString];
-}
-
-- (NSArray *)arrayWithImages:(NSArray *)theImages ofType:(TMDBImageType)aType
-{
-	NSMutableArray *imageObjects = [NSMutableArray arrayWithCapacity:0];
-
-	TMDBImage *currentImage = nil;
-	// outerImageDict: the TMDb API wraps each image in a wrapper dictionary (e.g. each backdrop has an "images" dictionary)
-	for (NSDictionary *outerImageDict in theImages)
-	{
-		// innerImageDict: the image info (see outerImageDict)
-		NSDictionary *innerImageDict = outerImageDict[@"image"];
-
-		// Fetch the existing image (if any)
-		BOOL allocatedNewObject = NO;
-		if (currentImage && ![currentImage.id isEqualToString:innerImageDict[@"id"]])
-		{
-			// Warning: This hasn't actually been tested yet
-			NSIndexSet *passed = [imageObjects indexesOfObjectsPassingTest:^(id obj, NSUInteger idx, BOOL *stop) {
-				TMDBImage *lookupImage = (TMDBImage *)obj;
-				BOOL passed = [lookupImage.id isEqualToString:innerImageDict[@"id"]];
-				if (passed) // we only need one object
-					*(stop) = YES;
-				return passed;
-			}];
-
-			if ([passed count] > 0 && imageObjects)
-				currentImage = imageObjects[[passed firstIndex]];
-			else
-				currentImage = nil;
-		}
-
-		// use !currentBackdrop instead of an else, as an object recovery (fetch) may have been performed
-		if (!currentImage)
-		{
-			currentImage = [[TMDBImage alloc] initWithId:innerImageDict[@"id"] ofType:aType];
-			allocatedNewObject = YES;
-		}
-
-		TMDBImageSize imgSize = -1;
-		NSString *imgSizeString = innerImageDict[@"size"];
-		if ([imgSizeString isEqualToString:@"original"])
-			imgSize = TMDBImageSizeOriginal;
-		else if ([imgSizeString isEqualToString:@"mid"])
-			imgSize = TMDBImageSizeMid;
-		else if ([imgSizeString isEqualToString:@"cover"])
-			imgSize = TMDBImageSizeCover;
-		else if ([imgSizeString isEqualToString:@"thumb"])
-			imgSize = TMDBImageSizeThumb;
-
-		[currentImage setURL:[NSURL URLWithString:innerImageDict[@"url"]] forSize:imgSize];
-
-		// Add object if it doesn't already exist
-		if (allocatedNewObject)
-			[imageObjects addObject:currentImage];
-	}
-	return imageObjects;
 }
 
 @end

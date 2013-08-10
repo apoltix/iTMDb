@@ -7,87 +7,69 @@
 //
 
 #import "TMDBImage.h"
+#import "TMDB.h"
 
-@implementation TMDBImage {
-@private
-	NSMutableDictionary *_data;
-}
+@interface TMDBImage ()
 
-+ (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type
+@property (nonatomic, copy) NSString *filePath;
+
+@end
+
+@implementation TMDBImage
+
++ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType context:(TMDB *)context
 {
-	return [[TMDBImage alloc] initWithId:anID ofType:type];
+	NSMutableArray *images = [NSMutableArray array];
+
+	for (NSDictionary *imageDict in rawImages)
+	{
+		TMDBImage *currentImage = [[TMDBImage alloc] initWithDictionary:imageDict type:aType context:context];
+		[images addObject:currentImage];
+	}
+
+	return images;
 }
 
-- (TMDBImage *)initWithId:(NSString *)anID ofType:(TMDBImageType)type
+- (instancetype)initWithDictionary:(NSDictionary *)d type:(TMDBImageType)type context:(TMDB *)context
 {
 	if (!(self = [super init]))
 		return nil;
 
-	_id   = anID;
+	_context = context;
 	_type = type;
-
-	_data  = [NSMutableDictionary dictionaryWithCapacity:1];
+	_filePath = [TMDB_NSStringOrNil(d[@"file_path"]) copy];
+	_originalSize = (TMDBSize){
+		.width = [TMDB_NSNumberOrNil(d[@"width"]) floatValue],
+		.height = [TMDB_NSNumberOrNil(d[@"height"]) floatValue]
+	};
+	_aspectRatio = [TMDB_NSNumberOrNil(d[@"aspect_ratio"]) floatValue];
+	_iso639_1 = TMDB_NSStringOrNil(d[@"iso_639_1"]);
+	_voteAverage = [TMDB_NSNumberOrNil(d[@"vote_average"]) floatValue];
+	_voteCount = [TMDB_NSNumberOrNil(d[@"vote_count"]) unsignedIntegerValue];
 
 	return self;
 }
 
-#pragma mark -
-
-- (NSMutableDictionary *)imageDataForSize:(TMDBImageSize)size
-{
-	return _data[@(size)];
-}
-
 #pragma mark - URLs
 
-- (NSURL *)urlForSize:(TMDBImageSize)size
+- (NSURL *)urlForSize:(NSString *)size
 {
-	return [self imageDataForSize:size][@"url"];
-}
-
-- (void)setURL:(NSURL *)url forSize:(TMDBImageSize)size
-{
-	NSMutableDictionary *imageData = [self imageDataForSize:size];
-	if (!imageData)
-	{
-		imageData = [NSMutableDictionary dictionaryWithCapacity:3];
-		imageData[@"width"] = @0;
-		imageData[@"height"] = @0;
-
-		_data[@(size)] = imageData;
-	}
-
-	imageData[@"url"] = url;
+	return [[_context.configuration.imagesBaseURL URLByAppendingPathComponent:size] URLByAppendingPathComponent:self.filePath];
 }
 
 #pragma mark - Sizes
 
-- (CGSize)sizeForSize:(TMDBImageSize)size
+- (TMDBSize)sizeForSize:(NSString *)size
 {
-	NSDictionary *imageData = [self imageDataForSize:size];
-	if (!imageData)
-		return CGSizeZero;
-	return CGSizeMake((CGFloat)[imageData[@"width"] floatValue], (CGFloat)[imageData[@"height"] floatValue]);
-}
-
-- (TMDBImageSize)sizes
-{
-	TMDBImageSize theSizes = 0;
-	for (NSNumber *aSize in [_data allKeys])
-		theSizes |= [aSize integerValue];
-	return theSizes;
-}
-
-- (NSUInteger)sizeCount
-{
-	return [_data count];
+//	return (TMDBSize){[imageData[@"width"] floatValue], [imageData[@"height"] floatValue]};
+	return (TMDBSize){0,0};
 }
 
 #pragma mark -
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ %p: %@ (%li sizes)>", NSStringFromClass([self class]), self, _id, [_data count]];
+	return [NSString stringWithFormat:@"<%@ %p: \"%@\", size %.0fx%.0f>", NSStringFromClass([self class]), self, self.filePath, self.originalSize.width, self.originalSize.height];
 }
 
 @end

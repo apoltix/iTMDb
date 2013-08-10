@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = AA3242CB12CBEF2F00063558 /* TMDBPerson.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3242CC12CBEF2F00063558 /* TMDBPerson.m */; };
 		AA65EA92176E698E00D8C4D5 /* TMDBError.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65EA90176E665300D8C4D5 /* TMDBError.m */; };
@@ -19,6 +18,7 @@
 		AA9D9B7817B61E380016B954 /* TMDBHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7617B61E380016B954 /* TMDBHelpers.m */; };
 		AA9D9B7C17B62E1B0016B954 /* TMDBLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7A17B62E1B0016B954 /* TMDBLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA9D9B7D17B62E1B0016B954 /* TMDBLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7B17B62E1B0016B954 /* TMDBLanguage.m */; };
+		AA9D9B7F17B63D5D0016B954 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9D9B7E17B63D5D0016B954 /* Foundation.framework */; };
 		AABB1F7A12833F9800F84FEB /* TMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = AABB1F6512833F5300F84FEB /* TMDB.m */; };
 		AAF437F61283464D00F5CC92 /* TMDBRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF437F51283464D00F5CC92 /* TMDBRequestDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF4389D12834E6600F5CC92 /* TMDBMovie.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -32,10 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* iTMDb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* iTMDb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iTMDb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +49,7 @@
 		AA9D9B7617B61E380016B954 /* TMDBHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBHelpers.m; path = Classes/TMDBHelpers.m; sourceTree = "<group>"; };
 		AA9D9B7A17B62E1B0016B954 /* TMDBLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBLanguage.h; path = Classes/Languages/TMDBLanguage.h; sourceTree = "<group>"; };
 		AA9D9B7B17B62E1B0016B954 /* TMDBLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBLanguage.m; path = Classes/Languages/TMDBLanguage.m; sourceTree = "<group>"; };
+		AA9D9B7E17B63D5D0016B954 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AABB1F6412833F5300F84FEB /* TMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDB.h; path = Classes/TMDB.h; sourceTree = "<group>"; };
 		AABB1F6512833F5300F84FEB /* TMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDB.m; path = Classes/TMDB.m; sourceTree = "<group>"; };
 		AAF437F51283464D00F5CC92 /* TMDBRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBRequestDelegate.h; path = Classes/Requests/TMDBRequestDelegate.h; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 		AAF43A20128361C400F5CC92 /* TMDBDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBDelegate.h; path = Classes/TMDBDelegate.h; sourceTree = "<group>"; };
 		AAFA3EB112863A77002B9E38 /* TMDBImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBImage.h; path = Classes/Movies/TMDBImage.h; sourceTree = "<group>"; };
 		AAFA3EB212863A78002B9E38 /* TMDBImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBImage.m; path = Classes/Movies/TMDBImage.m; sourceTree = "<group>"; };
-		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
+				AA9D9B7F17B63D5D0016B954 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +128,7 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+				AA9D9B7E17B63D5D0016B954 /* Foundation.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -139,9 +136,6 @@
 		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
-				D2F7E79907B2D74100F64583 /* CoreData.framework */,
-				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -168,7 +162,6 @@
 		AA98583E128308180074F570 /* Movies */ = {
 			isa = PBXGroup;
 			children = (
-				AAFA3EAD12863A5B002B9E38 /* Images */,
 				AAF4389D12834E6600F5CC92 /* TMDBMovie.h */,
 				AAF4389E12834E6600F5CC92 /* TMDBMovie.m */,
 			);
@@ -228,6 +221,7 @@
 			children = (
 				AA9D9B6F17B51E940016B954 /* Configuration */,
 				AA98583E128308180074F570 /* Movies */,
+				AAFA3EAD12863A5B002B9E38 /* Images */,
 				AA985840128308360074F570 /* People */,
 				AA9D9B7917B62D970016B954 /* Languages */,
 			);
