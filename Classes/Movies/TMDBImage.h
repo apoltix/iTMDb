@@ -21,6 +21,12 @@ typedef struct {
 	float height;
 } TMDBSize;
 
+typedef NS_ENUM(NSUInteger, TMDBImageSize) {
+	TMDBImageSizeWidth,
+	TMDBImageSizeHeight,
+	TMDBImageSizeOriginal
+};
+
 /**
  * A `TMDBImage` object represents an image in one-to-many sizes.
  */
@@ -37,6 +43,11 @@ typedef struct {
 @property (nonatomic, readonly) NSUInteger voteCount;
 
 + (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType context:(TMDB *)context;
+
+/**
+ * TODO: Find a better name for this method.
+ */
++ (float)sizeFromString:(NSString *)s imageSize:(TMDBImageSize *)outImageSize;
 
 - (instancetype)initWithDictionary:(NSDictionary *)rawImageData type:(TMDBImageType)type context:(TMDB *)context;
 

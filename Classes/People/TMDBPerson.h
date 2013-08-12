@@ -20,19 +20,21 @@
  */
 @interface TMDBPerson : NSObject
 
-/** @name Batch Processsing */
+/** @name Batch Processing */
+
 /**
  * Returns an array of `TMDBPerson` objects with the information provided in the
- * personsInfo array.
+ * `personsInfo` array.
  *
  * @param movie The movie with which the persons should be associated.
- * @param personInfo An array of NSDictionary objects with information about the
- * persons for which objects are to be created.
+ * @param personInfo An array of `NSDictionary` objects with information about
+ * the persons for which objects are to be created.
  * @return An array of `TMDBPerson` objects.
  */
-+ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)personsInfo;
++ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)d;
 
 /** @name Creating an Instance */
+
 /**
  * Returns a person object populated with the provided person information.
  *
@@ -41,9 +43,9 @@
  * @return An immutable person object populated with the provided person
  * information.
  */
-- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)personInfo;
+- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)d;
 
-@property (nonatomic, strong) TMDB *context;
+@property (nonatomic, strong, readonly) TMDB *context;
 
 /** @name Basic Information */
 /** The TMDb ID of the person. */

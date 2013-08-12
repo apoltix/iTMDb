@@ -58,7 +58,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (instancetype)initWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -73,7 +73,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (instancetype)initWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
 
 /** @name Basic Information */
 
@@ -104,6 +104,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 @property (nonatomic, strong, readonly) NSArray *keywords;
 
 /** @name Times and Dates */
+
 /** The release date of the movie. */
 @property (nonatomic, copy, readonly) NSDate *released;
 
@@ -210,7 +211,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
++ (instancetype)movieWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -225,7 +226,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
++ (instancetype)movieWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
 
 @end
 

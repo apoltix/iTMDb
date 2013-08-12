@@ -28,8 +28,9 @@ NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
 	self.apiKey = apiKey;
 	self.language = language;
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDidFinishLoading:) name:TMDBDidFinishLoadingMovieNotification object:self];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDidFailLoading:)   name:TMDBDidFailLoadingMovieNotification   object:self];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+	[nc addObserver:self selector:@selector(movieDidFinishLoading:) name:TMDBDidFinishLoadingMovieNotification object:self];
+	[nc addObserver:self selector:@selector(movieDidFailLoading:)   name:TMDBDidFailLoadingMovieNotification   object:self];
 
 	_configuration = [[TMDBConfiguration alloc] initWithContext:self];
 
@@ -38,8 +39,9 @@ NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
 
 - (void)dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:TMDBDidFinishLoadingMovieNotification object:self];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:TMDBDidFailLoadingMovieNotification   object:self];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+	[nc removeObserver:self name:TMDBDidFinishLoadingMovieNotification object:self];
+	[nc removeObserver:self name:TMDBDidFailLoadingMovieNotification   object:self];
 }
 
 #pragma mark - Notifications

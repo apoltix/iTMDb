@@ -13,34 +13,34 @@
 
 @implementation TMDBPerson
 
-+ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)personsInfo
++ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)d
 {
-	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:[personsInfo count]];
+	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:[d count]];
 
-	for (NSDictionary *person in personsInfo)
+	for (NSDictionary *person in d)
 		[persons addObject:[[TMDBPerson alloc] initWithMovie:movie personInfo:person]];
 
 	return [NSArray arrayWithArray:persons];
 }
 
-- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)personInfo
+- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)d
 {
 	if (!(self = [super init]))
 		return nil;
 
 	_movie = movie;
-	self.context = movie.context;
+	_context = movie.context;
 
-	if (personInfo != nil)
+	if (d != nil)
 	{
-		_id = [personInfo[@"id"] unsignedIntegerValue];
-		_name = [personInfo[@"name"] copy];
-		_character = [personInfo[@"character"] copy];
-		_job = [personInfo[@"job"] copy];
-		_url = [NSURL URLWithString:personInfo[@"url"]];
-		_order = [personInfo[@"order"] integerValue];
-		_castID = [personInfo[@"cast_id"] integerValue];
-		_profileURL = [NSURL URLWithString:personInfo[@"profile"]];
+		_id = [TMDB_NSNumberOrNil(d[@"id"]) unsignedIntegerValue];
+		_name = [TMDB_NSStringOrNil(d[@"name"]) copy];
+		_character = [TMDB_NSStringOrNil(d[@"character"]) copy];
+		_job = [TMDB_NSStringOrNil(d[@"job"]) copy];
+		_url = TMDB_NSURLOrNilFromStringOrNil(d[@"url"]);
+		_order = [TMDB_NSNumberOrNil(d[@"order"]) integerValue];
+		_castID = [TMDB_NSNumberOrNil(d[@"cast_id"]) integerValue];
+		_profileURL = TMDB_NSURLOrNilFromStringOrNil(d[@"profile"]);
 	}
 
 	return self;

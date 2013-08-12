@@ -15,17 +15,17 @@
 	TMDBRequestCompletionBlock _completionBlock;
 }
 
-+ (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)aDelegate
++ (instancetype)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)aDelegate
 {
 	return [[TMDBRequest alloc] initWithURL:url delegate:aDelegate];
 }
 
-+ (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block
++ (instancetype)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block
 {
 	return [[TMDBRequest alloc] initWithURL:url completionBlock:block];
 }
 
-- (id)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate
+- (instancetype)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate
 {
 	if (!(self = [super init]))
 		return nil;
@@ -41,7 +41,7 @@
 	return self;
 }
 
-- (id)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block
+- (instancetype)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block
 {
 	if (!(self = [super init]))
 		return nil;
@@ -59,7 +59,7 @@
 
 #pragma mark -
 
-- (NSDictionary *)parsedData
+- (id)parsedData
 {
 	if (_parsedData)
 		return _parsedData;
@@ -67,14 +67,14 @@
 	NSError *error = nil;
 	id parsedData = [NSJSONSerialization JSONObjectWithData:_data options:0 error:&error];
 	if (error)
-		NSLog(@"iTMDb: Error parsing JSON data: %@", error);
+		TMDBLog(@"iTMDb: Error parsing JSON data: %@", error);
 
 	_parsedData = parsedData;
 
 	return parsedData;
 }
 
-#pragma mark - NSURLConnection delegate
+#pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
@@ -95,20 +95,18 @@
 
 	if (self.delegate && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)])
 		[self.delegate request:self didFinishLoading:error];
-	if (_completionBlock)
-		_completionBlock(nil);
-	//else
-	//	NSLog(@"TMDBRequest did fail with error: %@", error);
+
+	if (self.completionBlock)
+		self.completionBlock(nil);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	if (self.delegate && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)])
 		[self.delegate request:self didFinishLoading:nil];
-	if (_completionBlock)
-		_completionBlock([self parsedData]);
-	//else
-	//	NSLog(@"TMDBRequest: Neither a delegate nor a block was set.");
+
+	if (self.completionBlock)
+		self.completionBlock([self parsedData]);
 
 	_data = nil;
 }

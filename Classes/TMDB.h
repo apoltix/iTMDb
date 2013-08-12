@@ -63,15 +63,16 @@ extern NSString * const TMDBErrorUserInfoKey;
  * Initializes the context with the provided API key (required), and optionally
  * a delegate and language.
  */
-- (instancetype)initWithAPIKey:(NSString *)anApiKey delegate:(id<TMDBDelegate>)aDelegate language:(NSString *)aLanguage;
+- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language;
 
 /** @name Getting Configuration */
 
+/** The TMDb configuration. */
 @property (nonatomic, strong, readonly) TMDBConfiguration *configuration;
 
 @end
 
-@interface TMDB (DeprecatedMethods)
+@interface TMDB (UnavailableMethods)
 
 /** @name Deprecated methods */
 

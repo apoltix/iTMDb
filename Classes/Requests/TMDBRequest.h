@@ -8,21 +8,33 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TMDBRequestDelegate.h"
+@protocol TMDBRequestDelegate;
 
 typedef void (^TMDBRequestCompletionBlock)(id parsedData);
 
 @interface TMDBRequest : NSObject
 
 @property (nonatomic, weak, readonly) id<TMDBRequestDelegate> delegate;
+@property (nonatomic, copy, readonly) TMDBRequestCompletionBlock completionBlock;
 
-+ (TMDBRequest *)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
-+ (TMDBRequest *)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
++ (instancetype)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
++ (instancetype)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
 
-- (id)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
-- (id)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
+- (instancetype)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate;
+- (instancetype)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
 
 @property (nonatomic, copy, readonly) NSURLResponse *response;
 - (id)parsedData;
+
+@end
+
+@protocol TMDBRequestDelegate <NSObject>
+
+@required
+
+/**
+ * Called when a TMDBRequest is finished and the data has been loaded, or an error occured.
+ */
+- (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error;
 
 @end

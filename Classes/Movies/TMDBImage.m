@@ -30,6 +30,34 @@
 	return images;
 }
 
++ (float)sizeFromString:(NSString *)s imageSize:(TMDBImageSize *)outImageSize
+{
+	if ([s length] == 0)
+		return -1;
+
+	if ([[s lowercaseString] isEqualToString:@"original"])
+	{
+		if (outImageSize)
+			*outImageSize = TMDBImageSizeOriginal;
+
+		return 0;
+	}
+
+	if (outImageSize)
+	{
+		NSString *prefix = [[s substringToIndex:1] lowercaseString];
+
+		if ([prefix isEqualToString:@"w"])
+			*outImageSize = TMDBImageSizeWidth;
+		else if ([prefix isEqualToString:@"h"])
+			*outImageSize = TMDBImageSizeHeight;
+	}
+
+	NSString *size = [s substringFromIndex:1];
+
+	return [size floatValue];
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)d type:(TMDBImageType)type context:(TMDB *)context
 {
 	if (!(self = [super init]))

@@ -12,7 +12,7 @@
 #import "TMDBPerson.h"
 #import "TMDBRequest.h"
 #import "TMDBLanguage.h"
-#import "TMDBRequestDelegate.h"
+#import "TMDBRequest.h"
 
 @interface TMDBMovie () <TMDBRequestDelegate>
 
@@ -293,10 +293,10 @@
 		_backdrops = nil;
 	NSLog(@"BACKDROPS %@", _backdrops);
 
-	// Cast
+	// Cast and Crew
 	_cast = nil;
-	if (d[@"cast"] && ![d isKindOfClass:[NSNull class]])
-		_cast = [TMDBPerson personsWithMovie:self personsInfo:d[@"cast"]];
+	if (d[@"casts"] && ![d isKindOfClass:[NSNull class]])
+		_cast = [TMDBPerson personsWithMovie:self personsInfo:d[@"casts"]];
 
 	if (_isSearchingOnly)
 	{
@@ -349,14 +349,14 @@
 	return [[self alloc] initWithID:anID options:options context:context];
 }
 
-+ (instancetype)movieWithName:(NSString *)aName options:(TMDBMovieFetchOptions)options context:(TMDB *)context
++ (instancetype)movieWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	return [[self alloc] initWithName:aName options:options context:context];
+	return [[self alloc] initWithName:name options:options context:context];
 }
 
-+ (instancetype)movieWithName:(NSString *)aName year:(NSUInteger)aYear options:(TMDBMovieFetchOptions)options context:(TMDB *)context
++ (instancetype)movieWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	return [[self alloc] initWithName:aName year:aYear options:options context:context];
+	return [[self alloc] initWithName:name year:year options:options context:context];
 }
 
 @end
