@@ -295,8 +295,18 @@
 
 	// Cast and Crew
 	_cast = nil;
-	if (d[@"casts"] && ![d isKindOfClass:[NSNull class]])
-		_cast = [TMDBPerson personsWithMovie:self personsInfo:d[@"casts"]];
+	if (TMDB_NSDictionaryOrNil(d[@"casts"]) != nil)
+	{
+		NSDictionary *rawCasts = (NSDictionary *)d[@"casts"];
+		NSMutableArray *casts = [NSMutableArray array];
+		for (NSString *key in rawCasts)
+		{
+			NSArray *castsPart = [TMDBPerson personsWithMovie:self personsInfo:rawCasts[key]];
+			if ([castsPart count] > 0)
+				[casts addObjectsFromArray:castsPart];
+		}
+		_cast = [NSArray arrayWithArray:casts];
+	}
 
 	if (_isSearchingOnly)
 	{

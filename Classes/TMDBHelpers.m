@@ -28,7 +28,7 @@ inline NSNumber *TMDB_NSNumberOrNil(NSNumber *numberOrNil)
 
 inline NSURL *TMDB_NSURLOrNilFromStringOrNil(NSString *urlString)
 {
-	if (urlString == nil || [urlString length] == 0)
+	if (TMDB_NSStringOrNil(urlString) == nil || [urlString length] == 0)
 		return nil;
 
 	return [NSURL URLWithString:urlString];

@@ -11,12 +11,27 @@
 @class TMDBMovie;
 @class TMDB;
 
+typedef NS_OPTIONS(NSUInteger, TMDBPersonUpdateOptions) {
+	/** Indicates that basic information should be fetched. */
+	TMDBPersonUpdateOptionBasic = 1 << 1,
+	/** Indicates that credits, i.e. cast and crew, should be fetched.  */
+	TMDBPersonUpdateOptionCredits = 1 << 2,
+	/** Indicates that image URLs should be fetched. */
+	TMDBPersonUpdateOptionImages = 1 << 3
+};
+
+/**
+ * A block called when a person object has been updated, or failed to be
+ * updated.
+ */
+typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
+
 /**
  * A `TMDBPerson` object contains information about a person associated with a
  * `TMDBMovie` object.
  *
- * This class does not interact with the TMDb API itself and thus instances are
- * immutable model objects.
+ * By default Person objects contain only basic information. To fetch more
+ * information use the `-update:` and `-update:completion:` metods.
  */
 @interface TMDBPerson : NSObject
 
@@ -36,6 +51,14 @@
 /** @name Creating an Instance */
 
 /**
+ * Returns a person object populated only with the provided ID. Fetch person
+ * information by calling `-update:`.
+ *
+ * @param personID The ID of the person.
+ */
+- (instancetype)initWithID:(NSUInteger)personID;
+
+/**
  * Returns a person object populated with the provided person information.
  *
  * @param movie The movie object with which the person should be associated.
@@ -45,6 +68,7 @@
  */
 - (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)d;
 
+/** The context to which the person belongs. */
 @property (nonatomic, strong, readonly) TMDB *context;
 
 /** @name Basic Information */
@@ -63,20 +87,41 @@
 /** The job position of the person in this movie. */
 @property (nonatomic, copy, readonly) NSString *job;
 
+/** The person's job department. */
+@property (nonatomic, copy, readonly) NSString *department;
+
 /**
  * The order in which the person should be listed in the Cast and Crew list for
  * the movie.
  */
-@property (nonatomic, readonly) NSInteger order;
+@property (nonatomic, readonly) NSUInteger order;
 
 /** The */
 @property (nonatomic, readonly) NSInteger castID;
 
 /** @name External Resources */
+
 /** A URL to an official website of this person. */
 @property (nonatomic, copy, readonly) NSURL *url;
 
 /** A URL to the TMDb profile page of this person. */
 @property (nonatomic, copy, readonly) NSURL *profileURL;
+
+/** @name Updating */
+
+/**
+ * Updates the Person with the basic information.
+ *
+ * @param completionBlock A block called when the update succeeds or fails.
+ */
+- (void)update:(TMDBPersonUpdateCompletionBlock)completionBlock;
+
+/**
+ * Updates the Person with the specified information.
+ *
+ * @param options The information to be fetched.
+ * @param completionBlock A block called when the update succeeds or fails.
+ */
+- (void)update:(TMDBPersonUpdateOptions)options completion:(TMDBPersonUpdateCompletionBlock)completionBlock;
 
 @end
