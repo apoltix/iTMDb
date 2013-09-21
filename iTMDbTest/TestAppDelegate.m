@@ -49,7 +49,7 @@
 
 	NSString *apiKey = [self.apiKey stringValue];
 
-	if (!([apiKey length] > 0 && ([self.movieID integerValue] > 0 || [[self.movieName stringValue] length] > 0)))
+	if (!([apiKey length] > 0 && ([self.searchMovieID integerValue] > 0 || [[self.searchMovieName stringValue] length] > 0)))
 	{
 		NSAlert *alert = [NSAlert alertWithMessageText:@"Missing either API key, movie ID or title"
 										 defaultButton:@"OK"
@@ -89,12 +89,12 @@
 	if (self.fetchImageURLsCheckbox.state == NSOnState)
 		fetchOptions |= TMDBMovieFetchOptionImages;
 
-	if ([self.movieID integerValue] > 0)
-		self.movie = [[TMDBMovie alloc] initWithID:[self.movieID integerValue] options:fetchOptions context:_tmdb];
+	if ([self.searchMovieID integerValue] > 0)
+		self.movie = [[TMDBMovie alloc] initWithID:[self.searchMovieID integerValue] options:fetchOptions context:_tmdb];
 	else if ([self.movieYear integerValue] > 0)
-		self.movie = [[TMDBMovie alloc] initWithName:[self.movieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions context:_tmdb];
+		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions context:_tmdb];
 	else
-		self.movie = [[TMDBMovie alloc] initWithName:[self.movieName stringValue] options:fetchOptions context:_tmdb];
+		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] options:fetchOptions context:_tmdb];
 }
 
 - (IBAction)viewAllData:(id)sender
@@ -149,7 +149,7 @@
 	self.moviePostersCount.stringValue = @"0 (0 sizes total)";
 	self.movieBackdropsCount.stringValue = @"0 (0 sizes total)";
 
-	[_throbber stopAnimation:self];
+	[self.throbber stopAnimation:self];
 	self.goButton.enabled = YES;
 	self.viewAllDataButton.enabled = NO;
 }

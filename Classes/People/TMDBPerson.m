@@ -87,7 +87,7 @@
 	_url = TMDB_NSURLOrNilFromStringOrNil(d[@"url"]);
 	_order = [TMDB_NSNumberOrNil(d[@"order"]) unsignedIntegerValue];
 	_castID = [TMDB_NSNumberOrNil(d[@"cast_id"]) integerValue];
-	_profileURL = TMDB_NSURLOrNilFromStringOrNil(d[@"profile_path"]); // TODO: Validate URL fragment
+	_imageURL = TMDB_NSURLOrNilFromStringOrNil(d[@"profile_path"]); // TODO: Validate URL fragment
 }
 
 #pragma mark - Updating

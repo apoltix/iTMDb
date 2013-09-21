@@ -72,6 +72,7 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
 @property (nonatomic, strong, readonly) TMDB *context;
 
 /** @name Basic Information */
+
 /** The TMDb ID of the person. */
 @property (nonatomic, readonly) NSUInteger id;
 
@@ -104,8 +105,8 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
 /** A URL to an official website of this person. */
 @property (nonatomic, copy, readonly) NSURL *url;
 
-/** A URL to the TMDb profile page of this person. */
-@property (nonatomic, copy, readonly) NSURL *profileURL;
+/** A URL fragment pointing to the TMDb profile image of this person. */
+@property (nonatomic, copy, readonly) NSURL *imageURL;
 
 /** @name Updating */
 

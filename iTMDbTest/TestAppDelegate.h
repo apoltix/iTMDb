@@ -17,8 +17,8 @@
 @property (nonatomic, weak) IBOutlet NSWindow *allDataWindow;
 
 @property (nonatomic, weak) IBOutlet NSTextField *apiKey;
-@property (nonatomic, weak) IBOutlet NSTextField *movieID;
-@property (nonatomic, weak) IBOutlet NSTextField *movieName;
+@property (nonatomic, weak) IBOutlet NSTextField *searchMovieID;
+@property (nonatomic, weak) IBOutlet NSTextField *searchMovieName;
 @property (nonatomic, weak) IBOutlet NSTextField *movieYear;
 @property (nonatomic, weak) IBOutlet NSTextField *language;
 @property (nonatomic, weak) IBOutlet NSButton *fetchCastAndCrewCheckbox;
