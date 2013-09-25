@@ -10,7 +10,7 @@
 
 #import <iTMDb/iTMDb.h>
 
-@interface TestAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, TMDBDelegate>
+@interface TestAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, TMDBDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet NSWindow *window;
 
@@ -36,6 +36,12 @@
 @property (nonatomic, weak) IBOutlet NSButton *goButton;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *throbber;
 @property (nonatomic, weak) IBOutlet NSButton *viewAllDataButton;
+
+@property (nonatomic, weak) IBOutlet NSTableView *castAndCrewTableView;
+@property (nonatomic, weak) IBOutlet NSTableCellView *imageAndNameTableViewCell;
+@property (nonatomic, weak) IBOutlet NSTableCellView *secondaryTableViewCell;
+
+@property (nonatomic, weak) IBOutlet NSCollectionView *postersCollectionView;
 
 @property (nonatomic, strong) IBOutlet NSTextView *allDataTextView;
 

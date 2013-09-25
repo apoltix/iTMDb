@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA52449217F36866000AECAD /* TMDBImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52449117F36866000AECAD /* TMDBImageView.m */; };
+		AA52449517F369E7000AECAD /* TMDBImageViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52449417F369E7000AECAD /* TMDBImageViewItem.m */; };
 		AAA5D52114829C9700BD9791 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA5D52014829C9700BD9791 /* Cocoa.framework */; };
 		AAA5D52B14829C9700BD9791 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAA5D52914829C9700BD9791 /* InfoPlist.strings */; };
 		AAA5D52D14829C9700BD9791 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA5D52C14829C9700BD9791 /* main.m */; };
@@ -17,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA52449017F36866000AECAD /* TMDBImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMDBImageView.h; sourceTree = "<group>"; };
+		AA52449117F36866000AECAD /* TMDBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDBImageView.m; sourceTree = "<group>"; };
+		AA52449317F369E7000AECAD /* TMDBImageViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMDBImageViewItem.h; sourceTree = "<group>"; };
+		AA52449417F369E7000AECAD /* TMDBImageViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDBImageViewItem.m; sourceTree = "<group>"; };
 		AAA5D51C14829C9700BD9791 /* iTMDbTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTMDbTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA5D52014829C9700BD9791 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AAA5D52314829C9700BD9791 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -46,6 +52,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA52449617F36A13000AECAD /* Image View */ = {
+			isa = PBXGroup;
+			children = (
+				AA52449317F369E7000AECAD /* TMDBImageViewItem.h */,
+				AA52449417F369E7000AECAD /* TMDBImageViewItem.m */,
+				AA52449017F36866000AECAD /* TMDBImageView.h */,
+				AA52449117F36866000AECAD /* TMDBImageView.m */,
+			);
+			name = "Image View";
+			sourceTree = "<group>";
+		};
 		AAA5D51114829C9700BD9791 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +105,7 @@
 			children = (
 				AAA5D54614829DB900BD9791 /* TestAppDelegate.h */,
 				AAA5D54714829DB900BD9791 /* TestAppDelegate.m */,
+				AA52449617F36A13000AECAD /* Image View */,
 				AAA5D52714829C9700BD9791 /* Supporting Files */,
 			);
 			path = iTMDbTest;
@@ -172,6 +190,8 @@
 			files = (
 				AAA5D52D14829C9700BD9791 /* main.m in Sources */,
 				AAA5D54814829DB900BD9791 /* TestAppDelegate.m in Sources */,
+				AA52449517F369E7000AECAD /* TMDBImageViewItem.m in Sources */,
+				AA52449217F36866000AECAD /* TMDBImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +221,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -237,7 +256,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;

@@ -39,6 +39,13 @@
 	if (!font)
 		font = [NSFont fontWithName:@"Courier" size:11.0];
 	[_allDataTextView setFont:font];
+
+	self.postersCollectionView.content = @[
+		@"Hello",
+		@"There",
+		@"Test",
+		@"Poster"
+	];
 }
 
 #pragma mark -
@@ -135,6 +142,8 @@
 
 	self.moviePostersCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.posters count], [context.configuration.imagesPosterSizes count]];
 	self.movieBackdropsCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], [context.configuration.imagesBackdropSizes count]];
+
+	self.postersCollectionView.content = aMovie.posters;
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error
@@ -152,7 +161,40 @@
 	[self.throbber stopAnimation:self];
 	self.goButton.enabled = YES;
 	self.viewAllDataButton.enabled = NO;
+
+	self.postersCollectionView.content = @[];
 }
+
+#pragma mark - NSTableViewDataSource
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+	return 10;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	if ([tableColumn.identifier isEqualToString:@"imageAndName"])
+	{
+		NSTableCellView *view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:nil];
+
+		view.textField.stringValue = [NSString stringWithFormat:@"Row %li", row];
+
+		return view;
+	}
+	else if ([tableColumn.identifier isEqualToString:@"secondary"])
+	{
+		NSTableCellView *view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:nil];
+
+		view.textField.stringValue = [NSString stringWithFormat:@"Row %li", row];
+
+		return view;
+	}
+
+	return nil;
+}
+
+#pragma mark - NSTableViewDelegate
 
 #pragma mark -
 
