@@ -13,3 +13,4 @@
 #import "TMDBMovie.h"
 #import "TMDBImage.h"
 #import "TMDBPerson.h"
+#import "TMDBConfiguration.h"

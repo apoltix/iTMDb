@@ -39,13 +39,6 @@
 	if (!font)
 		font = [NSFont fontWithName:@"Courier" size:11.0];
 	[_allDataTextView setFont:font];
-
-	self.postersCollectionView.content = @[
-		@"Hello",
-		@"There",
-		@"Test",
-		@"Poster"
-	];
 }
 
 #pragma mark -
@@ -73,17 +66,17 @@
 	self.goButton.enabled = NO;
 	self.viewAllDataButton.enabled = NO;
 
-	if (!_tmdb || ![_tmdb.apiKey isEqualToString:apiKey])
-		_tmdb = [[TMDB alloc] initWithAPIKey:apiKey delegate:self language:nil];
+	if (!self.tmdb || ![self.tmdb.apiKey isEqualToString:apiKey])
+		self.tmdb = [[TMDB alloc] initWithAPIKey:apiKey delegate:self language:nil];
 
 	if (_allData)
 		_allData = nil;
 
 	NSString *lang = [self.language stringValue];
 	if (lang && [lang length] > 0)
-		_tmdb.language = lang;
+		self.tmdb.language = lang;
 	else
-		_tmdb.language = @"en";
+		self.tmdb.language = @"en";
 
 	TMDBMovieFetchOptions fetchOptions = TMDBMovieFetchOptionBasic;
 
@@ -97,11 +90,11 @@
 		fetchOptions |= TMDBMovieFetchOptionImages;
 
 	if ([self.searchMovieID integerValue] > 0)
-		self.movie = [[TMDBMovie alloc] initWithID:[self.searchMovieID integerValue] options:fetchOptions context:_tmdb];
+		self.movie = [[TMDBMovie alloc] initWithID:[self.searchMovieID integerValue] options:fetchOptions context:self.tmdb];
 	else if ([self.movieYear integerValue] > 0)
-		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions context:_tmdb];
+		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions context:self.tmdb];
 	else
-		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] options:fetchOptions context:_tmdb];
+		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] options:fetchOptions context:self.tmdb];
 }
 
 - (IBAction)viewAllData:(id)sender
@@ -144,6 +137,7 @@
 	self.movieBackdropsCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], [context.configuration.imagesBackdropSizes count]];
 
 	self.postersCollectionView.content = aMovie.posters;
+	[self.castAndCrewTableView reloadData];
 }
 		
 - (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error
@@ -169,29 +163,57 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return 10;
+	return [_movie.cast count];
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+	TMDBPerson *person = _movie.cast[row];
+	NSTableCellView *view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+
 	if ([tableColumn.identifier isEqualToString:@"imageAndName"])
 	{
-		NSTableCellView *view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:nil];
+		view.textField.stringValue = person.name;
 
-		view.textField.stringValue = [NSString stringWithFormat:@"Row %li", row];
+		NSURL *imageURL = nil;
+		if (person.imageURL != nil)
+		{
+			TMDBConfiguration *config = _movie.context.configuration;
+			imageURL = config.imagesBaseURL;
+			imageURL = [imageURL URLByAppendingPathComponent:config.imagesPosterSizes[0]];
+			imageURL = [imageURL URLByAppendingPathComponent:[person.imageURL path]];
+		}
 
-		return view;
+		if (imageURL != nil)
+		{
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+				NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+				dispatch_async(dispatch_get_main_queue(), ^{
+					view.imageView.image = image;
+				});
+			});
+		}
+		else
+			view.imageView.image = nil;
 	}
-	else if ([tableColumn.identifier isEqualToString:@"secondary"])
+	else if ([tableColumn.identifier isEqualToString:@"character"])
 	{
-		NSTableCellView *view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:nil];
-
-		view.textField.stringValue = [NSString stringWithFormat:@"Row %li", row];
-
-		return view;
+		if ([person.job isEqualToString:@"Actor"])
+			view.textField.stringValue = person.character ? : person.job ? : @"";
+		else
+			view.textField.stringValue = person.job ? : @"";
 	}
+	else if ([tableColumn.identifier isEqualToString:@"other"])
+	{
+		if ([person.job isEqualToString:@"Actor"])
+			view.textField.stringValue = person.job ? : @"";
+		else
+			view.textField.stringValue = @"";
+	}
+	else
+		view = nil;
 
-	return nil;
+	return view;
 }
 
 #pragma mark - NSTableViewDelegate
