@@ -291,7 +291,6 @@
 		_backdrops = [TMDBImage imageArrayWithRawImageDictionaries:images[@"backdrops"] ofType:TMDBImageTypeBackdrop context:_context];
 	else
 		_backdrops = nil;
-	NSLog(@"BACKDROPS %@", _backdrops);
 
 	// Cast and Crew
 	_cast = nil;
@@ -308,11 +307,25 @@
 		_cast = [NSArray arrayWithArray:casts];
 	}
 
+	// Keywords
+	NSArray *rawKeywords = TMDB_NSArrayOrNil(TMDB_NSDictionaryOrNil(d[@"keywords"])[@"keywords"]);
+	if ([rawKeywords count] > 0)
+	{
+		NSMutableArray *keywords = [NSMutableArray arrayWithCapacity:[rawKeywords count]];
+		for (NSDictionary *keyword in rawKeywords)
+		{
+			[keywords addObject:keyword[@"name"]];
+		}
+		_keywords = [NSArray arrayWithArray:keywords];
+	}
+	else
+		_keywords = nil;
+
 	if (_isSearchingOnly)
 	{
 		_isSearchingOnly = NO;
-		if ([self initWithID:_id options:_options context:_context])
-			; // NOOP to suppress compiler warning, probably not a good idea
+		// Cast to suppress compiler warning, probably not a good idea
+		(void)[self initWithID:_id options:_options context:_context];
 		return;
 	}
 

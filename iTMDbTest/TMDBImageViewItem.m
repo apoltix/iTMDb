@@ -13,14 +13,24 @@
 
 @implementation TMDBImageViewItem
 
-- (id)copyWithZone:(NSZone *)zone
+//- (id)copyWithZone:(NSZone *)zone
+//{
+//	TMDBImageViewItem *copy = [super copyWithZone:zone];
+//
+//	return copy;
+//}
+
+- (TMDBImageView *)tmdbImageView
 {
-	TMDBImageViewItem *copy = [super copyWithZone:zone];
+	return (TMDBImageView *)self.view;
+}
 
-	NSArray *subviews = [copy.view subviews];
-	copy.imageView = subviews[0];
+- (void)setSelected:(BOOL)selected
+{
+	[super setSelected:selected];
 
-	return copy;
+	self.tmdbImageView.selected = selected;
+	[self.view setNeedsDisplay:YES];
 }
 
 - (void)setRepresentedObject:(TMDBImage *)image
@@ -37,12 +47,12 @@
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
 			dispatch_async(dispatch_get_main_queue(), ^{
-				self.imageView.image = image;
+				self.tmdbImageView.image = image;
 			});
 		});
 	}
 	else
-		self.imageView.image = nil;
+		self.tmdbImageView.image = nil;
 }
 
 @end

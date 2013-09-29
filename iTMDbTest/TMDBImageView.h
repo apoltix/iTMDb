@@ -10,6 +10,7 @@
 
 @interface TMDBImageView : NSView
 
-@property (nonatomic, strong) IBOutlet NSImageView *imageView;
+@property (nonatomic, getter=isSelected) BOOL selected;
+@property (nonatomic, strong) NSImage *image;
 
 @end

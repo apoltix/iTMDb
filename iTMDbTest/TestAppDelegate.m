@@ -186,12 +186,27 @@
 
 		if (imageURL != nil)
 		{
-			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-				NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
-				dispatch_async(dispatch_get_main_queue(), ^{
-					view.imageView.image = image;
-				});
+			static NSCache *cache;
+			static dispatch_once_t onceToken;
+			dispatch_once(&onceToken, ^{
+				cache = [[NSCache alloc] init];
 			});
+
+			__block NSImage *image = [cache objectForKey:imageURL];
+
+			if (image != nil)
+				view.imageView.image = image;
+			else
+			{
+				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+					image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[cache setObject:image forKey:imageURL];
+						view.imageView.image = image;
+					});
+				});
+			}
 		}
 		else
 			view.imageView.image = nil;

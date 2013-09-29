@@ -23,6 +23,7 @@
 		AA52449117F36866000AECAD /* TMDBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDBImageView.m; sourceTree = "<group>"; };
 		AA52449317F369E7000AECAD /* TMDBImageViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMDBImageViewItem.h; sourceTree = "<group>"; };
 		AA52449417F369E7000AECAD /* TMDBImageViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDBImageViewItem.m; sourceTree = "<group>"; };
+		AA52449717F60708000AECAD /* iTMDbTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iTMDbTest.entitlements; sourceTree = "<group>"; };
 		AAA5D51C14829C9700BD9791 /* iTMDbTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTMDbTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA5D52014829C9700BD9791 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AAA5D52314829C9700BD9791 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -103,6 +104,7 @@
 		AAA5D52614829C9700BD9791 /* iTMDbTest */ = {
 			isa = PBXGroup;
 			children = (
+				AA52449717F60708000AECAD /* iTMDbTest.entitlements */,
 				AAA5D54614829DB900BD9791 /* TestAppDelegate.h */,
 				AAA5D54714829DB900BD9791 /* TestAppDelegate.m */,
 				AA52449617F36A13000AECAD /* Image View */,
@@ -152,6 +154,16 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Devify;
+				TargetAttributes = {
+					AAA5D51B14829C9700BD9791 = {
+						DevelopmentTeam = XNW8A6Y6CT;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = AAA5D51614829C9700BD9791 /* Build configuration list for PBXProject "iTMDbTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -284,6 +296,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = iTMDbTest/iTMDbTest.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTMDbTest/iTMDbTest-Prefix.pch";
@@ -297,6 +311,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = iTMDbTest/iTMDbTest.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTMDbTest/iTMDbTest-Prefix.pch";
