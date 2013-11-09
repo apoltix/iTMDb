@@ -30,34 +30,6 @@
 	return images;
 }
 
-+ (float)sizeFromString:(NSString *)s imageSize:(TMDBImageSize *)outImageSize
-{
-	if ([s length] == 0)
-		return -1;
-
-	if ([[s lowercaseString] isEqualToString:@"original"])
-	{
-		if (outImageSize)
-			*outImageSize = TMDBImageSizeOriginal;
-
-		return 0;
-	}
-
-	if (outImageSize)
-	{
-		NSString *prefix = [[s substringToIndex:1] lowercaseString];
-
-		if ([prefix isEqualToString:@"w"])
-			*outImageSize = TMDBImageSizeWidth;
-		else if ([prefix isEqualToString:@"h"])
-			*outImageSize = TMDBImageSizeHeight;
-	}
-
-	NSString *size = [s substringFromIndex:1];
-
-	return [size floatValue];
-}
-
 - (instancetype)initWithDictionary:(NSDictionary *)d type:(TMDBImageType)type context:(TMDB *)context
 {
 	if (!(self = [super init]))
@@ -80,6 +52,11 @@
 
 #pragma mark - URLs
 
++ (NSURL *)urlForSize:(NSString *)size imagePath:(NSString *)imagePath context:(TMDB *)context
+{
+	return [[context.configuration.imagesBaseURL URLByAppendingPathComponent:size] URLByAppendingPathComponent:imagePath];
+}
+
 - (NSURL *)urlForSize:(NSString *)size
 {
 	return [[_context.configuration.imagesBaseURL URLByAppendingPathComponent:size] URLByAppendingPathComponent:self.filePath];
@@ -87,9 +64,68 @@
 
 #pragma mark - Sizes
 
++ (float)sizeFromString:(NSString *)s imageSize:(TMDBImageSize *)outImageSize
+{
+	if ([s length] == 0)
+		return -1.0f;
+
+	if ([[s lowercaseString] isEqualToString:@"original"])
+	{
+		if (outImageSize)
+			*outImageSize = TMDBImageSizeOriginal;
+
+		return -1.0f;
+	}
+
+	if (outImageSize)
+	{
+		NSString *prefix = [[s substringToIndex:1] lowercaseString];
+
+		if ([prefix isEqualToString:@"w"])
+			*outImageSize = TMDBImageSizeWidth;
+		else if ([prefix isEqualToString:@"h"])
+			*outImageSize = TMDBImageSizeHeight;
+	}
+
+	NSString *size = [s substringFromIndex:1];
+
+	return [size floatValue];
+}
+
++ (NSString *)sizeClosestMatchingSize:(float)size inSizes:(NSArray *)sizes dimension:(TMDBImageSize)dimension
+{
+	if ([sizes count] == 0)
+		return nil;
+
+	CGFloat closestMatch = 0.0;
+	NSString *closestMatchString = nil;
+
+	for (NSString *s in sizes)
+	{
+		TMDBImageSize dim;
+		CGFloat is = [TMDBImage sizeFromString:s imageSize:&dim];
+
+		if (dim != dimension)
+			continue;
+
+		if (is < closestMatch || (closestMatch > size && is > size))
+			continue;
+
+		closestMatch = is;
+		closestMatchString = s;
+
+		// Don't break, as the sizes might not be in order
+	}
+
+	if (closestMatchString == nil)
+		return [sizes firstObject];
+
+	return closestMatchString;
+}
+
 - (TMDBSize)sizeForSize:(NSString *)size
 {
-//	return (TMDBSize){[imageData[@"width"] floatValue], [imageData[@"height"] floatValue]};
+	//	return (TMDBSize){[imageData[@"width"] floatValue], [imageData[@"height"] floatValue]};
 	return (TMDBSize){0,0};
 }
 

@@ -39,17 +39,23 @@
 
 	self.textField.stringValue = [image description] ? : @"";
 
-	TMDBConfiguration *config = image.context.configuration;
-	NSURL *imageURL = [image urlForSize:config.imagesPosterSizes[0]];
-
-	if (imageURL != nil)
+	if (image != nil)
 	{
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				self.tmdbImageView.image = image;
+		TMDBConfiguration *config = image.context.configuration;
+		NSString *imageSize = [TMDBImage sizeClosestMatchingSize:self.view.frame.size.width inSizes:config.imagesPosterSizes dimension:TMDBImageSizeWidth];
+		NSURL *imageURL = [image urlForSize:imageSize];
+
+		if (imageURL != nil)
+		{
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+				NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+				dispatch_async(dispatch_get_main_queue(), ^{
+					self.tmdbImageView.image = image;
+				});
 			});
-		});
+		}
+		else
+			self.tmdbImageView.image = nil;
 	}
 	else
 		self.tmdbImageView.image = nil;
