@@ -1,12 +1,12 @@
 # iTMDb
 
-iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb.org/) v3.0 API. © Christian Rasmussen, 2010–2013.
+iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb.org/) v3.0 API. © Christian Rasmussen, 2010–2014.
 
 This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. See the `LICENSE` file. If you would like to use a different license, please contact me at code at devify dot dk.
 
 iTMDb is developed for **Mac OS X** 10.7 Lion and up, but it should work fine with *iOS 5* and up.
 
-**You need Xcode 4.6 and LLVM Clang 4.2 or higher to build the project.**
+You need Xcode 5.0 and LLVM Clang 5.0 or higher to build the project.
 
 Please remember to read the TMDb API [Terms of Use](https://www.themoviedb.org/about/api-terms).
 

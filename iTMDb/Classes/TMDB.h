@@ -63,7 +63,7 @@ extern NSString * const TMDBErrorUserInfoKey;
  * Initializes the context with the provided API key (required), and optionally
  * a delegate and language.
  */
-- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language;
+- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language NS_DESIGNATED_INITIALIZER;
 
 /** @name Getting Configuration */
 

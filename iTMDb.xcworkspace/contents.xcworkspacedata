@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:iTMDb.xcodeproj">
+      location = "group:iTMDb/iTMDb.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:iTMDbTest.xcodeproj">
+      location = "group:iTMDbDemo/iTMDbDemo.xcodeproj">
    </FileRef>
 </Workspace>

@@ -1,5 +1,5 @@
 //
-//  TestAppDelegate.h
+//  DemoAppDelegate.h
 //  iTMDb
 //
 //  Created by Christian Rasmussen on 04/11/10.
@@ -10,7 +10,7 @@
 
 #import <iTMDb/iTMDb.h>
 
-@interface TestAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, TMDBDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface DemoAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, TMDBDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet NSWindow *window;
 
@@ -27,7 +27,7 @@
 
 @property (nonatomic, weak) IBOutlet NSTextField *movieTitle;
 @property (nonatomic, strong) IBOutlet NSTextView *movieOverview;
-@property (nonatomic, weak) IBOutlet NSTokenField*movieKeywords;
+@property (nonatomic, weak) IBOutlet NSTokenField *movieKeywords;
 @property (nonatomic, weak) IBOutlet NSTextField *movieRuntime;
 @property (nonatomic, weak) IBOutlet NSTextField *movieReleaseDate;
 @property (nonatomic, weak) IBOutlet NSTextField *moviePostersCount;

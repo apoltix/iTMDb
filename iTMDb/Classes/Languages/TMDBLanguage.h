@@ -14,7 +14,7 @@
 
 + (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries context:(TMDB *)context;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary context:(TMDB *)context;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary context:(TMDB *)context NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong, readonly) TMDB *context;
 

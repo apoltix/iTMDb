@@ -18,7 +18,7 @@
  */
 @interface TMDBConfiguration : NSObject
 
-- (instancetype)initWithContext:(TMDB *)context;
+- (instancetype)initWithContext:(TMDB *)context NS_DESIGNATED_INITIALIZER;
 
 /** A value indicating if the configuration has been loaded yet. */
 @property (nonatomic, readonly, getter=isLoaded) BOOL loaded;

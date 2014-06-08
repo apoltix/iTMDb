@@ -1,14 +1,14 @@
 //
-//  TestAppDelegate.m
+//  DemoAppDelegate.m
 //  iTMDb
 //
 //  Created by Christian Rasmussen on 04/11/10.
 //  Copyright 2010 Apoltix. All rights reserved.
 //
 
-#import "TestAppDelegate.h"
+#import "DemoAppDelegate.h"
 
-@interface TestAppDelegate ()
+@interface DemoAppDelegate ()
 
 @property (nonatomic, strong) TMDB *tmdb;
 @property (nonatomic, strong) TMDBMovie *movie;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation TestAppDelegate
+@implementation DemoAppDelegate
 
 + (void)initialize
 {

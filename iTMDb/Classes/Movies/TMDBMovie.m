@@ -40,7 +40,7 @@
 
 - (instancetype)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context userData:(NSDictionary *)userData
 {
-	if (!(self = [self init]))
+	if (!(self = [super init]))
 		return nil;
 
 	_context = context;

@@ -49,7 +49,7 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 
 + (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType context:(TMDB *)context;
 
-- (instancetype)initWithDictionary:(NSDictionary *)rawImageData type:(TMDBImageType)type context:(TMDB *)context;
+- (instancetype)initWithDictionary:(NSDictionary *)rawImageData type:(TMDBImageType)type context:(TMDB *)context NS_DESIGNATED_INITIALIZER;
 
 /** @name Getting URLs */
 

@@ -30,7 +30,7 @@
 
 @synthesize loaded=_isLoaded;
 
-- (id)initWithContext:(TMDB *)context
+- (instancetype)initWithContext:(TMDB *)context
 {
 	if (!(self = [super init]))
 		return nil;

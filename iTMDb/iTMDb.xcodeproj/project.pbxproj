@@ -40,10 +40,10 @@
 		AA65EA8F176E665300D8C4D5 /* TMDBError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TMDBError.h; path = Classes/TMDBError.h; sourceTree = "<group>"; };
 		AA65EA90176E665300D8C4D5 /* TMDBError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TMDBError.m; path = Classes/TMDBError.m; sourceTree = "<group>"; };
 		AA985847128309AA0074F570 /* iTMDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb.h; sourceTree = "<group>"; };
-		AA98586D12830B680074F570 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		AA98586D12830B680074F570 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		AA9D9B7017B51EAA0016B954 /* TMDBConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBConfiguration.h; path = Classes/Configuration/TMDBConfiguration.h; sourceTree = "<group>"; };
 		AA9D9B7117B51EAA0016B954 /* TMDBConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBConfiguration.m; path = Classes/Configuration/TMDBConfiguration.m; sourceTree = "<group>"; };
-		AA9D9B7417B5263B0016B954 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		AA9D9B7417B5263B0016B954 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		AA9D9B7517B61E380016B954 /* TMDBHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBHelpers.h; path = Classes/TMDBHelpers.h; sourceTree = "<group>"; };
 		AA9D9B7617B61E380016B954 /* TMDBHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBHelpers.m; path = Classes/TMDBHelpers.m; sourceTree = "<group>"; };
 		AA9D9B7A17B62E1B0016B954 /* TMDBLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBLanguage.h; path = Classes/Languages/TMDBLanguage.h; sourceTree = "<group>"; };

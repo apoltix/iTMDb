@@ -13,7 +13,7 @@
 		AAA5D52B14829C9700BD9791 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAA5D52914829C9700BD9791 /* InfoPlist.strings */; };
 		AAA5D52D14829C9700BD9791 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA5D52C14829C9700BD9791 /* main.m */; };
 		AAA5D53114829C9700BD9791 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAA5D52F14829C9700BD9791 /* Credits.rtf */; };
-		AAA5D54814829DB900BD9791 /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA5D54714829DB900BD9791 /* TestAppDelegate.m */; };
+		AAA5D54814829DB900BD9791 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA5D54714829DB900BD9791 /* DemoAppDelegate.m */; };
 		AAA5D54A14829DC000BD9791 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA5D54914829DC000BD9791 /* MainMenu.xib */; };
 		AAA5D5801482A4AA00BD9791 /* iTMDb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA5D57F1482A4AA00BD9791 /* iTMDb.framework */; };
 /* End PBXBuildFile section */
@@ -23,20 +23,20 @@
 		AA52449117F36866000AECAD /* TMDBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDBImageView.m; sourceTree = "<group>"; };
 		AA52449317F369E7000AECAD /* TMDBImageViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMDBImageViewItem.h; sourceTree = "<group>"; };
 		AA52449417F369E7000AECAD /* TMDBImageViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDBImageViewItem.m; sourceTree = "<group>"; };
-		AA52449717F60708000AECAD /* iTMDbTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iTMDbTest.entitlements; sourceTree = "<group>"; };
-		AAA5D51C14829C9700BD9791 /* iTMDbTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTMDbTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA52449717F60708000AECAD /* iTMDbDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iTMDbDemo.entitlements; sourceTree = "<group>"; };
+		AAA5D51C14829C9700BD9791 /* iTMDbDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTMDbDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA5D52014829C9700BD9791 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AAA5D52314829C9700BD9791 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		AAA5D52414829C9700BD9791 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		AAA5D52514829C9700BD9791 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AAA5D52A14829C9700BD9791 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AAA5D52C14829C9700BD9791 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AAA5D52E14829C9700BD9791 /* iTMDbTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTMDbTest-Prefix.pch"; sourceTree = "<group>"; };
+		AAA5D52E14829C9700BD9791 /* iTMDbDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTMDbDemo-Prefix.pch"; sourceTree = "<group>"; };
 		AAA5D53014829C9700BD9791 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		AAA5D54614829DB900BD9791 /* TestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAppDelegate.h; sourceTree = "<group>"; };
-		AAA5D54714829DB900BD9791 /* TestAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAppDelegate.m; sourceTree = "<group>"; };
+		AAA5D54614829DB900BD9791 /* DemoAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoAppDelegate.h; path = Classes/DemoAppDelegate.h; sourceTree = "<group>"; };
+		AAA5D54714829DB900BD9791 /* DemoAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoAppDelegate.m; path = Classes/DemoAppDelegate.m; sourceTree = "<group>"; };
 		AAA5D54914829DC000BD9791 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		AAA5D54B14829DC700BD9791 /* iTMDbTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iTMDbTest-Info.plist"; sourceTree = "<group>"; };
+		AAA5D54B14829DC700BD9791 /* iTMDbDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iTMDbDemo-Info.plist"; sourceTree = "<group>"; };
 		AAA5D57F1482A4AA00BD9791 /* iTMDb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTMDb.framework; path = "../../../../Library/Developer/Xcode/DerivedData/iTMDb-fkdpveytxgdaxscbhaocxaexddtm/Build/Products/Debug/iTMDb.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,12 +62,13 @@
 				AA52449117F36866000AECAD /* TMDBImageView.m */,
 			);
 			name = "Image View";
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		AAA5D51114829C9700BD9791 = {
 			isa = PBXGroup;
 			children = (
-				AAA5D52614829C9700BD9791 /* iTMDbTest */,
+				AAA5D52614829C9700BD9791 /* iTMDbDemo */,
 				AAA5D51F14829C9700BD9791 /* Frameworks */,
 				AAA5D51D14829C9700BD9791 /* Products */,
 			);
@@ -76,7 +77,7 @@
 		AAA5D51D14829C9700BD9791 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AAA5D51C14829C9700BD9791 /* iTMDbTest.app */,
+				AAA5D51C14829C9700BD9791 /* iTMDbDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,26 +102,26 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		AAA5D52614829C9700BD9791 /* iTMDbTest */ = {
+		AAA5D52614829C9700BD9791 /* iTMDbDemo */ = {
 			isa = PBXGroup;
 			children = (
-				AA52449717F60708000AECAD /* iTMDbTest.entitlements */,
-				AAA5D54614829DB900BD9791 /* TestAppDelegate.h */,
-				AAA5D54714829DB900BD9791 /* TestAppDelegate.m */,
+				AAA5D54614829DB900BD9791 /* DemoAppDelegate.h */,
+				AAA5D54714829DB900BD9791 /* DemoAppDelegate.m */,
 				AA52449617F36A13000AECAD /* Image View */,
 				AAA5D52714829C9700BD9791 /* Supporting Files */,
 			);
-			path = iTMDbTest;
+			name = iTMDbDemo;
 			sourceTree = "<group>";
 		};
 		AAA5D52714829C9700BD9791 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AAA5D54B14829DC700BD9791 /* iTMDbTest-Info.plist */,
+				AA52449717F60708000AECAD /* iTMDbDemo.entitlements */,
+				AAA5D54B14829DC700BD9791 /* iTMDbDemo-Info.plist */,
 				AAA5D54914829DC000BD9791 /* MainMenu.xib */,
 				AAA5D52914829C9700BD9791 /* InfoPlist.strings */,
 				AAA5D52C14829C9700BD9791 /* main.m */,
-				AAA5D52E14829C9700BD9791 /* iTMDbTest-Prefix.pch */,
+				AAA5D52E14829C9700BD9791 /* iTMDbDemo-Prefix.pch */,
 				AAA5D52F14829C9700BD9791 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
@@ -129,9 +130,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AAA5D51B14829C9700BD9791 /* iTMDbTest */ = {
+		AAA5D51B14829C9700BD9791 /* iTMDbDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AAA5D53A14829C9700BD9791 /* Build configuration list for PBXNativeTarget "iTMDbTest" */;
+			buildConfigurationList = AAA5D53A14829C9700BD9791 /* Build configuration list for PBXNativeTarget "iTMDbDemo" */;
 			buildPhases = (
 				AAA5D51814829C9700BD9791 /* Sources */,
 				AAA5D51914829C9700BD9791 /* Frameworks */,
@@ -141,9 +142,9 @@
 			);
 			dependencies = (
 			);
-			name = iTMDbTest;
-			productName = iTMDbTest;
-			productReference = AAA5D51C14829C9700BD9791 /* iTMDbTest.app */;
+			name = iTMDbDemo;
+			productName = iTMDbDemo;
+			productReference = AAA5D51C14829C9700BD9791 /* iTMDbDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -152,7 +153,7 @@
 		AAA5D51314829C9700BD9791 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Devify;
 				TargetAttributes = {
 					AAA5D51B14829C9700BD9791 = {
@@ -165,7 +166,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AAA5D51614829C9700BD9791 /* Build configuration list for PBXProject "iTMDbTest" */;
+			buildConfigurationList = AAA5D51614829C9700BD9791 /* Build configuration list for PBXProject "iTMDbDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -177,7 +178,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AAA5D51B14829C9700BD9791 /* iTMDbTest */,
+				AAA5D51B14829C9700BD9791 /* iTMDbDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -201,7 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA5D52D14829C9700BD9791 /* main.m in Sources */,
-				AAA5D54814829DB900BD9791 /* TestAppDelegate.m in Sources */,
+				AAA5D54814829DB900BD9791 /* DemoAppDelegate.m in Sources */,
 				AA52449517F369E7000AECAD /* TMDBImageViewItem.m in Sources */,
 				AA52449217F36866000AECAD /* TMDBImageView.m in Sources */,
 			);
@@ -239,8 +240,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -274,9 +277,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -296,13 +301,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = iTMDbTest/iTMDbTest.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_ENTITLEMENTS = iTMDbDemo.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iTMDbTest/iTMDbTest-Prefix.pch";
-				INFOPLIST_FILE = "iTMDbTest/iTMDbTest-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "iTMDbDemo-Prefix.pch";
+				INFOPLIST_FILE = "iTMDbDemo-Info.plist";
+				PRODUCT_NAME = iTMDbDemo;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -311,13 +316,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = iTMDbTest/iTMDbTest.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_ENTITLEMENTS = iTMDbDemo.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iTMDbTest/iTMDbTest-Prefix.pch";
-				INFOPLIST_FILE = "iTMDbTest/iTMDbTest-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "iTMDbDemo-Prefix.pch";
+				INFOPLIST_FILE = "iTMDbDemo-Info.plist";
+				PRODUCT_NAME = iTMDbDemo;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -325,7 +330,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AAA5D51614829C9700BD9791 /* Build configuration list for PBXProject "iTMDbTest" */ = {
+		AAA5D51614829C9700BD9791 /* Build configuration list for PBXProject "iTMDbDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AAA5D53814829C9700BD9791 /* Debug */,
@@ -334,7 +339,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AAA5D53A14829C9700BD9791 /* Build configuration list for PBXNativeTarget "iTMDbTest" */ = {
+		AAA5D53A14829C9700BD9791 /* Build configuration list for PBXNativeTarget "iTMDbDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AAA5D53B14829C9700BD9791 /* Debug */,

@@ -56,7 +56,7 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
  *
  * @param personID The ID of the person.
  */
-- (instancetype)initWithID:(NSUInteger)personID;
+- (instancetype)initWithID:(NSUInteger)personID NS_DESIGNATED_INITIALIZER;
 
 /**
  * Returns a person object populated with the provided person information.
