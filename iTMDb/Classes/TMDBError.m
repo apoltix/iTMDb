@@ -8,4 +8,4 @@
 
 #import "TMDBError.h"
 
-NSString * const TMDBErrorDomain = @"com.apoltix.tmdb";
+NSString * const TMDBErrorDomain = @"com.devify.tmdb";

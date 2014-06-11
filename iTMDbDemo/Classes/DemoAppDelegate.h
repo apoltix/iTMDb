@@ -8,44 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <iTMDb/iTMDb.h>
-
-@interface DemoAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, TMDBDelegate, NSTableViewDataSource, NSTableViewDelegate>
-
-@property (nonatomic, strong) IBOutlet NSWindow *window;
-
-@property (nonatomic, weak) IBOutlet NSWindow *allDataWindow;
-
-@property (nonatomic, weak) IBOutlet NSTextField *apiKey;
-@property (nonatomic, weak) IBOutlet NSTextField *searchMovieID;
-@property (nonatomic, weak) IBOutlet NSTextField *searchMovieName;
-@property (nonatomic, weak) IBOutlet NSTextField *movieYear;
-@property (nonatomic, weak) IBOutlet NSTextField *language;
-@property (nonatomic, weak) IBOutlet NSButton *fetchCastAndCrewCheckbox;
-@property (nonatomic, weak) IBOutlet NSButton *fetchKeywordsCheckbox;
-@property (nonatomic, weak) IBOutlet NSButton *fetchImageURLsCheckbox;
-
-@property (nonatomic, weak) IBOutlet NSTextField *movieTitle;
-@property (nonatomic, strong) IBOutlet NSTextView *movieOverview;
-@property (nonatomic, weak) IBOutlet NSTokenField *movieKeywords;
-@property (nonatomic, weak) IBOutlet NSTextField *movieRuntime;
-@property (nonatomic, weak) IBOutlet NSTextField *movieReleaseDate;
-@property (nonatomic, weak) IBOutlet NSTextField *moviePostersCount;
-@property (nonatomic, weak) IBOutlet NSTextField *movieBackdropsCount;
-
-@property (nonatomic, weak) IBOutlet NSButton *goButton;
-@property (nonatomic, weak) IBOutlet NSProgressIndicator *throbber;
-@property (nonatomic, weak) IBOutlet NSButton *viewAllDataButton;
-
-@property (nonatomic, weak) IBOutlet NSTableView *castAndCrewTableView;
-@property (nonatomic, weak) IBOutlet NSTableCellView *imageAndNameTableViewCell;
-@property (nonatomic, weak) IBOutlet NSTableCellView *secondaryTableViewCell;
-
-@property (nonatomic, weak) IBOutlet NSCollectionView *postersCollectionView;
-
-@property (nonatomic, strong) IBOutlet NSTextView *allDataTextView;
-
-- (IBAction)go:(id)sender;
-- (IBAction)viewAllData:(id)sender;
+@interface DemoAppDelegate : NSObject <NSApplicationDelegate>
 
 @end

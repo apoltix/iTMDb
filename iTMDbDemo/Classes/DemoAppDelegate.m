@@ -7,8 +7,42 @@
 //
 
 #import "DemoAppDelegate.h"
+#import <iTMDb/iTMDb.h>
 
-@interface DemoAppDelegate ()
+@interface DemoAppDelegate () <NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate, TMDBDelegate>
+
+@property (nonatomic, strong) IBOutlet NSWindow *window;
+
+@property (nonatomic, weak) IBOutlet NSWindow *allDataWindow;
+
+@property (nonatomic, weak) IBOutlet NSTextField *apiKey;
+@property (nonatomic, weak) IBOutlet NSTextField *searchMovieID;
+@property (nonatomic, weak) IBOutlet NSTextField *searchMovieName;
+@property (nonatomic, weak) IBOutlet NSTextField *movieYear;
+@property (nonatomic, weak) IBOutlet NSTextField *language;
+@property (nonatomic, weak) IBOutlet NSButton *fetchCastAndCrewCheckbox;
+@property (nonatomic, weak) IBOutlet NSButton *fetchKeywordsCheckbox;
+@property (nonatomic, weak) IBOutlet NSButton *fetchImageURLsCheckbox;
+
+@property (nonatomic, weak) IBOutlet NSTextField *movieTitle;
+@property (nonatomic, strong) IBOutlet NSTextView *movieOverview;
+@property (nonatomic, weak) IBOutlet NSTokenField *movieKeywords;
+@property (nonatomic, weak) IBOutlet NSTextField *movieRuntime;
+@property (nonatomic, weak) IBOutlet NSTextField *movieReleaseDate;
+@property (nonatomic, weak) IBOutlet NSTextField *moviePostersCount;
+@property (nonatomic, weak) IBOutlet NSTextField *movieBackdropsCount;
+
+@property (nonatomic, weak) IBOutlet NSButton *goButton;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *throbber;
+@property (nonatomic, weak) IBOutlet NSButton *viewAllDataButton;
+
+@property (nonatomic, weak) IBOutlet NSTableView *castAndCrewTableView;
+
+@property (nonatomic, weak) IBOutlet NSCollectionView *postersCollectionView;
+
+@property (nonatomic, strong) IBOutlet NSTextView *allDataTextView;
+
+@property (nonatomic, copy) IBOutlet NSArray *posters;
 
 @property (nonatomic, strong) TMDB *tmdb;
 @property (nonatomic, strong) TMDBMovie *movie;
@@ -16,7 +50,10 @@
 
 @end
 
-@implementation DemoAppDelegate
+@implementation DemoAppDelegate {
+@private
+	NSCache *_cache;
+}
 
 + (void)initialize
 {
@@ -33,6 +70,7 @@
 {
 	[super awakeFromNib];
 
+	_cache = [[NSCache alloc] init];
 	_tmdb = nil;
 
 	NSFont *font = [NSFont fontWithName:@"Lucida Console" size:11.0];
@@ -55,8 +93,7 @@
 										 defaultButton:@"OK"
 									   alternateButton:nil
 										   otherButton:nil
-							 informativeTextWithFormat:@"Please enter both API key, and a movie ID or title.\n\n"
-													   @"You can obtain an API key from themoviedb.org."];
+							 informativeTextWithFormat:@"Please enter both API key, and a movie ID or title.\n\nYou can obtain an API key from themoviedb.org."];
 		[alert beginSheetModalForWindow:_window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 
 		return;
@@ -66,18 +103,22 @@
 	self.goButton.enabled = NO;
 	self.viewAllDataButton.enabled = NO;
 
+	// Initialize or update the framework setup
 	if (!self.tmdb || ![self.tmdb.apiKey isEqualToString:apiKey])
 		self.tmdb = [[TMDB alloc] initWithAPIKey:apiKey delegate:self language:nil];
 
+	// Clear previous data, if any
 	if (_allData)
 		_allData = nil;
 
+	// Set the language, if specified
 	NSString *lang = [self.language stringValue];
-	if (lang && [lang length] > 0)
+	if ([lang length] > 0)
 		self.tmdb.language = lang;
 	else
 		self.tmdb.language = @"en";
 
+	// Define the amount of detail we want to fetch
 	TMDBMovieFetchOptions fetchOptions = TMDBMovieFetchOptionBasic;
 
 	if (self.fetchCastAndCrewCheckbox.state == NSOnState)
@@ -89,17 +130,24 @@
 	if (self.fetchImageURLsCheckbox.state == NSOnState)
 		fetchOptions |= TMDBMovieFetchOptionImages;
 
+	// Actually fetch the movie based on the information we have
 	if ([self.searchMovieID integerValue] > 0)
+	{
 		self.movie = [[TMDBMovie alloc] initWithID:[self.searchMovieID integerValue] options:fetchOptions context:self.tmdb];
+	}
 	else if ([self.movieYear integerValue] > 0)
+	{
 		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions context:self.tmdb];
+	}
 	else
+	{
 		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] options:fetchOptions context:self.tmdb];
+	}
 }
 
 - (IBAction)viewAllData:(id)sender
 {
-	if (!_allData)
+	if (_allData == nil)
 		return;
 
 	self.allDataTextView.string = [_allData description];
@@ -121,7 +169,7 @@
 
 	self.movieTitle.stringValue = aMovie.title ? : @"";
 	self.movieOverview.string = aMovie.overview ? : @"";
-	self.movieRuntime.stringValue = [NSString stringWithFormat:@"%lu", aMovie.runtime] ? : @"";
+	self.movieRuntime.stringValue = [NSString stringWithFormat:@"%lu minutes", aMovie.runtime] ? : @"";
 
 	self.movieKeywords.stringValue = [aMovie.keywords componentsJoinedByString:@", "] ? : @"";
 
@@ -129,14 +177,15 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		releaseDateFormatter = [[NSDateFormatter alloc] init];
-		[releaseDateFormatter setDateFormat:@"dd-MM-yyyy"];
+		releaseDateFormatter.timeStyle = NSDateFormatterNoStyle;
+		releaseDateFormatter.dateStyle = NSDateFormatterMediumStyle;
 	});
 	self.movieReleaseDate.stringValue = [releaseDateFormatter stringFromDate:aMovie.released] ? : @"";
 
 	self.moviePostersCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.posters count], [context.configuration.imagesPosterSizes count]];
 	self.movieBackdropsCount.stringValue = [NSString stringWithFormat:@"%lu (%lu sizes total)", [aMovie.backdrops count], [context.configuration.imagesBackdropSizes count]];
 
-	self.postersCollectionView.content = aMovie.posters;
+	self.posters = aMovie.posters;
 	[self.castAndCrewTableView reloadData];
 }
 		
@@ -147,10 +196,10 @@
 
 	self.movieTitle.stringValue = @"";
 	self.movieOverview.string = @"";
-	self.movieRuntime.stringValue = @"0";
-	self.movieReleaseDate.stringValue = @"00-00-0000";
-	self.moviePostersCount.stringValue = @"0 (0 sizes total)";
-	self.movieBackdropsCount.stringValue = @"0 (0 sizes total)";
+	self.movieRuntime.stringValue = @"";
+	self.movieReleaseDate.stringValue = @"";
+	self.moviePostersCount.stringValue = @"";
+	self.movieBackdropsCount.stringValue = @"";
 
 	[self.throbber stopAnimation:self];
 	self.goButton.enabled = YES;
@@ -165,6 +214,8 @@
 {
 	return [_movie.cast count];
 }
+
+#pragma mark - NSTableViewDelegate
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
@@ -186,13 +237,7 @@
 
 		if (imageURL != nil)
 		{
-			static NSCache *cache;
-			static dispatch_once_t onceToken;
-			dispatch_once(&onceToken, ^{
-				cache = [[NSCache alloc] init];
-			});
-
-			__block NSImage *image = [cache objectForKey:imageURL];
+			__block NSImage *image = [_cache objectForKey:imageURL];
 
 			if (image != nil)
 				view.imageView.image = image;
@@ -202,7 +247,7 @@
 					image = [[NSImage alloc] initWithContentsOfURL:imageURL];
 
 					dispatch_async(dispatch_get_main_queue(), ^{
-						[cache setObject:image forKey:imageURL];
+						[_cache setObject:image forKey:imageURL];
 						view.imageView.image = image;
 					});
 				});
@@ -230,8 +275,6 @@
 
 	return view;
 }
-
-#pragma mark - NSTableViewDelegate
 
 #pragma mark -
 

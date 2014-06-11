@@ -10,13 +10,11 @@ You need Xcode 5.0 and LLVM Clang 5.0 or higher to build the project.
 
 Please remember to read the TMDb API [Terms of Use](https://www.themoviedb.org/about/api-terms).
 
-You can safely submit your apps using iTMDb to the App Store (it's been approved for use with [Collection](http://collectionapp.com/)).
-
-Originally made for version 2.1, the framework has been updated for support with version 3.0 of the API after version 2.1 was deprecated by TMDb. Support for a few new APIs have also been added.
+You can safely submit your apps using iTMDb to the App Store (it's been approved for use with [Collection](http://collectionapp.com/)). It fully supports OS X's sandboxing requirements.
 
 ## Documentation
 
-Most of the classes are documented using [appledoc](https://github.com/tomaz/appledoc). A generated copy of the documentation can be found [here](http://docs.apoltix.com/itmdb/). The documentation is also parseable by and usable in Xcode 5.
+Most of the classes are documented using [appledoc](https://github.com/tomaz/appledoc). A generated copy of the documentation can be found [here](http://docs.apoltix.com/itmdb/). The documentation is also parseable by and usable in Xcode 5 and 6.
 
 Certain classes have no specific documentation, but they are internal classes used by other classes, and are not intended to be interacted with directly.
 
@@ -28,25 +26,27 @@ You can check out the included test project (`iTMDbTest`) within the Xcode works
 
 1. Add the framework to your project like any other framework (use Google if you don't know how to do this).
 
-2. Add the following line to the header (or source) files where you will be using iTMDb:
+2. Add a Copy Files build phase to your project that puts the framework into the target's Frameworks folder.
+
+3. Add the following line to the header (or source) files where you will be using iTMDb:
 
 	``` objective-c
 	 #import <iTMDb/iTMDb.h>
 	```
 
-3. You create an instance of iTMDb like this. Replace ``api_key`` with your own API key, provided by [TMDb](http://api.themoviedb.org/). iTMDb performs fetch requests asynchronously, so setting a delegate is required. The delegate will receive notifications when the loading is done. The object should follow the TMDBDelegate protocol.
+4. You create an instance of iTMDb like this. Replace ``api_key`` with your own API key, provided by [TMDb](http://api.themoviedb.org/). iTMDb performs fetch requests asynchronously, so setting a delegate is required. The delegate will receive notifications when the loading is done. The object should follow the TMDBDelegate protocol.
 
 	``` objective-c
 	TMDB *tmdb = [[TMDB alloc] initWithAPIKey:@"api_key" delegate:self];
 	```
 
-4. Look up a movie (while knowing it's id).
+5. Look up a movie (while knowing it's id).
 
 	``` objective-c
-	[tmdb movieWithID:22538];
+	[TMDBMovie movieWithID:22538 options:TMDBMovieFetchOptionAll context:tmdb];
 	```
 
-5. An API request is made. Once information has been downloaded, the context object (`tmdb`) will receive a notification. The fetched properties are available through the returned object, which is sent to the context delegate (`tmdb.delegate`) with the following method:
+6. An API request is made. Once information has been downloaded, the context object (`tmdb`) will receive a notification. The fetched properties are available through the returned object, which is sent to the context delegate (`tmdb.delegate`) with the following method:
 
 	``` objective-c
 	-[tmdb:(TMDB *)context didFinishLoadingMovie:(TMDBMovie *)movie]

@@ -11,7 +11,14 @@
 #import "TMDBImageView.h"
 #import <iTMDb/iTMDB.h>
 
+static NSCache *imageCache;
+
 @implementation TMDBImageViewItem
+
++ (void)initialize
+{
+	imageCache = [[NSCache alloc] init];
+}
 
 //- (id)copyWithZone:(NSZone *)zone
 //{
@@ -45,20 +52,35 @@
 		NSString *imageSize = [TMDBImage sizeClosestMatchingSize:self.view.frame.size.width inSizes:config.imagesPosterSizes dimension:TMDBImageSizeWidth];
 		NSURL *imageURL = [image urlForSize:imageSize];
 
-		if (imageURL != nil)
+		NSImage *cachedImage = [imageCache objectForKey:imageURL];
+		if (cachedImage != nil)
+		{
+			self.tmdbImageView.image = cachedImage;
+		}
+		else if (imageURL != nil)
 		{
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 				NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
 				dispatch_async(dispatch_get_main_queue(), ^{
-					self.tmdbImageView.image = image;
+					if (image != nil)
+					{
+						self.tmdbImageView.image = image;
+						[imageCache setObject:image forKey:imageURL];
+					}
+					else
+						self.tmdbImageView.image = [NSImage imageNamed:NSImageNameCaution];
 				});
 			});
 		}
 		else
-			self.tmdbImageView.image = nil;
+		{
+			self.tmdbImageView.image = [NSImage imageNamed:NSImageNameCaution];
+		}
 	}
 	else
-		self.tmdbImageView.image = nil;
+	{
+		self.tmdbImageView.image = [NSImage imageNamed:NSImageNameCaution];
+	}
 }
 
 @end

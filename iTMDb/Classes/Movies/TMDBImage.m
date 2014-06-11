@@ -102,7 +102,7 @@
 
 	for (NSString *s in sizes)
 	{
-		TMDBImageSize dim;
+		TMDBImageSize dim = TMDBImageSizeOriginal;
 		CGFloat is = [TMDBImage sizeFromString:s imageSize:&dim];
 
 		if (dim != dimension)
