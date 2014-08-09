@@ -37,10 +37,7 @@
 	_context = context;
 	_type = type;
 	_filePath = [TMDB_NSStringOrNil(d[@"file_path"]) copy];
-	_originalSize = (TMDBSize){
-		.width = [TMDB_NSNumberOrNil(d[@"width"]) floatValue],
-		.height = [TMDB_NSNumberOrNil(d[@"height"]) floatValue]
-	};
+	_originalSize = CGSizeMake([TMDB_NSNumberOrNil(d[@"width"]) floatValue], [TMDB_NSNumberOrNil(d[@"height"]) floatValue]);
 	_aspectRatio = [TMDB_NSNumberOrNil(d[@"aspect_ratio"]) floatValue];
 	_iso639_1 = TMDB_NSStringOrNil(d[@"iso_639_1"]);
 	_voteAverage = [TMDB_NSNumberOrNil(d[@"vote_average"]) floatValue];
@@ -119,10 +116,10 @@
 	return closestMatchString;
 }
 
-- (TMDBSize)sizeForSize:(NSString *)size
+- (CGSize)sizeForSize:(NSString *)size
 {
-	//	return (TMDBSize){[imageData[@"width"] floatValue], [imageData[@"height"] floatValue]};
-	return (TMDBSize){0,0};
+//	return CGSizeMake([imageData[@"width"] floatValue], [imageData[@"height"] floatValue]);
+	return CGSizeZero;
 }
 
 #pragma mark -

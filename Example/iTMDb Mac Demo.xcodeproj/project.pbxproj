@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA114AC719965546007DB70E /* iTMDb.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5DBB19964B310007EE28 /* iTMDb.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA4B5DBE19964B550007EE28 /* iTMDb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5DBB19964B310007EE28 /* iTMDb.framework */; };
 		AA52449217F36866000AECAD /* TMDBImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52449117F36866000AECAD /* TMDBImageView.m */; };
 		AA52449517F369E7000AECAD /* TMDBImageViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AA52449417F369E7000AECAD /* TMDBImageViewItem.m */; };
 		AA58F42B1948E0B300C8C26D /* TMDBCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58F42A1948E0B300C8C26D /* TMDBCollectionView.m */; };
@@ -17,10 +19,48 @@
 		AAA5D53114829C9700BD9791 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAA5D52F14829C9700BD9791 /* Credits.rtf */; };
 		AAA5D54814829DB900BD9791 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA5D54714829DB900BD9791 /* DemoAppDelegate.m */; };
 		AAA5D54A14829DC000BD9791 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA5D54914829DC000BD9791 /* MainMenu.xib */; };
-		AAA5D5801482A4AA00BD9791 /* iTMDb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA5D57F1482A4AA00BD9791 /* iTMDb.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AA4B5DBA19964B310007EE28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4B5DB519964B310007EE28 /* iTMDb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = iTMDb;
+		};
+		AA4B5DBC19964B310007EE28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4B5DB519964B310007EE28 /* iTMDb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AA4B5D73199647690007EE28;
+			remoteInfo = "iTMDb-static";
+		};
+		AA4B5DBF19964B5A0007EE28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4B5DB519964B310007EE28 /* iTMDb.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = iTMDb;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AA114AC519965538007DB70E /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AA114AC719965546007DB70E /* iTMDb.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		AA4B5DB519964B310007EE28 /* iTMDb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iTMDb.xcodeproj; path = ../iTMDb/iTMDb.xcodeproj; sourceTree = "<group>"; };
 		AA52449017F36866000AECAD /* TMDBImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMDBImageView.h; sourceTree = "<group>"; };
 		AA52449117F36866000AECAD /* TMDBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDBImageView.m; sourceTree = "<group>"; };
 		AA52449317F369E7000AECAD /* TMDBImageViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMDBImageViewItem.h; sourceTree = "<group>"; };
@@ -32,7 +72,6 @@
 		AAA5D51C14829C9700BD9791 /* iTMDb Mac Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTMDb Mac Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA5D52014829C9700BD9791 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AAA5D52314829C9700BD9791 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		AAA5D52414829C9700BD9791 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		AAA5D52514829C9700BD9791 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AAA5D52A14829C9700BD9791 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AAA5D52C14829C9700BD9791 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -41,7 +80,6 @@
 		AAA5D54714829DB900BD9791 /* DemoAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoAppDelegate.m; path = Classes/DemoAppDelegate.m; sourceTree = "<group>"; };
 		AAA5D54914829DC000BD9791 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		AAA5D54B14829DC700BD9791 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AAA5D57F1482A4AA00BD9791 /* iTMDb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTMDb.framework; path = "../../../../Library/Developer/Xcode/DerivedData/iTMDb-fkdpveytxgdaxscbhaocxaexddtm/Build/Products/Debug/iTMDb.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,13 +88,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA5D52114829C9700BD9791 /* Cocoa.framework in Frameworks */,
-				AAA5D5801482A4AA00BD9791 /* iTMDb.framework in Frameworks */,
+				AA4B5DBE19964B550007EE28 /* iTMDb.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA4B5DB619964B310007EE28 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5DBB19964B310007EE28 /* iTMDb.framework */,
+				AA4B5DBD19964B310007EE28 /* libiTMDb.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AA52449617F36A13000AECAD /* Image View */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,7 +122,7 @@
 		AAA5D51114829C9700BD9791 = {
 			isa = PBXGroup;
 			children = (
-				AAA5D52614829C9700BD9791 /* iTMDbDemo */,
+				AAA5D52614829C9700BD9791 /* iTMDb Mac Demo */,
 				AAA5D51F14829C9700BD9791 /* Frameworks */,
 				AAA5D51D14829C9700BD9791 /* Products */,
 			);
@@ -92,24 +139,15 @@
 		AAA5D51F14829C9700BD9791 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA4B5DB519964B310007EE28 /* iTMDb.xcodeproj */,
+				AAA5D52514829C9700BD9791 /* Foundation.framework */,
 				AAA5D52014829C9700BD9791 /* Cocoa.framework */,
-				AAA5D57F1482A4AA00BD9791 /* iTMDb.framework */,
-				AAA5D52214829C9700BD9791 /* Other Frameworks */,
+				AAA5D52314829C9700BD9791 /* AppKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		AAA5D52214829C9700BD9791 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AAA5D52314829C9700BD9791 /* AppKit.framework */,
-				AAA5D52414829C9700BD9791 /* CoreData.framework */,
-				AAA5D52514829C9700BD9791 /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		AAA5D52614829C9700BD9791 /* iTMDbDemo */ = {
+		AAA5D52614829C9700BD9791 /* iTMDb Mac Demo */ = {
 			isa = PBXGroup;
 			children = (
 				AAA5D54614829DB900BD9791 /* DemoAppDelegate.h */,
@@ -117,7 +155,6 @@
 				AA52449617F36A13000AECAD /* Image View */,
 				AAA5D52714829C9700BD9791 /* Supporting Files */,
 			);
-			name = iTMDbDemo;
 			path = "iTMDb Mac Demo";
 			sourceTree = "<group>";
 		};
@@ -144,10 +181,12 @@
 				AAA5D51814829C9700BD9791 /* Sources */,
 				AAA5D51914829C9700BD9791 /* Frameworks */,
 				AAA5D51A14829C9700BD9791 /* Resources */,
+				AA114AC519965538007DB70E /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AA4B5DC019964B5A0007EE28 /* PBXTargetDependency */,
 			);
 			name = "iTMDb Mac Demo";
 			productName = iTMDbDemo;
@@ -183,12 +222,35 @@
 			mainGroup = AAA5D51114829C9700BD9791;
 			productRefGroup = AAA5D51D14829C9700BD9791 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AA4B5DB619964B310007EE28 /* Products */;
+					ProjectRef = AA4B5DB519964B310007EE28 /* iTMDb.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AAA5D51B14829C9700BD9791 /* iTMDb Mac Demo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AA4B5DBB19964B310007EE28 /* iTMDb.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = iTMDb.framework;
+			remoteRef = AA4B5DBA19964B310007EE28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AA4B5DBD19964B310007EE28 /* libiTMDb.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libiTMDb.a;
+			remoteRef = AA4B5DBC19964B310007EE28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AAA5D51A14829C9700BD9791 /* Resources */ = {
@@ -218,6 +280,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA4B5DC019964B5A0007EE28 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = iTMDb;
+			targetProxy = AA4B5DBF19964B5A0007EE28 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AAA5D52914829C9700BD9791 /* InfoPlist.strings */ = {

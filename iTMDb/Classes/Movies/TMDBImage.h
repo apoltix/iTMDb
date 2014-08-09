@@ -15,12 +15,6 @@ typedef NS_ENUM(NSUInteger, TMDBImageType) {
 	TMDBImageTypeBackdrop
 };
 
-// Don't use CGRect/NSRect to avoid dependency to Core Graphics.
-typedef struct {
-	float width;
-	float height;
-} TMDBSize;
-
 /**
  * 
  */
@@ -38,7 +32,7 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 @property (nonatomic, strong, readonly) TMDB *context;
 
 @property (nonatomic, readonly) TMDBImageType type;
-@property (nonatomic, readonly) TMDBSize originalSize;
+@property (nonatomic, readonly) CGSize originalSize;
 @property (nonatomic, readonly) float aspectRatio; // This is actually unnecessary
 @property (nonatomic, copy, readonly) NSString *iso639_1; // Two-letter language code
 
@@ -80,7 +74,7 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
  */
 + (NSString *)sizeClosestMatchingSize:(float)size inSizes:(NSArray *)sizes dimension:(TMDBImageSize)dimension;
 
-- (TMDBSize)sizeForSize:(NSString *)size UNAVAILABLE_ATTRIBUTE; // Not yet updated
+- (CGSize)sizeForSize:(NSString *)size UNAVAILABLE_ATTRIBUTE; // Not yet updated for TMDb 3.0
 
 @end
 

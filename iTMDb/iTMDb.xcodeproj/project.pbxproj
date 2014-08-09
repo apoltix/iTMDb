@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = AA3242CB12CBEF2F00063558 /* TMDBPerson.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3242CC12CBEF2F00063558 /* TMDBPerson.m */; };
+		AA4B5D6E199647090007EE28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5D6D199647090007EE28 /* CoreGraphics.framework */; };
+		AA4B5D89199647E90007EE28 /* TMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = AABB1F6512833F5300F84FEB /* TMDB.m */; };
+		AA4B5D8A199647E90007EE28 /* TMDBError.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65EA90176E665300D8C4D5 /* TMDBError.m */; };
+		AA4B5D8B199647E90007EE28 /* TMDBHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7617B61E380016B954 /* TMDBHelpers.m */; };
+		AA4B5D8C199647E90007EE28 /* TMDBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7117B51EAA0016B954 /* TMDBConfiguration.m */; };
+		AA4B5D8D199647E90007EE28 /* TMDBMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF4389E12834E6600F5CC92 /* TMDBMovie.m */; };
+		AA4B5D8E199647E90007EE28 /* TMDBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFA3EB212863A78002B9E38 /* TMDBImage.m */; };
+		AA4B5D8F199647E90007EE28 /* TMDBPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3242CC12CBEF2F00063558 /* TMDBPerson.m */; };
+		AA4B5D90199647E90007EE28 /* TMDBLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7B17B62E1B0016B954 /* TMDBLanguage.m */; };
+		AA4B5D91199647E90007EE28 /* TMDBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF43A0F12835F9400F5CC92 /* TMDBRequest.m */; };
+		AA4B5D93199647F10007EE28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5D92199647F10007EE28 /* Foundation.framework */; };
+		AA4B5D95199647F60007EE28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5D94199647F60007EE28 /* CoreGraphics.framework */; };
 		AA65EA92176E698E00D8C4D5 /* TMDBError.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65EA90176E665300D8C4D5 /* TMDBError.m */; };
 		AA65EA93176E69A800D8C4D5 /* TMDBError.h in Headers */ = {isa = PBXBuildFile; fileRef = AA65EA8F176E665300D8C4D5 /* TMDBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA985848128309AA0074F570 /* iTMDb.h in Headers */ = {isa = PBXBuildFile; fileRef = AA985847128309AA0074F570 /* iTMDb.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,6 +42,18 @@
 		AAFA3EB412863A78002B9E38 /* TMDBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFA3EB212863A78002B9E38 /* TMDBImage.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AA4B5D71199647690007EE28 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		32DBCF5E0370ADEE00C91783 /* iTMDb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb_Prefix.pch; sourceTree = "<group>"; };
@@ -37,6 +61,10 @@
 		8DC2EF5B0486A6940098B216 /* iTMDb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iTMDb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3242CB12CBEF2F00063558 /* TMDBPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBPerson.h; path = Classes/People/TMDBPerson.h; sourceTree = "<group>"; };
 		AA3242CC12CBEF2F00063558 /* TMDBPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBPerson.m; path = Classes/People/TMDBPerson.m; sourceTree = "<group>"; };
+		AA4B5D6D199647090007EE28 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AA4B5D73199647690007EE28 /* libiTMDb.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiTMDb.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA4B5D92199647F10007EE28 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		AA4B5D94199647F60007EE28 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		AA65EA8F176E665300D8C4D5 /* TMDBError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TMDBError.h; path = Classes/TMDBError.h; sourceTree = "<group>"; };
 		AA65EA90176E665300D8C4D5 /* TMDBError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TMDBError.m; path = Classes/TMDBError.m; sourceTree = "<group>"; };
 		AA985847128309AA0074F570 /* iTMDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb.h; sourceTree = "<group>"; };
@@ -66,6 +94,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA9D9B7F17B63D5D0016B954 /* Foundation.framework in Frameworks */,
+				AA4B5D6E199647090007EE28 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA4B5D70199647690007EE28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4B5D93199647F10007EE28 /* Foundation.framework in Frameworks */,
+				AA4B5D95199647F60007EE28 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* iTMDb.framework */,
+				AA4B5D73199647690007EE28 /* libiTMDb.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,26 +123,17 @@
 			isa = PBXGroup;
 			children = (
 				08FB77AEFE84172EC02AAC07 /* Classes */,
-				32C88DFF0371C24200C91783 /* Other Sources */,
 				089C1665FE841158C02AAC07 /* Resources */,
-				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				1058C7B0FEA5585E11CA2CBB /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
 			name = iTMDb;
 			sourceTree = "<group>";
 		};
-		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
-				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
-			);
-			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				32DBCF5E0370ADEE00C91783 /* iTMDb_Prefix.pch */,
 				AA98586D12830B680074F570 /* README.md */,
 				AA9D9B7417B5263B0016B954 /* LICENSE */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
@@ -123,27 +153,31 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
-		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+		1058C7B0FEA5585E11CA2CBB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5D961996480F0007EE28 /* OS X */,
+				AA4B5D97199648130007EE28 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA4B5D961996480F0007EE28 /* OS X */ = {
 			isa = PBXGroup;
 			children = (
 				AA9D9B7E17B63D5D0016B954 /* Foundation.framework */,
+				AA4B5D6D199647090007EE28 /* CoreGraphics.framework */,
 			);
-			name = "Linked Frameworks";
+			name = "OS X";
 			sourceTree = "<group>";
 		};
-		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+		AA4B5D97199648130007EE28 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				AA4B5D92199647F10007EE28 /* Foundation.framework */,
+				AA4B5D94199647F60007EE28 /* CoreGraphics.framework */,
 			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		32C88DFF0371C24200C91783 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32DBCF5E0370ADEE00C91783 /* iTMDb_Prefix.pch */,
-			);
-			name = "Other Sources";
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		AA65EA91176E666B00D8C4D5 /* Other */ = {
@@ -277,6 +311,23 @@
 			productReference = 8DC2EF5B0486A6940098B216 /* iTMDb.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		AA4B5D72199647690007EE28 /* iTMDb-static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA4B5D811996476A0007EE28 /* Build configuration list for PBXNativeTarget "iTMDb-static" */;
+			buildPhases = (
+				AA4B5D6F199647690007EE28 /* Sources */,
+				AA4B5D70199647690007EE28 /* Frameworks */,
+				AA4B5D71199647690007EE28 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iTMDb-static";
+			productName = "iTMDb-static";
+			productReference = AA4B5D73199647690007EE28 /* libiTMDb.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -286,6 +337,11 @@
 				CLASSPREFIX = TMDB;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Devify;
+				TargetAttributes = {
+					AA4B5D72199647690007EE28 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "iTMDb" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -303,6 +359,7 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* iTMDb */,
+				AA4B5D72199647690007EE28 /* iTMDb-static */,
 			);
 		};
 /* End PBXProject section */
@@ -334,6 +391,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA4B5D6F199647690007EE28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4B5D89199647E90007EE28 /* TMDB.m in Sources */,
+				AA4B5D8A199647E90007EE28 /* TMDBError.m in Sources */,
+				AA4B5D8B199647E90007EE28 /* TMDBHelpers.m in Sources */,
+				AA4B5D8C199647E90007EE28 /* TMDBConfiguration.m in Sources */,
+				AA4B5D8D199647E90007EE28 /* TMDBMovie.m in Sources */,
+				AA4B5D8E199647E90007EE28 /* TMDBImage.m in Sources */,
+				AA4B5D8F199647E90007EE28 /* TMDBPerson.m in Sources */,
+				AA4B5D90199647E90007EE28 /* TMDBLanguage.m in Sources */,
+				AA4B5D91199647E90007EE28 /* TMDBRequest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -352,7 +425,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -361,8 +433,6 @@
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = iTMDb_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = iTMDb;
@@ -374,15 +444,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = iTMDb_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = iTMDb;
@@ -393,17 +459,32 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = iTMDb_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -415,20 +496,63 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = iTMDb_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA4B5D821996476A0007EE28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = iTMDb;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AA4B5D831996476A0007EE28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = iTMDb;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -452,6 +576,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		AA4B5D811996476A0007EE28 /* Build configuration list for PBXNativeTarget "iTMDb-static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA4B5D821996476A0007EE28 /* Debug */,
+				AA4B5D831996476A0007EE28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

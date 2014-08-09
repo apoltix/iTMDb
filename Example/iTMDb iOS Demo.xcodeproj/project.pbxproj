@@ -1,0 +1,405 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA4B5D3C199640E10007EE28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4B5D3B199640E10007EE28 /* main.m */; };
+		AA4B5D48199640E10007EE28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4B5D46199640E10007EE28 /* Main.storyboard */; };
+		AA4B5D4A199640E10007EE28 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA4B5D49199640E10007EE28 /* Images.xcassets */; };
+		AA4B5D661996427B0007EE28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4B5D611996427B0007EE28 /* AppDelegate.m */; };
+		AA4B5D671996427B0007EE28 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4B5D631996427B0007EE28 /* DetailViewController.m */; };
+		AA4B5D681996427B0007EE28 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4B5D651996427B0007EE28 /* MasterViewController.m */; };
+		AA4B5DB019964B100007EE28 /* libiTMDb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5DAE19964AED0007EE28 /* libiTMDb.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AA4B5DAB19964AED0007EE28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4B5DA619964AED0007EE28 /* iTMDb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = iTMDb;
+		};
+		AA4B5DAD19964AED0007EE28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4B5DA619964AED0007EE28 /* iTMDb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AA4B5D73199647690007EE28;
+			remoteInfo = "iTMDb-static";
+		};
+		AA4B5DB319964B250007EE28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4B5DA619964AED0007EE28 /* iTMDb.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AA4B5D72199647690007EE28;
+			remoteInfo = "iTMDb-static";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AA4B5D36199640E10007EE28 /* iTMDb iOS Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTMDb iOS Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA4B5D3A199640E10007EE28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA4B5D3B199640E10007EE28 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AA4B5D47199640E10007EE28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AA4B5D49199640E10007EE28 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AA4B5D601996427B0007EE28 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AA4B5D611996427B0007EE28 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AA4B5D621996427B0007EE28 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		AA4B5D631996427B0007EE28 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		AA4B5D641996427B0007EE28 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		AA4B5D651996427B0007EE28 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		AA4B5DA619964AED0007EE28 /* iTMDb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iTMDb.xcodeproj; path = ../iTMDb/iTMDb.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA4B5D33199640E10007EE28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4B5DB019964B100007EE28 /* libiTMDb.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA4B5D2D199640E10007EE28 = {
+			isa = PBXGroup;
+			children = (
+				AA4B5D38199640E10007EE28 /* iTMDb iOS Demo */,
+				AA4B5D6C199646D00007EE28 /* Frameworks */,
+				AA4B5D37199640E10007EE28 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA4B5D37199640E10007EE28 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5D36199640E10007EE28 /* iTMDb iOS Demo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA4B5D38199640E10007EE28 /* iTMDb iOS Demo */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5D5F1996427B0007EE28 /* Classes */,
+				AA4B5D69199642890007EE28 /* Resources */,
+				AA4B5D39199640E10007EE28 /* Supporting Files */,
+			);
+			path = "iTMDb iOS Demo";
+			sourceTree = "<group>";
+		};
+		AA4B5D39199640E10007EE28 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5D3A199640E10007EE28 /* Info.plist */,
+				AA4B5D3B199640E10007EE28 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA4B5D5F1996427B0007EE28 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5D601996427B0007EE28 /* AppDelegate.h */,
+				AA4B5D611996427B0007EE28 /* AppDelegate.m */,
+				AA4B5D621996427B0007EE28 /* DetailViewController.h */,
+				AA4B5D631996427B0007EE28 /* DetailViewController.m */,
+				AA4B5D641996427B0007EE28 /* MasterViewController.h */,
+				AA4B5D651996427B0007EE28 /* MasterViewController.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		AA4B5D69199642890007EE28 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5D46199640E10007EE28 /* Main.storyboard */,
+				AA4B5D49199640E10007EE28 /* Images.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		AA4B5D6C199646D00007EE28 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5DA619964AED0007EE28 /* iTMDb.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA4B5DA719964AED0007EE28 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA4B5DAC19964AED0007EE28 /* iTMDb.framework */,
+				AA4B5DAE19964AED0007EE28 /* libiTMDb.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA4B5D35199640E10007EE28 /* iTMDb iOS Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA4B5D59199640E10007EE28 /* Build configuration list for PBXNativeTarget "iTMDb iOS Demo" */;
+			buildPhases = (
+				AA4B5D32199640E10007EE28 /* Sources */,
+				AA4B5D33199640E10007EE28 /* Frameworks */,
+				AA4B5D34199640E10007EE28 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA4B5DB419964B250007EE28 /* PBXTargetDependency */,
+			);
+			name = "iTMDb iOS Demo";
+			productName = "iTMDb iOS Demo";
+			productReference = AA4B5D36199640E10007EE28 /* iTMDb iOS Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA4B5D2E199640E10007EE28 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = Devify;
+				TargetAttributes = {
+					AA4B5D35199640E10007EE28 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+				};
+			};
+			buildConfigurationList = AA4B5D31199640E10007EE28 /* Build configuration list for PBXProject "iTMDb iOS Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA4B5D2D199640E10007EE28;
+			productRefGroup = AA4B5D37199640E10007EE28 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AA4B5DA719964AED0007EE28 /* Products */;
+					ProjectRef = AA4B5DA619964AED0007EE28 /* iTMDb.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				AA4B5D35199640E10007EE28 /* iTMDb iOS Demo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AA4B5DAC19964AED0007EE28 /* iTMDb.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = iTMDb.framework;
+			remoteRef = AA4B5DAB19964AED0007EE28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AA4B5DAE19964AED0007EE28 /* libiTMDb.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libiTMDb.a;
+			remoteRef = AA4B5DAD19964AED0007EE28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA4B5D34199640E10007EE28 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4B5D48199640E10007EE28 /* Main.storyboard in Resources */,
+				AA4B5D4A199640E10007EE28 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA4B5D32199640E10007EE28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4B5D3C199640E10007EE28 /* main.m in Sources */,
+				AA4B5D661996427B0007EE28 /* AppDelegate.m in Sources */,
+				AA4B5D671996427B0007EE28 /* DetailViewController.m in Sources */,
+				AA4B5D681996427B0007EE28 /* MasterViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA4B5DB419964B250007EE28 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iTMDb-static";
+			targetProxy = AA4B5DB319964B250007EE28 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AA4B5D46199640E10007EE28 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA4B5D47199640E10007EE28 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AA4B5D57199640E10007EE28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AA4B5D58199640E10007EE28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA4B5D5A199640E10007EE28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/iTMDb-dqvdbwkkrzdmdldfsnpfddswjium/Build/Products/Debug",
+				);
+				INFOPLIST_FILE = "iTMDb iOS Demo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/christian/Documents/Projects/iTMDb/iTMDb/build/Debug-iphoneos",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA4B5D5B199640E10007EE28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/iTMDb-dqvdbwkkrzdmdldfsnpfddswjium/Build/Products/Debug",
+				);
+				INFOPLIST_FILE = "iTMDb iOS Demo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/christian/Documents/Projects/iTMDb/iTMDb/build/Debug-iphoneos",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA4B5D31199640E10007EE28 /* Build configuration list for PBXProject "iTMDb iOS Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA4B5D57199640E10007EE28 /* Debug */,
+				AA4B5D58199640E10007EE28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA4B5D59199640E10007EE28 /* Build configuration list for PBXNativeTarget "iTMDb iOS Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA4B5D5A199640E10007EE28 /* Debug */,
+				AA4B5D5B199640E10007EE28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA4B5D2E199640E10007EE28 /* Project object */;
+}
