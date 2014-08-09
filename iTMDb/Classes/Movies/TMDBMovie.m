@@ -169,11 +169,9 @@
 
 - (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error
 {
-	if (error)
-	{
+	if (error) {
 		//NSLog(@"iTMDb: TMDBMovie request failed: %@", [error description]);
-		if (_context)
-		{
+		if (_context) {
 			NSDictionary *userInfo = @{
 				TMDBMovieUserInfoKey: self,
 				TMDBErrorUserInfoKey: error
@@ -185,11 +183,9 @@
 
 	_rawResults = _isSearchingOnly ? (NSArray *)((NSDictionary *)[request parsedData])[@"results"] : (NSDictionary *)[request parsedData];
 
-	if (!_rawResults || (_isSearchingOnly ? ![_rawResults count] > 0 || ![_rawResults[0] isKindOfClass:[NSDictionary class]] : NO))
-	{
+	if (!_rawResults || (_isSearchingOnly ? ![_rawResults count] > 0 || ![_rawResults[0] isKindOfClass:[NSDictionary class]] : NO)) {
 		//NSLog(@"iTMDb: Returned data is NOT a dictionary!\n%@", _rawResults);
-		if (_context)
-		{
+		if (_context) {
 			NSDictionary *errorDict = @{
 				NSLocalizedDescriptionKey: [NSString stringWithFormat:@"The data source (themoviedb) returned invalid data: %@", _rawResults]
 			};
@@ -211,15 +207,12 @@
 	// If there are multiple results, and the user specified an expected year
 	// of release iterate over the search results and find the one matching
 	// said year, if any.
-	if (_isSearchingOnly && _expectedYear != 0)
-	{
-		for (NSDictionary *result in (NSArray *)_rawResults)
-		{
+	if (_isSearchingOnly && _expectedYear != 0) {
+		for (NSDictionary *result in (NSArray *)_rawResults) {
 			NSDate *releaseDate = [self dateFromString:(NSString *)result[@"release_date"]];
 			NSUInteger releaseYear = [self yearFromDate:releaseDate];
 
-			if (releaseYear == _expectedYear)
-			{
+			if (releaseYear == _expectedYear) {
 				d = result;
 				break;
 			}
@@ -294,12 +287,10 @@
 
 	// Cast and Crew
 	_cast = nil;
-	if (TMDB_NSDictionaryOrNil(d[@"casts"]) != nil)
-	{
+	if (TMDB_NSDictionaryOrNil(d[@"casts"]) != nil) {
 		NSDictionary *rawCasts = (NSDictionary *)d[@"casts"];
 		NSMutableArray *casts = [NSMutableArray array];
-		for (NSString *key in rawCasts)
-		{
+		for (NSString *key in rawCasts) {
 			NSArray *castsPart = [TMDBPerson personsWithMovie:self personsInfo:rawCasts[key]];
 			if ([castsPart count] > 0)
 				[casts addObjectsFromArray:castsPart];
@@ -309,11 +300,9 @@
 
 	// Keywords
 	NSArray *rawKeywords = TMDB_NSArrayOrNil(TMDB_NSDictionaryOrNil(d[@"keywords"])[@"keywords"]);
-	if ([rawKeywords count] > 0)
-	{
+	if ([rawKeywords count] > 0) {
 		NSMutableArray *keywords = [NSMutableArray arrayWithCapacity:[rawKeywords count]];
-		for (NSDictionary *keyword in rawKeywords)
-		{
+		for (NSDictionary *keyword in rawKeywords) {
 			[keywords addObject:keyword[@"name"]];
 		}
 		_keywords = [NSArray arrayWithArray:keywords];
@@ -321,8 +310,7 @@
 	else
 		_keywords = nil;
 
-	if (_isSearchingOnly)
-	{
+	if (_isSearchingOnly) {
 		_isSearchingOnly = NO;
 		// Cast to suppress compiler warning, probably not a good idea
 		(void)[self initWithID:_id options:_options context:_context];
@@ -330,8 +318,7 @@
 	}
 
 	// Notify the context that the movie info has been loaded
-	if (_context)
-	{
+	if (_context) {
 		NSDictionary *userInfo = @{
 			TMDBMovieUserInfoKey: self
 		};

@@ -49,14 +49,12 @@
 
 - (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error
 {
-	if (error != nil)
-	{
+	if (error != nil) {
 		TMDBLog(@"Configuration fetch request failed with error: %@", error);
 		return;
 	}
 
-	if (request.parsedData == nil || ![request.parsedData isKindOfClass:[NSDictionary class]])
-	{
+	if (request.parsedData == nil || ![request.parsedData isKindOfClass:[NSDictionary class]]) {
 		TMDBLog(@"Configuration response was empty or invalid.");
 		return;
 	}

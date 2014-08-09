@@ -27,8 +27,7 @@
 
 	NSMutableArray *languages = [NSMutableArray array];
 
-	for (NSDictionary *rawLanguage in rawLanguagesDictionaries)
-	{
+	for (NSDictionary *rawLanguage in rawLanguagesDictionaries) {
 		TMDBLanguage *language = [[TMDBLanguage alloc] initWithDictionary:rawLanguage context:context];
 
 		if (language)

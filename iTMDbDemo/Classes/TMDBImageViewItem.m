@@ -20,13 +20,6 @@ static NSCache *imageCache;
 	imageCache = [[NSCache alloc] init];
 }
 
-//- (id)copyWithZone:(NSZone *)zone
-//{
-//	TMDBImageViewItem *copy = [super copyWithZone:zone];
-//
-//	return copy;
-//}
-
 - (TMDBImageView *)tmdbImageView
 {
 	return (TMDBImageView *)self.view;
@@ -46,39 +39,40 @@ static NSCache *imageCache;
 
 	self.textField.stringValue = [image description] ? : @"";
 
-	if (image != nil)
-	{
+	if (image != nil) {
 		TMDBConfiguration *config = image.context.configuration;
-		NSString *imageSize = [TMDBImage sizeClosestMatchingSize:self.view.frame.size.width inSizes:config.imagesPosterSizes dimension:TMDBImageSizeWidth];
+
+		NSString *imageSize = [TMDBImage sizeClosestMatchingSize:self.view.frame.size.width
+														 inSizes:config.imagesPosterSizes
+													   dimension:TMDBImageSizeWidth];
+
 		NSURL *imageURL = [image urlForSize:imageSize];
 
 		NSImage *cachedImage = [imageCache objectForKey:imageURL];
-		if (cachedImage != nil)
-		{
+
+		if (cachedImage != nil) {
 			self.tmdbImageView.image = cachedImage;
 		}
-		else if (imageURL != nil)
-		{
+		else if (imageURL != nil) {
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+				// Never download images this way. Only done this way to avoid dependencies
 				NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
 				dispatch_async(dispatch_get_main_queue(), ^{
-					if (image != nil)
-					{
+					if (image != nil) {
 						self.tmdbImageView.image = image;
 						[imageCache setObject:image forKey:imageURL];
 					}
-					else
+					else {
 						self.tmdbImageView.image = [NSImage imageNamed:NSImageNameCaution];
+					}
 				});
 			});
 		}
-		else
-		{
+		else {
 			self.tmdbImageView.image = [NSImage imageNamed:NSImageNameCaution];
 		}
 	}
-	else
-	{
+	else {
 		self.tmdbImageView.image = [NSImage imageNamed:NSImageNameCaution];
 	}
 }

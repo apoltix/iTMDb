@@ -21,8 +21,7 @@
 {
 	NSMutableArray *images = [NSMutableArray array];
 
-	for (NSDictionary *imageDict in rawImages)
-	{
+	for (NSDictionary *imageDict in rawImages) {
 		TMDBImage *currentImage = [[TMDBImage alloc] initWithDictionary:imageDict type:aType context:context];
 		[images addObject:currentImage];
 	}
@@ -69,16 +68,14 @@
 	if ([s length] == 0)
 		return -1.0f;
 
-	if ([[s lowercaseString] isEqualToString:@"original"])
-	{
+	if ([[s lowercaseString] isEqualToString:@"original"]) {
 		if (outImageSize)
 			*outImageSize = TMDBImageSizeOriginal;
 
 		return -1.0f;
 	}
 
-	if (outImageSize)
-	{
+	if (outImageSize) {
 		NSString *prefix = [[s substringToIndex:1] lowercaseString];
 
 		if ([prefix isEqualToString:@"w"])
@@ -100,8 +97,7 @@
 	CGFloat closestMatch = 0.0;
 	NSString *closestMatchString = nil;
 
-	for (NSString *s in sizes)
-	{
+	for (NSString *s in sizes) {
 		TMDBImageSize dim = TMDBImageSizeOriginal;
 		CGFloat is = [TMDBImage sizeFromString:s imageSize:&dim];
 

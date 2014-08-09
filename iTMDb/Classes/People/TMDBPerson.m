@@ -17,8 +17,7 @@
 {
 	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:[d count]];
 
-	for (NSDictionary *rawPerson in d)
-	{
+	for (NSDictionary *rawPerson in d) {
 		TMDBPerson *person = [[TMDBPerson alloc] initWithMovie:movie personInfo:rawPerson];
 		[persons addObject:person];
 	}
@@ -54,20 +53,16 @@
 
 - (NSString *)description
 {
-	if (_movie != nil && [_character length] > 0 && [_name length] > 0)
-	{
+	if (_movie != nil && [_character length] > 0 && [_name length] > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@ as \"%@\" in \"%@\"%@>", [self class], self, _name, _character, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%li)", _movie.year] : @"", nil];
 	}
-	else if (_movie != nil && [_name length] > 0 && [_job length] > 0)
-	{
+	else if (_movie != nil && [_name length] > 0 && [_job length] > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@ as %@ of \"%@\"%@>", [self class], self, _name, _job, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%li)", _movie.year] : @"", nil];
 	}
-	else if (_movie != nil && [_name length] > 0)
-	{
+	else if (_movie != nil && [_name length] > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@ in \"%@\"%@>", [self class], self, _name, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%li)", _movie.year] : @"", nil];
 	}
-	else if ([_name length] > 0)
-	{
+	else if ([_name length] > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@>", [self class], self, _name, nil];
 	}
 

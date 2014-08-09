@@ -74,8 +74,9 @@
 	_tmdb = nil;
 
 	NSFont *font = [NSFont fontWithName:@"Lucida Console" size:11.0];
-	if (!font)
+	if (!font) {
 		font = [NSFont fontWithName:@"Courier" size:11.0];
+	}
 	[_allDataTextView setFont:font];
 }
 
@@ -87,8 +88,7 @@
 
 	NSString *apiKey = [self.apiKey stringValue];
 
-	if (!([apiKey length] > 0 && ([self.searchMovieID integerValue] > 0 || [[self.searchMovieName stringValue] length] > 0)))
-	{
+	if (!([apiKey length] > 0 && ([self.searchMovieID integerValue] > 0 || [[self.searchMovieName stringValue] length] > 0))) {
 		NSAlert *alert = [NSAlert alertWithMessageText:@"Missing either API key, movie ID or title"
 										 defaultButton:@"OK"
 									   alternateButton:nil
@@ -104,51 +104,57 @@
 	self.viewAllDataButton.enabled = NO;
 
 	// Initialize or update the framework setup
-	if (!self.tmdb || ![self.tmdb.apiKey isEqualToString:apiKey])
+	if (!self.tmdb || ![self.tmdb.apiKey isEqualToString:apiKey]) {
 		self.tmdb = [[TMDB alloc] initWithAPIKey:apiKey delegate:self language:nil];
+	}
 
 	// Clear previous data, if any
-	if (_allData)
+	if (_allData) {
 		_allData = nil;
+	}
 
 	// Set the language, if specified
 	NSString *lang = [self.language stringValue];
-	if ([lang length] > 0)
+
+	if ([lang length] > 0) {
 		self.tmdb.language = lang;
-	else
+	}
+	else {
 		self.tmdb.language = @"en";
+	}
 
 	// Define the amount of detail we want to fetch
 	TMDBMovieFetchOptions fetchOptions = TMDBMovieFetchOptionBasic;
 
-	if (self.fetchCastAndCrewCheckbox.state == NSOnState)
+	if (self.fetchCastAndCrewCheckbox.state == NSOnState) {
 		fetchOptions |= TMDBMovieFetchOptionCasts;
+	}
 
-	if (self.fetchKeywordsCheckbox.state == NSOnState)
+	if (self.fetchKeywordsCheckbox.state == NSOnState) {
 		fetchOptions |= TMDBMovieFetchOptionKeywords;
+	}
 
-	if (self.fetchImageURLsCheckbox.state == NSOnState)
+	if (self.fetchImageURLsCheckbox.state == NSOnState) {
 		fetchOptions |= TMDBMovieFetchOptionImages;
+	}
 
 	// Actually fetch the movie based on the information we have
-	if ([self.searchMovieID integerValue] > 0)
-	{
+	if ([self.searchMovieID integerValue] > 0) {
 		self.movie = [[TMDBMovie alloc] initWithID:[self.searchMovieID integerValue] options:fetchOptions context:self.tmdb];
 	}
-	else if ([self.movieYear integerValue] > 0)
-	{
+	else if ([self.movieYear integerValue] > 0) {
 		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions context:self.tmdb];
 	}
-	else
-	{
+	else {
 		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] options:fetchOptions context:self.tmdb];
 	}
 }
 
 - (IBAction)viewAllData:(id)sender
 {
-	if (_allData == nil)
+	if (_allData == nil) {
 		return;
+	}
 
 	self.allDataTextView.string = [_allData description];
 
@@ -222,27 +228,24 @@
 	TMDBPerson *person = _movie.cast[row];
 	NSTableCellView *view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 
-	if ([tableColumn.identifier isEqualToString:@"imageAndName"])
-	{
+	if ([tableColumn.identifier isEqualToString:@"imageAndName"]) {
 		view.textField.stringValue = person.name;
 
 		NSURL *imageURL = nil;
-		if (person.imageURL != nil)
-		{
+		if (person.imageURL != nil) {
 			TMDBConfiguration *config = _movie.context.configuration;
 			imageURL = config.imagesBaseURL;
 			imageURL = [imageURL URLByAppendingPathComponent:config.imagesPosterSizes[0]];
 			imageURL = [imageURL URLByAppendingPathComponent:[person.imageURL path]];
 		}
 
-		if (imageURL != nil)
-		{
+		if (imageURL != nil) {
 			__block NSImage *image = [_cache objectForKey:imageURL];
 
-			if (image != nil)
+			if (image != nil) {
 				view.imageView.image = image;
-			else
-			{
+			}
+			else {
 				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 					image = [[NSImage alloc] initWithContentsOfURL:imageURL];
 
@@ -253,25 +256,27 @@
 				});
 			}
 		}
-		else
+		else {
 			view.imageView.image = nil;
+		}
 	}
-	else if ([tableColumn.identifier isEqualToString:@"character"])
-	{
-		if ([person.job isEqualToString:@"Actor"])
+	else if ([tableColumn.identifier isEqualToString:@"character"]) {
+		if ([person.job isEqualToString:@"Actor"]) {
 			view.textField.stringValue = person.character ? : person.job ? : @"";
-		else
+		}
+		else {
 			view.textField.stringValue = person.job ? : @"";
+		}
 	}
-	else if ([tableColumn.identifier isEqualToString:@"other"])
-	{
+	else if ([tableColumn.identifier isEqualToString:@"other"]) {
 		if ([person.job isEqualToString:@"Actor"])
 			view.textField.stringValue = person.job ? : @"";
 		else
 			view.textField.stringValue = @"";
 	}
-	else
+	else {
 		view = nil;
+	}
 
 	return view;
 }

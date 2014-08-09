@@ -32,8 +32,7 @@
 
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
 
-	if ([NSURLConnection connectionWithRequest:req delegate:self])
-	{
+	if ([NSURLConnection connectionWithRequest:req delegate:self]) {
 		_data = [NSMutableData data];
 		_delegate = delegate;
 	}
@@ -48,8 +47,7 @@
 
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
 
-	if ([NSURLConnection connectionWithRequest:req delegate:self])
-	{
+	if ([NSURLConnection connectionWithRequest:req delegate:self]) {
 		_data = [NSMutableData data];
 		_completionBlock = [block copy];
 	}
