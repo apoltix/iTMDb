@@ -5,6 +5,6 @@
       location = "group:iTMDb/iTMDb.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:iTMDbDemo/iTMDbDemo.xcodeproj">
+      location = "group:Example/iTMDb Mac Demo.xcodeproj">
    </FileRef>
 </Workspace>

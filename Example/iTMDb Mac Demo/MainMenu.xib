@@ -43,11 +43,11 @@
         <userDefaultsController representsSharedInstance="YES" id="920"/>
         <menu title="Main Menu" systemMenu="main" id="29">
             <items>
-                <menuItem title="iTMDbDemo" id="56">
+                <menuItem title="iTMDb Mac Demo" id="56">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="iTMDbDemo" systemMenu="apple" id="57">
+                    <menu key="submenu" title="iTMDb Mac Demo" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About iTMDbDemo" id="58">
+                            <menuItem title="About iTMDb Mac Demo" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
@@ -61,7 +61,7 @@
                                 <menu key="submenu" title="Services" systemMenu="services" id="130"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="144"/>
-                            <menuItem title="Hide iTMDbDemo" keyEquivalent="h" id="134">
+                            <menuItem title="Hide iTMDb Mac Demo" keyEquivalent="h" id="134">
                                 <connections>
                                     <action selector="hide:" target="-1" id="367"/>
                                 </connections>
@@ -79,7 +79,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="149"/>
-                            <menuItem title="Quit iTMDbDemo" keyEquivalent="q" id="136">
+                            <menuItem title="Quit iTMDb Mac Demo" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="terminate:" target="-1" id="369"/>
                                 </connections>
@@ -405,7 +405,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="106">
                         <items>
-                            <menuItem title="iTMDbDemo Help" keyEquivalent="?" id="111">
+                            <menuItem title="iTMDb Mac Demo Help" keyEquivalent="?" id="111">
                                 <connections>
                                     <action selector="showHelp:" target="-1" id="360"/>
                                 </connections>
@@ -415,7 +415,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="iTMDbDemo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" frameAutosaveName="mainWindow" animationBehavior="default" id="845">
+        <window title="iTMDb Mac Demo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" frameAutosaveName="mainWindow" animationBehavior="default" id="845">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="533" y="590" width="940" height="593"/>
@@ -995,7 +995,7 @@ DQ
                                                 <subviews>
                                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="o9w-ic-RpF">
                                                         <rect key="frame" x="20" y="20" width="353" height="238"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <clipView key="contentView" id="pJt-fF-oGa">
                                                             <rect key="frame" x="1" y="1" width="248" height="158"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

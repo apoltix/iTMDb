@@ -284,7 +284,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = TMDB;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Devify;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "iTMDb" */;
@@ -393,7 +393,6 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -416,7 +415,6 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
