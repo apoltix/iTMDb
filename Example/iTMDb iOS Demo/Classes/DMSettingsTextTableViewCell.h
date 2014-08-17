@@ -6,12 +6,10 @@
 //  Copyright (c) 2014 Devify. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "DMSettingsManager.h"
+#import "DMSettingsTableViewCell.h"
 
-@interface DMSettingsTextTableViewCell : UITableViewCell
+@interface DMSettingsTextTableViewCell : DMSettingsTableViewCell <UITextFieldDelegate>
 
-@property (nonatomic) DMSetting setting;
 @property (nonatomic, weak, readonly) UITextField *textField;
 
 @end

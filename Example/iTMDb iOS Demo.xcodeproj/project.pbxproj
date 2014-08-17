@@ -17,6 +17,12 @@
 		AA4B5D671996427B0007EE28 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4B5D631996427B0007EE28 /* DetailViewController.m */; };
 		AA4B5D681996427B0007EE28 /* DMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4B5D651996427B0007EE28 /* DMSearchViewController.m */; };
 		AA4B5DB019964B100007EE28 /* libiTMDb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5DAE19964AED0007EE28 /* libiTMDb.a */; };
+		AAC05ED019A1174E002221A3 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAC05ECF19A1174E002221A3 /* Settings.plist */; };
+		AAC05ED319A11905002221A3 /* DMSettingsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05ED219A11905002221A3 /* DMSettingsItem.m */; };
+		AAC05ED619A12592002221A3 /* DMSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05ED519A12592002221A3 /* DMSettingsTableViewCell.m */; };
+		AAC05ED919A125E8002221A3 /* DMSettingsSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05ED819A125E8002221A3 /* DMSettingsSwitchTableViewCell.m */; };
+		AAC05EDC19A12B35002221A3 /* DMSettingsNumberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05EDB19A12B35002221A3 /* DMSettingsNumberTableViewCell.m */; };
+		AAC05EE019A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05EDF19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +68,17 @@
 		AA4B5D641996427B0007EE28 /* DMSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSearchViewController.h; sourceTree = "<group>"; };
 		AA4B5D651996427B0007EE28 /* DMSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSearchViewController.m; sourceTree = "<group>"; };
 		AA4B5DA619964AED0007EE28 /* iTMDb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iTMDb.xcodeproj; path = ../iTMDb/iTMDb.xcodeproj; sourceTree = "<group>"; };
+		AAC05ECF19A1174E002221A3 /* Settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
+		AAC05ED119A11905002221A3 /* DMSettingsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSettingsItem.h; sourceTree = "<group>"; };
+		AAC05ED219A11905002221A3 /* DMSettingsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSettingsItem.m; sourceTree = "<group>"; };
+		AAC05ED419A12592002221A3 /* DMSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSettingsTableViewCell.h; sourceTree = "<group>"; };
+		AAC05ED519A12592002221A3 /* DMSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSettingsTableViewCell.m; sourceTree = "<group>"; };
+		AAC05ED719A125E8002221A3 /* DMSettingsSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSettingsSwitchTableViewCell.h; sourceTree = "<group>"; };
+		AAC05ED819A125E8002221A3 /* DMSettingsSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSettingsSwitchTableViewCell.m; sourceTree = "<group>"; };
+		AAC05EDA19A12B35002221A3 /* DMSettingsNumberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSettingsNumberTableViewCell.h; sourceTree = "<group>"; };
+		AAC05EDB19A12B35002221A3 /* DMSettingsNumberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSettingsNumberTableViewCell.m; sourceTree = "<group>"; };
+		AAC05EDE19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DMStringContainsOnlyNumbers.h"; sourceTree = "<group>"; };
+		AAC05EDF19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DMStringContainsOnlyNumbers.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +125,14 @@
 		AA0DF904199FC66A005DC94E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				AAC05ED419A12592002221A3 /* DMSettingsTableViewCell.h */,
+				AAC05ED519A12592002221A3 /* DMSettingsTableViewCell.m */,
 				AA0DF8FF199FC661005DC94E /* DMSettingsTextTableViewCell.h */,
 				AA0DF900199FC661005DC94E /* DMSettingsTextTableViewCell.m */,
+				AAC05ED719A125E8002221A3 /* DMSettingsSwitchTableViewCell.h */,
+				AAC05ED819A125E8002221A3 /* DMSettingsSwitchTableViewCell.m */,
+				AAC05EDA19A12B35002221A3 /* DMSettingsNumberTableViewCell.h */,
+				AAC05EDB19A12B35002221A3 /* DMSettingsNumberTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -117,8 +140,11 @@
 		AA0DF905199FE563005DC94E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AAC05EDD19A12EFE002221A3 /* Categories */,
 				AA0DF906199FE585005DC94E /* DMSettingsManager.h */,
 				AA0DF907199FE585005DC94E /* DMSettingsManager.m */,
+				AAC05ED119A11905002221A3 /* DMSettingsItem.h */,
+				AAC05ED219A11905002221A3 /* DMSettingsItem.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -176,6 +202,7 @@
 			children = (
 				AA4B5D46199640E10007EE28 /* Main.storyboard */,
 				AA4B5D49199640E10007EE28 /* Images.xcassets */,
+				AAC05ECF19A1174E002221A3 /* Settings.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -195,6 +222,15 @@
 				AA4B5DAE19964AED0007EE28 /* libiTMDb.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AAC05EDD19A12EFE002221A3 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				AAC05EDE19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.h */,
+				AAC05EDF19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +317,7 @@
 			files = (
 				AA4B5D48199640E10007EE28 /* Main.storyboard in Resources */,
 				AA4B5D4A199640E10007EE28 /* Images.xcassets in Resources */,
+				AAC05ED019A1174E002221A3 /* Settings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,11 +330,16 @@
 			files = (
 				AA4B5D3C199640E10007EE28 /* main.m in Sources */,
 				AA4B5D661996427B0007EE28 /* DMAppDelegate.m in Sources */,
+				AA0DF908199FE585005DC94E /* DMSettingsManager.m in Sources */,
+				AAC05ED319A11905002221A3 /* DMSettingsItem.m in Sources */,
+				AAC05EE019A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m in Sources */,
 				AA4B5D681996427B0007EE28 /* DMSearchViewController.m in Sources */,
 				AA4B5D671996427B0007EE28 /* DetailViewController.m in Sources */,
 				AA0DF8FC199FB7E0005DC94E /* DMSettingsViewController.m in Sources */,
+				AAC05ED619A12592002221A3 /* DMSettingsTableViewCell.m in Sources */,
 				AA0DF902199FC661005DC94E /* DMSettingsTextTableViewCell.m in Sources */,
-				AA0DF908199FE585005DC94E /* DMSettingsManager.m in Sources */,
+				AAC05ED919A125E8002221A3 /* DMSettingsSwitchTableViewCell.m in Sources */,
+				AAC05EDC19A12B35002221A3 /* DMSettingsNumberTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

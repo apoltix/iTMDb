@@ -7,38 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef NS_ENUM(NSUInteger, DMSetting) {
-	DMSettingNone = -1,
-	DMSettingAPIKey = 0,
-	DMSettingRequestMovieID,
-	DMSettingRequestMovieTitle,
-	DMSettingRequestMovieYear,
-	DMSettingRequestLanguage,
-	DMSettingRequestFetchData,
-	DMSettingRequestFetchDataBasicInformation,
-	DMSettingRequestFetchDataCastAndCrew,
-	DMSettingRequestFetchDataKeywords,
-	DMSettingRequestFetchDataImageURLs
-};
-
-/*
-	DMSettingResponseTitle,
-	DMSettingResponseOverview,
-	DMSettingResponseKeywords,
-	DMSettingResponseReleaseDate,
-	DMSettingResponseRuntime,
-	DMSettingResponsePosters,
-	DMSettingResponseBackdrops,
-*/
+#import "DMSettingsItem.h"
 
 @interface DMSettingsManager : NSObject
 
 + (instancetype)sharedManager;
 
-- (id)valueForSetting:(DMSetting)setting;
-- (void)setValue:(id)value forSetting:(DMSetting)setting;
-
-- (NSString *)localizedStringForSetting:(DMSetting)setting;
+@property (nonatomic, copy, readonly) NSArray *settings;
 
 @end

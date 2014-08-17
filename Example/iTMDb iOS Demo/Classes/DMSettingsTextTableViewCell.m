@@ -8,41 +8,24 @@
 
 #import "DMSettingsTextTableViewCell.h"
 
-@interface DMSettingsTextTableViewCell () <UITextFieldDelegate>
+@interface DMSettingsTextTableViewCell ()
 
-@property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 
 @end
 
 @implementation DMSettingsTextTableViewCell
 
-- (void)prepareForReuse {
-	[super prepareForReuse];
+- (void)setSettingsItem:(DMSettingsItem *)item {
+	[super setSettingsItem:item];
 
-	self.setting = DMSettingNone;
-}
-
-- (UILabel *)textLabel {
-	return self.titleLabel;
-}
-
-- (void)setSetting:(DMSetting)setting {
-	_setting = setting;
-
-	if (setting == DMSettingNone) {
-		self.textField.text = @"";
-		return;
-	}
-
-	self.textLabel.text = [[DMSettingsManager sharedManager] localizedStringForSetting:setting];
-	self.textField.text = [[DMSettingsManager sharedManager] valueForSetting:setting];
+	self.textField.text = [(id)self.settingsItem.value description];
 }
 
 #pragma mark - UITextFieldDelegate 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	[[DMSettingsManager sharedManager] setValue:textField.text forSetting:self.setting];
+	self.settingsItem.value = textField.text;
 }
 
 @end

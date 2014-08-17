@@ -19,45 +19,30 @@
 	return sharedManager;
 }
 
-+ (NSDictionary *)mapping
-{
-	static NSDictionary *mapping;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		mapping = @{
-			@(DMSettingAPIKey): @"API Key",
-			@(DMSettingRequestMovieID): @"Movie ID",
-			@(DMSettingRequestMovieTitle): @"Movie Title",
-			@(DMSettingRequestMovieYear): @"Movie Year",
-			@(DMSettingRequestLanguage): @"Language",
-			@(DMSettingRequestFetchData): @"Fetch Data",
-			@(DMSettingRequestFetchDataBasicInformation): @"Basic Information",
-			@(DMSettingRequestFetchDataCastAndCrew): @"Cast and Crew",
-			@(DMSettingRequestFetchDataKeywords): @"Keywords",
-			@(DMSettingRequestFetchDataImageURLs): @"Image URLs"
-		};
-	});
-	return mapping;
+- (instancetype)init {
+	if (!(self = [super init])) {
+		return nil;
+	}
+
+	[self loadSettings];
+
+	return self;
 }
 
-#pragma mark - Getters and Setters
+- (void)loadSettings {
+	NSMutableArray *s = [NSMutableArray array];
 
-- (id)valueForSetting:(DMSetting)setting
-{
-	NSString *key = [DMSettingsManager mapping][@(setting)];
-	return [[NSUserDefaults standardUserDefaults] objectForKey:key];
-}
+	NSURL *url = [[NSBundle mainBundle] URLForResource:@"Settings" withExtension:@"plist"];
+	NSArray *rawSettings = [NSArray arrayWithContentsOfURL:url];
 
-- (void)setValue:(id)value forSetting:(DMSetting)setting
-{
-	NSString *key = [DMSettingsManager mapping][@(setting)];
-	[[NSUserDefaults standardUserDefaults] setObject:value forKey:key];
-}
+	for (NSDictionary *d in rawSettings) {
+		DMSettingsItem *item = [[DMSettingsItem alloc] initWithDictionary:d];
+		[s addObject:item];
+	}
 
-- (NSString *)localizedStringForSetting:(DMSetting)setting
-{
-	NSString *key = [DMSettingsManager mapping][@(setting)];
-	return NSLocalizedString(key,);
+	[self willChangeValueForKey:@"settings"];
+	_settings = [s copy];
+	[self didChangeValueForKey:@"settings"];
 }
 
 @end

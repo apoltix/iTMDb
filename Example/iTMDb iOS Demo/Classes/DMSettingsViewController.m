@@ -12,6 +12,11 @@
 
 NSString * const TextFieldCellIdentifier = @"TextFieldCell";
 NSString * const SwitchCellIdentifier = @"SwitchCell";
+NSString * const NumberCellIdentifier = @"NumberCell";
+
+@interface DMSettingsViewController ()
+
+@end
 
 @implementation DMSettingsViewController
 
@@ -30,16 +35,44 @@ NSString * const SwitchCellIdentifier = @"SwitchCell";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 10;
+	return [DMSettingsManager sharedManager].settings.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	DMSettingsTextTableViewCell *cell = (DMSettingsTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier forIndexPath:indexPath];
+	DMSettingsItem *settingsItem = (DMSettingsItem *)[DMSettingsManager sharedManager].settings[indexPath.row];
 
-	DMSetting setting = (DMSetting)indexPath.row;
-	cell.setting = setting;
+	DMSettingsTableViewCell *cell = nil;
+
+	switch (settingsItem.type) {
+		case DMSettingsItemTypeString: {
+			cell = (DMSettingsTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier forIndexPath:indexPath];
+		} break;
+		case DMSettingsItemTypeBool: {
+			cell = (DMSettingsTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:SwitchCellIdentifier forIndexPath:indexPath];
+		} break;
+		case DMSettingsItemTypeInteger: {
+			cell = (DMSettingsTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NumberCellIdentifier forIndexPath:indexPath];
+		} break;
+		case DMSettingsItemTypeNone: {
+		} break;
+	}
+
+	cell.settingsItem = settingsItem;
 
 	return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	DMSettingsItem *settingsItem = (DMSettingsItem *)[DMSettingsManager sharedManager].settings[indexPath.row];
+
+	switch (settingsItem.type) {
+		case DMSettingsItemTypeString:  return 64.0;
+		case DMSettingsItemTypeBool:    return 47.0;
+		case DMSettingsItemTypeInteger: return 64.0;
+		case DMSettingsItemTypeNone:    break;
+	}
+
+	return 44.0;
 }
 
 @end

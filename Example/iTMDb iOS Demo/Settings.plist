@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>apiKey</string>
+		<key>type</key>
+		<string>string</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>movieID</string>
+		<key>type</key>
+		<string>integer</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>movieTitle</string>
+		<key>type</key>
+		<string>string</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>movieYear</string>
+		<key>type</key>
+		<string>integer</string>
+		<key>maxLength</key>
+		<integer>4</integer>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>language</string>
+		<key>type</key>
+		<string>string</string>
+		<key>maxLength</key>
+		<integer>2</integer>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>fetchBasicInformation</string>
+		<key>type</key>
+		<string>bool</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>fetchCastCrew</string>
+		<key>type</key>
+		<string>bool</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>fetchKeywords</string>
+		<key>type</key>
+		<string>bool</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>fetchImageURLs</string>
+		<key>type</key>
+		<string>bool</string>
+	</dict>
+</array>
+</plist>
