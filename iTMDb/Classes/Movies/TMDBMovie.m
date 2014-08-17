@@ -116,7 +116,7 @@
 
 + (NSURL *)fetchURLWithMovieID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
 {
-	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/movie/%lu?api_key=%@&language=%@%@",
+	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/movie/%tu?api_key=%@&language=%@%@",
 									   TMDBAPIVersion, anID, context.apiKey, context.language, [self appendToResponseStringFromFetchOptions:options]]];
 	return url;
 }
@@ -140,7 +140,7 @@
 	if (self.released == nil)
 		return [NSString stringWithFormat:@"<%@ %p: \"%@\">", NSStringFromClass(self.class), self, self.title];
 
-	return [NSString stringWithFormat:@"<%@ %p: \"%@\" (%li)>", NSStringFromClass(self.class), self, self.title, self.year];
+	return [NSString stringWithFormat:@"<%@ %p: \"%@\" (%zd)>", NSStringFromClass(self.class), self, self.title, self.year];
 }
 
 #pragma mark -

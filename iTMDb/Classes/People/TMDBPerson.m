@@ -54,13 +54,13 @@
 - (NSString *)description
 {
 	if (_movie != nil && [_character length] > 0 && [_name length] > 0) {
-		return [NSString stringWithFormat:@"<%@ %p: %@ as \"%@\" in \"%@\"%@>", [self class], self, _name, _character, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%li)", _movie.year] : @"", nil];
+		return [NSString stringWithFormat:@"<%@ %p: %@ as \"%@\" in \"%@\"%@>", [self class], self, _name, _character, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%zd)", _movie.year] : @"", nil];
 	}
 	else if (_movie != nil && [_name length] > 0 && [_job length] > 0) {
-		return [NSString stringWithFormat:@"<%@ %p: %@ as %@ of \"%@\"%@>", [self class], self, _name, _job, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%li)", _movie.year] : @"", nil];
+		return [NSString stringWithFormat:@"<%@ %p: %@ as %@ of \"%@\"%@>", [self class], self, _name, _job, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%zd)", _movie.year] : @"", nil];
 	}
 	else if (_movie != nil && [_name length] > 0) {
-		return [NSString stringWithFormat:@"<%@ %p: %@ in \"%@\"%@>", [self class], self, _name, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%li)", _movie.year] : @"", nil];
+		return [NSString stringWithFormat:@"<%@ %p: %@ in \"%@\"%@>", [self class], self, _name, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%zd)", _movie.year] : @"", nil];
 	}
 	else if ([_name length] > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@>", [self class], self, _name, nil];
@@ -94,7 +94,7 @@
 
 - (void)update:(TMDBPersonUpdateOptions)options completion:(TMDBPersonUpdateCompletionBlock)completionBlock
 {
-	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/person/%lu?api_key=%@&language=%@",
+	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/person/%zd?api_key=%@&language=%@",
 									   TMDBAPIVersion, _id, _context.apiKey, _context.language]];
 
 	[TMDBRequest requestWithURL:url completionBlock:^(id parsedData) {
