@@ -174,6 +174,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
+                                                <action selector="textFieldValueChanged:" destination="EPW-TK-f7T" eventType="valueChanged" id="CEc-qT-mbG"/>
                                                 <outlet property="delegate" destination="EPW-TK-f7T" id="imL-wB-5l8"/>
                                             </connections>
                                         </textField>
@@ -183,12 +184,15 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="hiU-as-LOk">
+                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" minimumValue="-1" maximumValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hiU-as-LOk">
                                             <rect key="frame" x="218" y="29" width="94" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="29" id="5wU-fg-V93"/>
                                                 <constraint firstAttribute="width" constant="94" id="nlq-BZ-aV5"/>
                                             </constraints>
+                                            <connections>
+                                                <action selector="stepperValueChanged:" destination="EPW-TK-f7T" eventType="valueChanged" id="zH6-r2-R6g"/>
+                                            </connections>
                                         </stepper>
                                     </subviews>
                                     <constraints>
@@ -204,6 +208,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="stepper" destination="hiU-as-LOk" id="005-YC-XCT"/>
                                     <outlet property="textField" destination="cBL-h9-W9l" id="mrx-MY-LZS"/>
                                     <outlet property="titleLabel" destination="uKc-Hy-2Z1" id="9dF-pr-E5a"/>
                                 </connections>

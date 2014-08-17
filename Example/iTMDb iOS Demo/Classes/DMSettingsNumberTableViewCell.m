@@ -17,6 +17,8 @@
 
 @implementation DMSettingsNumberTableViewCell
 
+#pragma mark - UITextFieldDelegate
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 	return [string dm_containsOnlyNumbers];
 }
@@ -28,6 +30,17 @@
 	}
 
 	[super textFieldDidEndEditing:textField];
+}
+
+#pragma mark -
+
+- (IBAction)stepperValueChanged:(UIStepper *)sender {
+	long long newValue = [(NSNumber *)self.settingsItem.value longLongValue] + (NSInteger)sender.value;
+
+	self.textField.text = [NSString stringWithFormat:@"%@", @(newValue)];
+	sender.value = 0.0;
+
+	[self saveValue];
 }
 
 @end

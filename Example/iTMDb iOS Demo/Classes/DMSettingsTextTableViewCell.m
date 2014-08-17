@@ -25,7 +25,13 @@
 #pragma mark - UITextFieldDelegate 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	self.settingsItem.value = textField.text;
+	[self saveValue];
+}
+
+#pragma mark -
+
+- (void)saveValue {
+	self.settingsItem.value = self.textField.text;
 }
 
 @end

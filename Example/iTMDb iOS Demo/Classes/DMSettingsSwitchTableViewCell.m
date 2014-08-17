@@ -23,7 +23,11 @@
 }
 
 - (IBAction)toggleValueChanged:(UISwitch *)toggle {
-	self.settingsItem.value = @(toggle.on);
+	[self saveValue];
+}
+
+- (void)saveValue {
+	self.settingsItem.value = @(self.toggle.on);
 }
 
 @end

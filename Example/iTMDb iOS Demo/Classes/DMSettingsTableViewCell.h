@@ -15,4 +15,6 @@
 
 @property (nonatomic) DMSettingsItem *settingsItem;
 
+- (void)saveValue;
+
 @end

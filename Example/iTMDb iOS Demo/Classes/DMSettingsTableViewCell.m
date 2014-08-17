@@ -36,4 +36,7 @@
 	self.titleLabel.text = self.settingsItem.localizedName;
 }
 
+- (void)saveValue {
+}
+
 @end
