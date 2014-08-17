@@ -15,4 +15,6 @@
 
 @property (nonatomic, copy, readonly) NSArray *settings;
 
+- (DMSettingsItem *)settingsItemNamed:(NSString *)name;
+
 @end

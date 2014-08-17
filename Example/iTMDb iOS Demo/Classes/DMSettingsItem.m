@@ -71,7 +71,7 @@
 	}
 }
 
-- (void)setValue:(id<NSCoding>)value {
+- (void)setValue:(id)value {
 	_value = value;
 
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

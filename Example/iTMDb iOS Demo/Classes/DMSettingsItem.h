@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, DMSettingsItemType) {
 @property (nonatomic, copy, readonly) NSString *localizedName;
 
 @property (nonatomic, readonly) DMSettingsItemType type;
-@property (nonatomic, copy) id<NSCoding> value;
+@property (nonatomic, copy) id value;
 
 @property (nonatomic, readonly) NSUInteger maxLength;
 

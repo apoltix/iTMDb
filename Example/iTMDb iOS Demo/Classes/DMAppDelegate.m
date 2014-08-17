@@ -8,35 +8,31 @@
 
 #import "DMAppDelegate.h"
 #import "DetailViewController.h"
+#import "TMDBMovie+DMBlocks.h"
 
-@interface DMAppDelegate ()
+@interface DMAppDelegate () <TMDBDelegate>
 
 @end
 
 @implementation DMAppDelegate
 
-+ (void)initialize
-{
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
-		@"language": @"en"
-	}];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	self.tmdb = [[TMDB alloc] initWithAPIKey:self.apiKey delegate:nil language:self.language];
+	self.tmdb = [[TMDB alloc] initWithAPIKey:nil delegate:self language:nil];
 	return YES;
 }
 
-#pragma mark -
+#pragma mark - TMDBDelegate
 
-- (NSString *)apiKey
-{
-	return [[NSUserDefaults standardUserDefaults] objectForKey:@"apiKey"];
+- (void)tmdb:(TMDB *)context didFinishLoadingMovie:(TMDBMovie *)movie {
+	if (movie.didFinishLoadingBlock != nil) {
+		movie.didFinishLoadingBlock(nil);
+	}
 }
 
-- (NSString *)language
-{
-	return [[NSUserDefaults standardUserDefaults] objectForKey:@"language"];
+- (void)tmdb:(TMDB *)context didFailLoadingMovie:(TMDBMovie *)movie error:(NSError *)error {
+	if (movie.didFinishLoadingBlock != nil) {
+		movie.didFinishLoadingBlock(error);
+	}
 }
 
 @end
