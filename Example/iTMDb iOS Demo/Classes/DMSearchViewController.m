@@ -17,7 +17,7 @@
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 
-@property (nonatomic, strong) NSArray *objects;
+@property (nonatomic, strong) NSMutableArray *objects;
 
 @property (nonatomic, strong) TMDBMovie *movie;
 
@@ -37,7 +37,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 
-	self.objects = @[];
+	self.objects = [NSMutableArray array];
 }
 
 #pragma mark -
@@ -73,8 +73,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-	id object = self.objects[indexPath.row];
-	cell.textLabel.text = [object description];
+	TMDBMovie *movie = self.objects[indexPath.row];
+	cell.textLabel.text = [movie description];
 	return cell;
 }
 
@@ -128,7 +128,7 @@
 //	}
 
 	// Set the language, if specified
-	NSString *lang = [settings settingsItemNamed:@"lang"].value;
+	NSString *lang = [settings settingsItemNamed:@"language"].value;
 
 	if (lang.length > 0) {
 		tmdb.language = lang;
@@ -155,19 +155,37 @@
 	// Actually fetch the movie based on the information we have
 	NSUInteger year = [(NSNumber *)[settings settingsItemNamed:@"movieYear"].value unsignedIntegerValue];
 
+	TMDBMovie *movie = nil;
+
 	if (searchMovieID.integerValue > 0) {
-		self.movie = [[TMDBMovie alloc] initWithID:searchMovieID.integerValue options:fetchOptions context:tmdb];
+		movie = [[TMDBMovie alloc] initWithID:searchMovieID.integerValue options:fetchOptions context:tmdb];
 	}
 	else if (year > 0) {
-		self.movie = [[TMDBMovie alloc] initWithName:searchMovieName year:year options:fetchOptions context:tmdb];
+		movie = [[TMDBMovie alloc] initWithName:searchMovieName year:year options:fetchOptions context:tmdb];
 	}
 	else {
-		self.movie = [[TMDBMovie alloc] initWithName:searchMovieName options:fetchOptions context:tmdb];
+		movie = [[TMDBMovie alloc] initWithName:searchMovieName options:fetchOptions context:tmdb];
 	}
 
-	self.movie.didFinishLoadingBlock = ^(NSError *error) {
-		NSLog(@"%@", error);
+	__weak TMDBMovie *weakMovie = movie;
+	movie.didFinishLoadingBlock = ^(NSError *error) {
+		if (error != nil) {
+			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error fetching movie"
+																message:error.localizedDescription
+															   delegate:nil
+													  cancelButtonTitle:@"OK"
+													  otherButtonTitles:nil];
+			[alertView show];
+			return;
+		}
+
+		[self.tableView beginUpdates];
+		[self.objects insertObject:weakMovie atIndex:0];
+		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+		[self.tableView endUpdates];
 	};
+
+	self.movie = movie;
 }
 
 @end
