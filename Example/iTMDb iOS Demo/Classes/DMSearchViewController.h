@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  DMSearchViewController.h
 //  iTMDb iOS Demo
 //
 //  Created by Christian Rasmussen on 09/08/2014.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
+@interface DMSearchViewController : UITableViewController
 
 @end
