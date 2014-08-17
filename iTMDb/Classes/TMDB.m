@@ -19,8 +19,7 @@ NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
 
 @implementation TMDB
 
-- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language
-{
+- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language {
 	if (!(self = [super init]))
 		return nil;
 
@@ -37,8 +36,7 @@ NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
 	return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc removeObserver:self name:TMDBDidFinishLoadingMovieNotification object:self];
 	[nc removeObserver:self name:TMDBDidFailLoadingMovieNotification   object:self];
@@ -46,26 +44,29 @@ NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
 
 #pragma mark - Notifications
 
-- (void)movieDidFinishLoading:(NSNotification *)n
-{
-	if (_delegate)
-		[_delegate tmdb:self didFinishLoadingMovie:n.userInfo[TMDBMovieUserInfoKey]];
+- (void)movieDidFinishLoading:(NSNotification *)n {
+	if (_delegate != nil) {
+		TMDBMovie *movie = n.userInfo[TMDBMovieUserInfoKey];
+		[_delegate tmdb:self didFinishLoadingMovie:movie];
+	}
 }
 
-- (void)movieDidFailLoading:(NSNotification *)n
-{
-	if (_delegate)
-		[_delegate tmdb:self didFailLoadingMovie:n.userInfo[TMDBMovieUserInfoKey] error:n.userInfo[TMDBErrorUserInfoKey]];
+- (void)movieDidFailLoading:(NSNotification *)n {
+	if (_delegate != nil) {
+		TMDBMovie *movie = n.userInfo[TMDBMovieUserInfoKey];
+		[_delegate tmdb:self didFailLoadingMovie:movie error:n.userInfo[TMDBErrorUserInfoKey]];
+	}
 }
 
 #pragma mark - Getters and setters
 
-- (void)setLanguage:(NSString *)language
-{
-	if (!language || [language length] == 0)
+- (void)setLanguage:(NSString *)language {
+	if (!language || [language length] == 0) {
 		_language = @"en";
-	else
+	}
+	else {
 		_language = [language copy];
+	}
 }
 
 @end

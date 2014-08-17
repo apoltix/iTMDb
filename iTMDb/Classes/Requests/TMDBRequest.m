@@ -15,20 +15,18 @@
 	TMDBRequestCompletionBlock _completionBlock;
 }
 
-+ (instancetype)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)aDelegate
-{
++ (instancetype)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)aDelegate {
 	return [[TMDBRequest alloc] initWithURL:url delegate:aDelegate];
 }
 
-+ (instancetype)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block
-{
++ (instancetype)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block {
 	return [[TMDBRequest alloc] initWithURL:url completionBlock:block];
 }
 
-- (instancetype)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate
-{
-	if (!(self = [super init]))
+- (instancetype)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate {
+	if (!(self = [super init])) {
 		return nil;
+	}
 
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
 
@@ -40,10 +38,10 @@
 	return self;
 }
 
-- (instancetype)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block
-{
-	if (!(self = [super init]))
+- (instancetype)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block {
+	if (!(self = [super init])) {
 		return nil;
+	}
 
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
 
@@ -57,15 +55,16 @@
 
 #pragma mark -
 
-- (id)parsedData
-{
-	if (_parsedData)
+- (id)parsedData {
+	if (_parsedData != nil) {
 		return _parsedData;
+	}
 
 	NSError *error = nil;
 	id parsedData = [NSJSONSerialization JSONObjectWithData:_data options:0 error:&error];
-	if (error)
+	if (error != nil) {
 		TMDBLog(@"iTMDb: Error parsing JSON data: %@", error);
+	}
 
 	_parsedData = parsedData;
 
@@ -74,37 +73,37 @@
 
 #pragma mark - NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
 	_parsedData = nil;
-	[_data setLength:0];
+	_data.length = 0;
 	_response = [response copy];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)thedata
-{
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)thedata {
 	[_data appendData:thedata];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 	_data = nil;
 	_parsedData = nil;
 
-	if (self.delegate && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)])
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)]) {
 		[self.delegate request:self didFinishLoading:error];
+	}
 
-	if (self.completionBlock)
+	if (self.completionBlock != nil) {
 		self.completionBlock(nil);
+	}
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-	if (self.delegate && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)])
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)]) {
 		[self.delegate request:self didFinishLoading:nil];
+	}
 
-	if (self.completionBlock)
+	if (self.completionBlock != nil) {
 		self.completionBlock([self parsedData]);
+	}
 
 	_data = nil;
 }

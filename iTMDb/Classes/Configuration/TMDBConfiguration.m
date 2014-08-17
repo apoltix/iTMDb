@@ -30,25 +30,26 @@
 
 @synthesize loaded=_isLoaded;
 
-- (instancetype)initWithContext:(TMDB *)context
-{
-	if (!(self = [super init]))
+- (instancetype)initWithContext:(TMDB *)context {
+	if (!(self = [super init])) {
 		return nil;
+	}
 
 	_context = context;
 
 	NSString *configURLString = [NSString stringWithFormat:@"%@%@/configuration?api_key=%@", TMDBAPIURLBase, TMDBAPIVersion, context.apiKey];
 	NSURL *configURL = [NSURL URLWithString:configURLString];
-	if (![TMDBRequest requestWithURL:configURL delegate:self])
+
+	if (![TMDBRequest requestWithURL:configURL delegate:self]) {
 		TMDBLog(@"Could not create request for configuration.");
+	}
 
 	return self;
 }
 
 #pragma mark - TMDBRequestDelegate
 
-- (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error
-{
+- (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error {
 	if (error != nil) {
 		TMDBLog(@"Configuration fetch request failed with error: %@", error);
 		return;
@@ -64,8 +65,7 @@
 	self.loaded = YES;
 }
 
-- (void)populateWithDictionary:(NSDictionary *)d
-{
+- (void)populateWithDictionary:(NSDictionary *)d {
 	self.imagesBaseURL = TMDB_NSURLOrNilFromStringOrNil(d[@"images"][@"base_url"]);
 	self.imagesSecureBaseURL = TMDB_NSURLOrNilFromStringOrNil(d[@"images"][@"secure_base_url"]);
 

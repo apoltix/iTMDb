@@ -11,36 +11,40 @@
 
 @implementation TMDBLanguage
 
-+ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries context:(TMDB *)context
-{
-	if (rawLanguagesDictionaries == nil)
++ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries context:(TMDB *)context {
+	if (rawLanguagesDictionaries == nil) {
 		return nil;
+	}
 
-	if (![rawLanguagesDictionaries isKindOfClass:[NSArray class]])
+	if (![rawLanguagesDictionaries isKindOfClass:[NSArray class]]) {
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Parameter rawLanguagesDictionary must be an NSArray instance." userInfo:@{@"object": rawLanguagesDictionaries}];
+	}
 
-	if ([rawLanguagesDictionaries count] == 0)
+	if ([rawLanguagesDictionaries count] == 0) {
 		return @[];
+	}
 
-	if (context == nil || ![context isKindOfClass:[TMDB class]])
+	if (context == nil || ![context isKindOfClass:[TMDB class]]) {
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Parameter context must be an instance of `TMDB`." userInfo:context ? @{@"object": context} : nil];
+	}
 
 	NSMutableArray *languages = [NSMutableArray array];
 
 	for (NSDictionary *rawLanguage in rawLanguagesDictionaries) {
 		TMDBLanguage *language = [[TMDBLanguage alloc] initWithDictionary:rawLanguage context:context];
 
-		if (language)
+		if (language) {
 			[languages addObject:language];
+		}
 	}
 
-	return [NSArray arrayWithArray:languages];
+	return [languages copy];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary context:(TMDB *)context
-{
-	if (!(self = [super init]))
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary context:(TMDB *)context {
+	if (!(self = [super init])) {
 		return nil;
+	}
 
 	_context = context;
 	_name = TMDB_NSStringOrNil(dictionary[@"name"]);
@@ -49,8 +53,7 @@
 	return self;
 }
 
-- (NSString *)description
-{
+- (NSString *)description {
 	return [NSString stringWithFormat:@"<%@ %p: \"%@\" (%@)>", NSStringFromClass(self.class), self, self.name, self.iso639_1];
 }
 

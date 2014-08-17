@@ -13,8 +13,7 @@
 
 @implementation TMDBPerson
 
-+ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)d
-{
++ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)d {
 	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:[d count]];
 
 	for (NSDictionary *rawPerson in d) {
@@ -22,37 +21,37 @@
 		[persons addObject:person];
 	}
 
-	return [NSArray arrayWithArray:persons];
+	return [persons copy];
 }
 
-- (instancetype)initWithID:(NSUInteger)personID
-{
-	if (!(self = [super init]))
+- (instancetype)initWithID:(NSUInteger)personID {
+	if (!(self = [super init])) {
 		return nil;
+	}
 
 	_id = personID;
 
 	return self;
 }
 
-- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)d
-{
-	if (!(self = [self initWithID:0]))
+- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)d {
+	if (!(self = [self initWithID:0])) {
 		return nil;
+	}
 
 	_movie = movie;
 	_context = movie.context;
 
-	if (d != nil)
+	if (d != nil) {
 		[self populate:d];
+	}
 
 	return self;
 }
 
 #pragma mark -
 
-- (NSString *)description
-{
+- (NSString *)description {
 	if (_movie != nil && [_character length] > 0 && [_name length] > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@ as \"%@\" in \"%@\"%@>", [self class], self, _name, _character, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%zd)", _movie.year] : @"", nil];
 	}
@@ -71,14 +70,14 @@
 
 #pragma mark -
 
-- (void)populate:(NSDictionary *)d
-{
+- (void)populate:(NSDictionary *)d {
 	_id = [TMDB_NSNumberOrNil(d[@"id"]) unsignedIntegerValue];
 	_name = [TMDB_NSStringOrNil(d[@"name"]) copy];
 	_character = [TMDB_NSStringOrNil(d[@"character"]) copy];
 	_job = [TMDB_NSStringOrNil(d[@"job"]) copy];
-	if (_job == nil)
+	if (_job == nil) {
 		_job = @"Actor"; // TODO: Use different/more permanent identifier
+	}
 	_url = TMDB_NSURLOrNilFromStringOrNil(d[@"url"]);
 	_order = [TMDB_NSNumberOrNil(d[@"order"]) unsignedIntegerValue];
 	_castID = [TMDB_NSNumberOrNil(d[@"cast_id"]) integerValue];
@@ -87,13 +86,11 @@
 
 #pragma mark - Updating
 
-- (void)update:(TMDBPersonUpdateCompletionBlock)completionBlock
-{
+- (void)update:(TMDBPersonUpdateCompletionBlock)completionBlock {
 	[self update:TMDBPersonUpdateOptionBasic completion:completionBlock];
 }
 
-- (void)update:(TMDBPersonUpdateOptions)options completion:(TMDBPersonUpdateCompletionBlock)completionBlock
-{
+- (void)update:(TMDBPersonUpdateOptions)options completion:(TMDBPersonUpdateCompletionBlock)completionBlock {
 	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/person/%zd?api_key=%@&language=%@",
 									   TMDBAPIVersion, _id, _context.apiKey, _context.language]];
 
