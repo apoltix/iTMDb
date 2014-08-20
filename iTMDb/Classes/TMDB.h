@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TMDBDelegate.h"
 #import "TMDBMovie.h"
 #import "TMDBError.h"
 #import "TMDBConfiguration.h"
@@ -24,46 +23,22 @@ extern NSString * const TMDBAPIURLBase;
 extern NSString * const TMDBAPIVersion;
 
 /**
- * A notification posted when a movie in this context finished loading. The
- * movie object is in the user info dictionary under the key
- * `TMDBMovieUserInfoKey`.
- */
-extern NSString * const TMDBDidFinishLoadingMovieNotification;
-
-/**
- * A notification posted when a movie in this context failed loading. The
- * movie object is in the user info dictionary under the key
- * `TMDBMovieUserInfoKey`. The user info also includes an error object under the
- * key `TMDBErrorUserInfoKey` when available.
- */
-extern NSString * const TMDBDidFailLoadingMovieNotification;
-
-extern NSString * const TMDBMovieUserInfoKey;
-extern NSString * const TMDBErrorUserInfoKey;
-
-/**
- * A `TMDB` instance is used as the TMDb context for all requests to the TMDb
- * API. You can create multiple independent instances if you wish. All objects
- * created by an instance references its creator object.
+ * The `TMDB` singleton instance is used as the TMDb context for all requests to
+ * the TMDb API.
  */
 @interface TMDB : NSObject
 
-/** The delegate of the context. Optional. */
-@property (nonatomic, weak) id<TMDBDelegate> delegate;
+/** @name Getting the Shared Instance */
+
++ (instancetype)sharedInstance;
+
+/** @name Context Settings */
 
 /** The API key used by the context. Required. */
 @property (nonatomic, copy) NSString *apiKey;
 
 /** The language used by the context. Default `@"en"` (English). Optional. */
 @property (nonatomic, copy) NSString *language;
-
-/** @name Creating an Instance */
-
-/**
- * Initializes the context with the provided API key (required), and optionally
- * a delegate and language.
- */
-- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language NS_DESIGNATED_INITIALIZER;
 
 /** @name Getting Configuration */
 
@@ -73,8 +48,6 @@ extern NSString * const TMDBErrorUserInfoKey;
 @end
 
 @interface TMDB (UnavailableMethods)
-
-/** @name Deprecated methods */
 
 /**
  * Fetches information about the movie with the given TMDb ID.

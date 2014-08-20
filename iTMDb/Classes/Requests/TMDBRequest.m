@@ -15,27 +15,14 @@
 	TMDBRequestCompletionBlock _completionBlock;
 }
 
-+ (instancetype)requestWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)aDelegate {
-	return [[TMDBRequest alloc] initWithURL:url delegate:aDelegate];
-}
-
 + (instancetype)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block {
-	return [[TMDBRequest alloc] initWithURL:url completionBlock:block];
-}
-
-- (instancetype)initWithURL:(NSURL *)url delegate:(id<TMDBRequestDelegate>)delegate {
-	if (!(self = [super init])) {
-		return nil;
-	}
-
-	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
-
-	if ([NSURLConnection connectionWithRequest:req delegate:self]) {
-		_data = [NSMutableData data];
-		_delegate = delegate;
-	}
-
-	return self;
+	__block TMDBRequest *request = [[TMDBRequest alloc] initWithURL:url completionBlock:^(id parsedData, NSError *error) {
+		if (block != nil) {
+			block(parsedData, error);
+		}
+		request = nil;
+	}];
+	return request;
 }
 
 - (instancetype)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block {
@@ -87,22 +74,14 @@
 	_data = nil;
 	_parsedData = nil;
 
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)]) {
-		[self.delegate request:self didFinishLoading:error];
-	}
-
 	if (self.completionBlock != nil) {
-		self.completionBlock(nil);
+		self.completionBlock(nil, error);
 	}
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(request:didFinishLoading:)]) {
-		[self.delegate request:self didFinishLoading:nil];
-	}
-
 	if (self.completionBlock != nil) {
-		self.completionBlock([self parsedData]);
+		self.completionBlock([self parsedData], nil);
 	}
 
 	_data = nil;

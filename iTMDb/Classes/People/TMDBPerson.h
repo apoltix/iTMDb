@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @class TMDBMovie;
-@class TMDB;
 
 typedef NS_OPTIONS(NSUInteger, TMDBPersonUpdateOptions) {
 	/** Indicates that basic information should be fetched. */
@@ -67,9 +66,6 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
  * information.
  */
 - (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)d;
-
-/** The context to which the person belongs. */
-@property (nonatomic, strong, readonly) TMDB *context;
 
 /** @name Basic Information */
 

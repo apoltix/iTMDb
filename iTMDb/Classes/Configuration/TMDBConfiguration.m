@@ -10,7 +10,7 @@
 #import "TMDB.h"
 #import "TMDBRequest.h"
 
-@interface TMDBConfiguration () <TMDBRequestDelegate>
+@interface TMDBConfiguration ()
 
 @property (nonatomic, getter=isLoaded) BOOL loaded;
 
@@ -30,40 +30,41 @@
 
 @synthesize loaded=_isLoaded;
 
-- (instancetype)initWithContext:(TMDB *)context {
-	if (!(self = [super init])) {
-		return nil;
-	}
-
-	_context = context;
+- (void)reload:(void (^)(NSError *error))completionBlock {
+	TMDB *context = [TMDB sharedInstance];
 
 	NSString *configURLString = [NSString stringWithFormat:@"%@%@/configuration?api_key=%@", TMDBAPIURLBase, TMDBAPIVersion, context.apiKey];
 	NSURL *configURL = [NSURL URLWithString:configURLString];
 
-	if (![TMDBRequest requestWithURL:configURL delegate:self]) {
+	TMDBRequestCompletionBlock innerCompletionBlock = ^(id parsedData, NSError *error) {
+		if (error != nil) {
+			if (completionBlock != nil) {
+				completionBlock(error);
+			}
+			return;
+		}
+
+		if (parsedData == nil || ![parsedData isKindOfClass:[NSDictionary class]]) {
+			TMDBLog(@"Configuration response was empty or invalid.");
+			// TODO: Create error object and call completion block
+			return;
+		}
+
+		[self populateWithDictionary:(NSDictionary *)parsedData];
+
+		self.loaded = YES;
+
+		if (completionBlock != nil) {
+			completionBlock(nil);
+		}
+	};
+
+	if (![TMDBRequest requestWithURL:configURL completionBlock:innerCompletionBlock]) {
 		TMDBLog(@"Could not create request for configuration.");
 	}
-
-	return self;
 }
 
-#pragma mark - TMDBRequestDelegate
-
-- (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error {
-	if (error != nil) {
-		TMDBLog(@"Configuration fetch request failed with error: %@", error);
-		return;
-	}
-
-	if (request.parsedData == nil || ![request.parsedData isKindOfClass:[NSDictionary class]]) {
-		TMDBLog(@"Configuration response was empty or invalid.");
-		return;
-	}
-
-	[self populateWithDictionary:(NSDictionary *)request.parsedData];
-
-	self.loaded = YES;
-}
+#pragma mark -
 
 - (void)populateWithDictionary:(NSDictionary *)d {
 	self.imagesBaseURL = TMDB_NSURLOrNilFromStringOrNil(d[@"images"][@"base_url"]);

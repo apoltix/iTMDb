@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import "TMDB.h"
-#import "TMDBDelegate.h"
 #import "TMDBMovie.h"
 #import "TMDBImage.h"
 #import "TMDBPerson.h"

@@ -8,21 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-@class TMDB;
-
 /**
  * The TMDb configuration information includes information commonly needed 
  * in many API responses, such as base URLs. Instances of this class is
- * automatically created by the `TMDB` context instance so you never need to
+ * automatically created by the `TMDB` shared instance so you never need to
  * create an instance yourself.
  */
 @interface TMDBConfiguration : NSObject
 
-- (instancetype)initWithContext:(TMDB *)context NS_DESIGNATED_INITIALIZER;
+- (void)reload:(void (^)(NSError *error))completionBlock;
 
 /** A value indicating if the configuration has been loaded yet. */
 @property (nonatomic, readonly, getter=isLoaded) BOOL loaded;
-@property (nonatomic, strong, readonly) TMDB *context;
 
 @property (nonatomic, copy, readonly) NSURL *imagesBaseURL;
 @property (nonatomic, copy, readonly) NSURL *imagesSecureBaseURL;

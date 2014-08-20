@@ -21,6 +21,8 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 								   TMDBMovieFetchOptionImages
 };
 
+typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
+
 /**
  * A `TMDBMovie` object represents information about a movie from the
  * [TMDb](http://themoviedb.org/) website. It is responsible for updating 
@@ -45,7 +47,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options;
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -58,7 +60,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options;
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -73,12 +75,13 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context;
+- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options;
+
+/** @name Loading Data */
+
+- (void)load:(TMDBMovieFetchCompletionBlock)completionBlock;
 
 /** @name Basic Information */
-
-/** The `TMDB` context that created the instance. */
-@property (nonatomic, strong, readonly) TMDB *context;
 
 @property (nonatomic, readonly) TMDBMovieFetchOptions options;
 
@@ -185,7 +188,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 
 @end
 
-@interface TMDBMovie (DeprecatedMethods)
+@interface TMDBMovie (UnavailableMethods)
 
 /**
  * Creates a fetch request for the movie with the provided TMDb ID, and returns
@@ -198,7 +201,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
++ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithID:options: instead.")));
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -211,7 +214,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
++ (instancetype)movieWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:options: instead.")));
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -226,11 +229,13 @@ typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context DEPRECATED_ATTRIBUTE;
++ (instancetype)movieWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:year:options: instead.")));
 
-@end
+- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithID:options: instead.")));
 
-@interface TMDBMovie (UnavailableProperties)
+- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:options: instead.")));
+
+- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:year:options: instead.")));
 
 /** The original language of the movie. */
 @property (nonatomic, copy, readonly) NSString *language UNAVAILABLE_ATTRIBUTE;

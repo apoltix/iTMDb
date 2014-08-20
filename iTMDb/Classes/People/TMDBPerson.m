@@ -40,7 +40,6 @@
 	}
 
 	_movie = movie;
-	_context = movie.context;
 
 	if (d != nil) {
 		[self populate:d];
@@ -91,10 +90,11 @@
 }
 
 - (void)update:(TMDBPersonUpdateOptions)options completion:(TMDBPersonUpdateCompletionBlock)completionBlock {
+	TMDB *context = [TMDB sharedInstance];
 	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/person/%zd?api_key=%@&language=%@",
-									   TMDBAPIVersion, _id, _context.apiKey, _context.language]];
+									   TMDBAPIVersion, _id, context.apiKey, context.language]];
 
-	[TMDBRequest requestWithURL:url completionBlock:^(id parsedData) {
+	[TMDBRequest requestWithURL:url completionBlock:^(id parsedData, NSError *error) {
 		NSLog(@"%@", parsedData);
 	}];
 }

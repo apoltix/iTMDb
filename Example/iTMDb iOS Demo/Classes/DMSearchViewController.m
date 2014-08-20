@@ -11,7 +11,6 @@
 #import "DMAppDelegate.h"
 #import "DMSettingsManager.h"
 #import <TMDb.h>
-#import "TMDBMovie+DMBlocks.h"
 
 @interface DMSearchViewController () <UISearchBarDelegate>
 
@@ -115,12 +114,23 @@
 //	self.goButton.enabled = NO;
 //	self.viewAllDataButton.enabled = NO;
 
-	TMDB *tmdb = ((DMAppDelegate *)[UIApplication sharedApplication].delegate).tmdb;
+	TMDB *tmdb = [TMDB sharedInstance];
 
 	// Initialize or update the framework setup
 	if (![tmdb.apiKey isEqualToString:apiKey]) {
 		tmdb.apiKey = apiKey;
+		[tmdb.configuration reload:^(NSError *error) {
+			[self search:searchMovieID name:searchMovieName];
+		}];
 	}
+	else {
+		[self search:searchMovieID name:searchMovieName];
+	}
+}
+
+- (void)search:(NSNumber *)movieID name:(NSString *)movieName {
+	DMSettingsManager *settings = [DMSettingsManager sharedManager];
+	TMDB *tmdb = [TMDB sharedInstance];
 
 	// Clear previous data, if any
 //	if (_allData) {
@@ -157,18 +167,18 @@
 
 	TMDBMovie *movie = nil;
 
-	if (searchMovieID.integerValue > 0) {
-		movie = [[TMDBMovie alloc] initWithID:searchMovieID.integerValue options:fetchOptions context:tmdb];
+	if (movieID.integerValue > 0) {
+		movie = [[TMDBMovie alloc] initWithID:movieID.integerValue options:fetchOptions];
 	}
 	else if (year > 0) {
-		movie = [[TMDBMovie alloc] initWithName:searchMovieName year:year options:fetchOptions context:tmdb];
+		movie = [[TMDBMovie alloc] initWithName:movieName year:year options:fetchOptions];
 	}
 	else {
-		movie = [[TMDBMovie alloc] initWithName:searchMovieName options:fetchOptions context:tmdb];
+		movie = [[TMDBMovie alloc] initWithName:movieName options:fetchOptions];
 	}
 
 	__weak TMDBMovie *weakMovie = movie;
-	movie.didFinishLoadingBlock = ^(NSError *error) {
+	[movie load:^(NSError *error) {
 		if (error != nil) {
 			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error fetching movie"
 																message:error.localizedDescription
@@ -183,7 +193,7 @@
 		[self.objects insertObject:weakMovie atIndex:0];
 		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 		[self.tableView endUpdates];
-	};
+	}];
 
 	self.movie = movie;
 }

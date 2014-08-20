@@ -11,57 +11,30 @@
 NSString * const TMDBAPIURLBase = @"http://api.themoviedb.org/";
 NSString * const TMDBAPIVersion = @"3";
 
-NSString * const TMDBDidFinishLoadingMovieNotification = @"TMDBDidFinishLoadingMovieNotification";
-NSString * const TMDBDidFailLoadingMovieNotification = @"TMDBDidFailLoadingMovieNotification";
-
-NSString * const TMDBMovieUserInfoKey = @"TMDBMovieUserInfoKey";
-NSString * const TMDBErrorUserInfoKey = @"TMDBErrorUserInfoKey";
-
 @implementation TMDB
 
-- (instancetype)initWithAPIKey:(NSString *)apiKey delegate:(id<TMDBDelegate>)delegate language:(NSString *)language {
++ (instancetype)sharedInstance {
+	static TMDB *sharedInstance;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		sharedInstance = [[self alloc] init];
+	});
+	return sharedInstance;
+}
+
+- (instancetype)init {
 	if (!(self = [super init]))
 		return nil;
 
-	self.delegate = delegate;
-	self.apiKey = apiKey;
-	self.language = language;
-
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc addObserver:self selector:@selector(movieDidFinishLoading:) name:TMDBDidFinishLoadingMovieNotification object:self];
-	[nc addObserver:self selector:@selector(movieDidFailLoading:)   name:TMDBDidFailLoadingMovieNotification   object:self];
-
-	_configuration = [[TMDBConfiguration alloc] initWithContext:self];
+	_configuration = [[TMDBConfiguration alloc] init];
 
 	return self;
-}
-
-- (void)dealloc {
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc removeObserver:self name:TMDBDidFinishLoadingMovieNotification object:self];
-	[nc removeObserver:self name:TMDBDidFailLoadingMovieNotification   object:self];
-}
-
-#pragma mark - Notifications
-
-- (void)movieDidFinishLoading:(NSNotification *)n {
-	if (_delegate != nil) {
-		TMDBMovie *movie = n.userInfo[TMDBMovieUserInfoKey];
-		[_delegate tmdb:self didFinishLoadingMovie:movie];
-	}
-}
-
-- (void)movieDidFailLoading:(NSNotification *)n {
-	if (_delegate != nil) {
-		TMDBMovie *movie = n.userInfo[TMDBMovieUserInfoKey];
-		[_delegate tmdb:self didFailLoadingMovie:movie error:n.userInfo[TMDBErrorUserInfoKey]];
-	}
 }
 
 #pragma mark - Getters and setters
 
 - (void)setLanguage:(NSString *)language {
-	if (!language || [language length] == 0) {
+	if (language == nil || language.length == 0) {
 		_language = @"en";
 	}
 	else {

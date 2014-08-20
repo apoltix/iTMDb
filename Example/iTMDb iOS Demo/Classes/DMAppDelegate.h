@@ -6,13 +6,10 @@
 //  Copyright (c) 2014 Devify. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <iTMDb/iTMDb.h>
+@import UIKit;
 
 @interface DMAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (nonatomic, strong) TMDB *tmdb;
 
 @end

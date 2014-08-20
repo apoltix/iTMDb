@@ -12,14 +12,10 @@
 #import "TMDBPerson.h"
 #import "TMDBRequest.h"
 #import "TMDBLanguage.h"
-#import "TMDBRequest.h"
-
-@interface TMDBMovie () <TMDBRequestDelegate>
-
-@end
 
 @implementation TMDBMovie {
 @private
+	NSURL			*_fetchURL;
 	TMDBRequest		*_request;
 
 	NSInteger        _year;
@@ -38,56 +34,56 @@
 
 #pragma mark - Constructors
 
-- (instancetype)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options context:(TMDB *)context userData:(NSDictionary *)userData {
+// Private
+- (instancetype)initWithURL:(NSURL *)url options:(TMDBMovieFetchOptions)options userData:(NSDictionary *)userData {
 	if (!(self = [super init])) {
 		return nil;
 	}
 
-	_context = context;
+	_fetchURL = url;
 	_options = options;
 	_rawResults = nil;
-	_userData = userData;
-
-	[self populateWithDataFromURL:url];
+	_userData = [userData copy];
 
 	return self;
 }
 
-- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context {
-	NSURL *url = [TMDBMovie fetchURLWithMovieID:anID options:options context:context];
+- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options {
+	NSURL *url = [TMDBMovie fetchURLWithMovieID:anID options:options];
 	_isSearchingOnly = NO;
-	return (self = [self initWithURL:url options:options context:context userData:nil]);
+	return (self = [self initWithURL:url options:options userData:nil]);
 }
 
-- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context {
-	NSURL *url = [TMDBMovie fetchURLWithMovieTitle:name options:options context:context];
+- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options {
+	NSURL *url = [TMDBMovie fetchURLWithMovieTitle:name options:options];
 	_isSearchingOnly = YES;
-	return (self = [self initWithURL:url options:options context:context userData:@{@"title": name}]);
+	return (self = [self initWithURL:url options:options userData:@{@"title": name}]);
 }
 
-- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context {
-	NSURL *url = [TMDBMovie fetchURLWithMovieTitle:name options:options context:context];
+- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options {
+	NSURL *url = [TMDBMovie fetchURLWithMovieTitle:name options:options];
 	_isSearchingOnly = YES;
 	_expectedYear = year;
-	return (self = [self initWithURL:url options:options context:context userData:@{@"title": name, @"year": @(year)}]);
+	return (self = [self initWithURL:url options:options userData:@{@"title": name, @"year": @(year)}]);
 }
 
-#pragma mark - Data Fetching and Population
+#pragma mark - Data Fetching
 
-- (void)refetchData {
-	TMDBMovieFetchOptions options = TMDBMovieFetchOptionBasic;
+- (void)load:(TMDBMovieFetchCompletionBlock)completionBlock {
+	NSURL *url = _fetchURL;
 
 	if (_id != 0) {
-		[self populateWithDataFromURL:[TMDBMovie fetchURLWithMovieID:_id options:options context:_context]];
+		url = [TMDBMovie fetchURLWithMovieID:_id options:_options];
 	}
 	else if (_title != nil) {
-		[self populateWithDataFromURL:[TMDBMovie fetchURLWithMovieTitle:_title options:options context:_context]];
+		url = [TMDBMovie fetchURLWithMovieTitle:_title options:_options];
 	}
-}
 
-- (void)populateWithDataFromURL:(NSURL *)url {
-	// Initialize the fetch request
-	_request = [TMDBRequest requestWithURL:url delegate:self];
+	if (url != nil) {
+		[TMDBRequest requestWithURL:url completionBlock:^(id parsedData, NSError *error) {
+			[self parseData:parsedData error:error completion:completionBlock];
+		}];
+	}
 }
 
 #pragma mark - Fetch URLs
@@ -97,30 +93,32 @@
 		return @"";
 	}
 
-	NSMutableString *s = [NSMutableString stringWithString:@"&append_to_response="];
+	NSMutableArray *optionsArray = [NSMutableArray array];
 
 	if ((options & TMDBMovieFetchOptionCasts) == TMDBMovieFetchOptionCasts) {
-		[s appendString:@"casts,"];
+		[optionsArray addObject:@"casts"];
 	}
 
 	if ((options & TMDBMovieFetchOptionKeywords) == TMDBMovieFetchOptionKeywords) {
-		[s appendString:@"keywords,"];
+		[optionsArray addObject:@"keywords"];
 	}
 
 	if ((options & TMDBMovieFetchOptionImages) == TMDBMovieFetchOptionImages) {
-		[s appendString:@"images"];
+		[optionsArray addObject:@"images"];
 	}
 
-	return [NSString stringWithString:s];
+	return [NSString stringWithFormat:@"&append_to_response=%@", [optionsArray componentsJoinedByString:@","]];
 }
 
-+ (NSURL *)fetchURLWithMovieID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context {
++ (NSURL *)fetchURLWithMovieID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options {
+	TMDB *context = [TMDB sharedInstance];
 	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/movie/%tu?api_key=%@&language=%@%@",
 									   TMDBAPIVersion, anID, context.apiKey, context.language, [self appendToResponseStringFromFetchOptions:options]]];
 	return url;
 }
 
-+ (NSURL *)fetchURLWithMovieTitle:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context {
++ (NSURL *)fetchURLWithMovieTitle:(NSString *)name options:(TMDBMovieFetchOptions)options {
+	TMDB *context = [TMDB sharedInstance];
 	NSString *aNameEscaped = [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:[TMDBAPIURLBase stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@&language=%@%@",
 									   TMDBAPIVersion, context.apiKey, aNameEscaped, context.language, [self appendToResponseStringFromFetchOptions:options]]];
@@ -144,6 +142,7 @@
 
 #pragma mark -
 
+// Private
 - (void)calculateYear {
 	_year = [self yearFromDate:self.released];
 }
@@ -166,31 +165,28 @@
 	[self didChangeValueForKey:@"year"];
 }
 
-#pragma mark - TMDBRequestDelegate
+#pragma mark -
 
-- (void)request:(TMDBRequest *)request didFinishLoading:(NSError *)error {
+- (void)parseData:(id)parsedData error:(NSError *)error completion:(TMDBMovieFetchCompletionBlock)completionBlock {
+	TMDB *context = [TMDB sharedInstance];
+
 	if (error != nil) {
-		//TMDBLog(@"TMDBMovie request failed: %@", [error description]);
-		if (_context != nil) {
-			NSDictionary *userInfo = @{
-				TMDBMovieUserInfoKey: self,
-				TMDBErrorUserInfoKey: error
-			};
-			[[NSNotificationCenter defaultCenter] postNotificationName:TMDBDidFailLoadingMovieNotification object:_context userInfo:userInfo];
+		if (completionBlock != nil) {
+			completionBlock(error);
 		}
 		return;
 	}
 
 	if (_isSearchingOnly) {
-		_rawResults = (NSArray *)((NSDictionary *)[request parsedData])[@"results"];
+		_rawResults = (NSArray *)((NSDictionary *)parsedData)[@"results"];
 	}
 	else {
-		_rawResults = (NSDictionary *)[request parsedData];
+		_rawResults = (NSDictionary *)parsedData;
 	}
 
 	if (_rawResults == nil || (_isSearchingOnly ? ![_rawResults count] > 0 || ![_rawResults[0] isKindOfClass:[NSDictionary class]] : NO)) {
 		//NSLog(@"iTMDb: Returned data is NOT a dictionary!\n%@", _rawResults);
-		if (_context != nil) {
+		if (context != nil) {
 			NSDictionary *errorDict = @{
 				NSLocalizedDescriptionKey: [NSString stringWithFormat:@"The data source (themoviedb) returned invalid data: %@", _rawResults]
 			};
@@ -198,11 +194,10 @@
 			NSError *failError = [NSError errorWithDomain:TMDBErrorDomain
 													 code:TMDBErrorCodeReceivedInvalidData
 												 userInfo:errorDict];
-			NSDictionary *userInfo = @{
-				TMDBMovieUserInfoKey: self,
-				TMDBErrorUserInfoKey: failError
-			};
-			[[NSNotificationCenter defaultCenter] postNotificationName:TMDBDidFailLoadingMovieNotification object:_context userInfo:userInfo];
+
+			if (completionBlock != nil) {
+				completionBlock(failError);
+			}
 		}
 		return;
 	}
@@ -268,7 +263,7 @@
 	_isAdult = [TMDB_NSNumberOrNil(d[@"adult"]) boolValue];
 
 	// Spoken Languages
-	_languagesSpoken = [TMDBLanguage languagesFromArrayOfDictionaries:TMDB_NSArrayOrNil(d[@"spoken_languages"]) context:_context];
+	_languagesSpoken = [TMDBLanguage languagesFromArrayOfDictionaries:TMDB_NSArrayOrNil(d[@"spoken_languages"]) context:context];
 
 	// Release date
 	NSString *released = TMDB_NSStringOrNil(d[@"release_date"]);
@@ -287,7 +282,7 @@
 
 	// Posters
 	if (images != nil && images[@"posters"] != nil) {
-		_posters = [TMDBImage imageArrayWithRawImageDictionaries:images[@"posters"] ofType:TMDBImageTypePoster context:_context];
+		_posters = [TMDBImage imageArrayWithRawImageDictionaries:images[@"posters"] ofType:TMDBImageTypePoster context:context];
 	}
 	else {
 		_posters = nil;
@@ -295,7 +290,7 @@
 
 	// Backdrops
 	if (images != nil && images[@"backdrops"] != nil) {
-		_backdrops = [TMDBImage imageArrayWithRawImageDictionaries:images[@"backdrops"] ofType:TMDBImageTypeBackdrop context:_context];
+		_backdrops = [TMDBImage imageArrayWithRawImageDictionaries:images[@"backdrops"] ofType:TMDBImageTypeBackdrop context:context];
 	}
 	else {
 		_backdrops = nil;
@@ -329,17 +324,12 @@
 
 	if (_isSearchingOnly) {
 		_isSearchingOnly = NO;
-		// Cast to suppress compiler warning, probably not a good idea
-		(void)[self initWithID:_id options:_options context:_context];
+		[self load:completionBlock];
 		return;
 	}
 
-	// Notify the context that the movie info has been loaded
-	if (_context != nil) {
-		NSDictionary *userInfo = @{
-			TMDBMovieUserInfoKey: self
-		};
-		[[NSNotificationCenter defaultCenter] postNotificationName:TMDBDidFinishLoadingMovieNotification object:_context userInfo:userInfo];
+	if (completionBlock != nil) {
+		completionBlock(nil);
 	}
 }
 
@@ -364,25 +354,6 @@
 		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
 	});
 	return [releasedFormatter dateFromString:dateString];
-}
-
-@end
-
-@implementation TMDBMovie (DeprecatedMethods)
-
-+ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context
-{
-	return [[self alloc] initWithID:anID options:options context:context];
-}
-
-+ (instancetype)movieWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context
-{
-	return [[self alloc] initWithName:name options:options context:context];
-}
-
-+ (instancetype)movieWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context
-{
-	return [[self alloc] initWithName:name year:year options:options context:context];
 }
 
 @end

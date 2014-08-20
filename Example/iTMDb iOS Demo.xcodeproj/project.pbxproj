@@ -23,7 +23,6 @@
 		AAC05ED919A125E8002221A3 /* DMSettingsSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05ED819A125E8002221A3 /* DMSettingsSwitchTableViewCell.m */; };
 		AAC05EDC19A12B35002221A3 /* DMSettingsNumberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05EDB19A12B35002221A3 /* DMSettingsNumberTableViewCell.m */; };
 		AAC05EE019A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05EDF19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m */; };
-		AAC05EE319A16226002221A3 /* TMDBMovie+DMBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC05EE219A16226002221A3 /* TMDBMovie+DMBlocks.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,8 +79,6 @@
 		AAC05EDB19A12B35002221A3 /* DMSettingsNumberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSettingsNumberTableViewCell.m; sourceTree = "<group>"; };
 		AAC05EDE19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DMStringContainsOnlyNumbers.h"; sourceTree = "<group>"; };
 		AAC05EDF19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DMStringContainsOnlyNumbers.m"; sourceTree = "<group>"; };
-		AAC05EE119A16226002221A3 /* TMDBMovie+DMBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TMDBMovie+DMBlocks.h"; sourceTree = "<group>"; };
-		AAC05EE219A16226002221A3 /* TMDBMovie+DMBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TMDBMovie+DMBlocks.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,8 +229,6 @@
 			children = (
 				AAC05EDE19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.h */,
 				AAC05EDF19A12F36002221A3 /* NSString+DMStringContainsOnlyNumbers.m */,
-				AAC05EE119A16226002221A3 /* TMDBMovie+DMBlocks.h */,
-				AAC05EE219A16226002221A3 /* TMDBMovie+DMBlocks.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -342,7 +337,6 @@
 				AA4B5D671996427B0007EE28 /* DetailViewController.m in Sources */,
 				AA0DF8FC199FB7E0005DC94E /* DMSettingsViewController.m in Sources */,
 				AAC05ED619A12592002221A3 /* DMSettingsTableViewCell.m in Sources */,
-				AAC05EE319A16226002221A3 /* TMDBMovie+DMBlocks.m in Sources */,
 				AA0DF902199FC661005DC94E /* DMSettingsTextTableViewCell.m in Sources */,
 				AAC05ED919A125E8002221A3 /* DMSettingsSwitchTableViewCell.m in Sources */,
 				AAC05EDC19A12B35002221A3 /* DMSettingsNumberTableViewCell.m in Sources */,
