@@ -50,35 +50,39 @@ All iTMDb classes are prefixed with `TMDB`, and the main class, just called `TMD
  #import <iTMDb/iTMDb.h>
 ```
 
-2. Create an instance of iTMDb. Replace `api_key` with your own API key, provided by [TMDb](http://api.themoviedb.org/). iTMDb performs fetch requests asynchronously, so setting a delegate is required. The delegate will receive notifications when the loading is done. The object should follow the `TMDBDelegate` protocol.
+2. Set the API key in the `TMDB` singleton's `apiKey` property. You need your own API key, provided by [TMDb](http://api.themoviedb.org/).
 
 ```objective-c
-TMDB *tmdb = [[TMDB alloc] initWithAPIKey:@"api_key" delegate:self];
+[TMDB sharedInstance].apiKey = @"api_key";
 ```
 
-3. Look up a movie by name and year:
+3. Look up a movie by name and year.
 
 ```objective-c
-[[TMDBMovie alloc] initWithName:@"The LEGO Movie" year:2014 options:TMDBMovieFetchOptionAll context:tmdb];
+TMDBMovie *movie = [[TMDBMovie alloc] initWithName:@"The LEGO Movie" year:2014 options:TMDBMovieFetchOptionAll];
+```
+
+The movie's properties (title, year, cast, etc.) is not populated until the information has been fetched. This is done by the `load:` method.
+
+```objective-c
+[movie load:^(NSError *error) {
+	// Do something with the movie
+}];
 ```
 
 If you don't know the movie's year, just call the same method without the `year` parameter:
 
 ```objective-c
--[TMDBMovie initWithName:options:context:]
+-[TMDBMovie initWithName:options:]
 ```
 
 Alternatively, you can look up a movie from its ID:
 
 ```objective-c
-[[TMDBMovie alloc] initWithID:22538 options:TMDBMovieFetchOptionAll context:tmdb];
+-[TMDBMovie initWithID:options:]
 ```
 
-4. An API request is made. Once information has been downloaded, the context object (`tmdb`) will receive a notification. The fetched properties are available through the returned object, which is sent to the context delegate (`tmdb.delegate`) with the following method:
-
-```objective-c
--[id<TMDBDelegate> tmdb:didFinishLoadingMovie:]
-```
+4. An API request is made. Once information has been downloaded, the block provided in the `load:` method is called.  At this point, the movie's properties are populated (depending on the set fetch options).
 
 ## Dependencies
 
