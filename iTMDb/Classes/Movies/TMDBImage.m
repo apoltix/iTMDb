@@ -17,23 +17,22 @@
 
 @implementation TMDBImage
 
-+ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType context:(TMDB *)context {
++ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType {
 	NSMutableArray *images = [NSMutableArray array];
 
 	for (NSDictionary *imageDict in rawImages) {
-		TMDBImage *currentImage = [[TMDBImage alloc] initWithDictionary:imageDict type:aType context:context];
+		TMDBImage *currentImage = [[TMDBImage alloc] initWithDictionary:imageDict type:aType];
 		[images addObject:currentImage];
 	}
 
 	return images;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)d type:(TMDBImageType)type context:(TMDB *)context {
+- (instancetype)initWithDictionary:(NSDictionary *)d type:(TMDBImageType)type {
 	if (!(self = [super init])) {
 		return nil;
 	}
 
-	_context = context;
 	_type = type;
 	_filePath = [TMDB_NSStringOrNil(d[@"file_path"]) copy];
 	_originalSize = CGSizeMake([TMDB_NSNumberOrNil(d[@"width"]) floatValue], [TMDB_NSNumberOrNil(d[@"height"]) floatValue]);
@@ -47,12 +46,14 @@
 
 #pragma mark - URLs
 
-+ (NSURL *)urlForSize:(NSString *)size imagePath:(NSString *)imagePath context:(TMDB *)context {
++ (NSURL *)urlForSize:(NSString *)size imagePath:(NSString *)imagePath {
+	TMDB *context = [TMDB sharedInstance];
 	return [[context.configuration.imagesBaseURL URLByAppendingPathComponent:size] URLByAppendingPathComponent:imagePath];
 }
 
 - (NSURL *)urlForSize:(NSString *)size {
-	return [[_context.configuration.imagesBaseURL URLByAppendingPathComponent:size] URLByAppendingPathComponent:self.filePath];
+	TMDB *context = [TMDB sharedInstance];
+	return [[context.configuration.imagesBaseURL URLByAppendingPathComponent:size] URLByAppendingPathComponent:self.filePath];
 }
 
 #pragma mark - Sizes

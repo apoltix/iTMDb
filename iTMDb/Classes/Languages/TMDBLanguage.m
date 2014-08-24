@@ -11,29 +11,31 @@
 
 @implementation TMDBLanguage
 
-+ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries context:(TMDB *)context {
++ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries {
 	if (rawLanguagesDictionaries == nil) {
 		return nil;
 	}
 
 	if (![rawLanguagesDictionaries isKindOfClass:[NSArray class]]) {
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Parameter rawLanguagesDictionary must be an NSArray instance." userInfo:@{@"object": rawLanguagesDictionaries}];
+		NSDictionary *userInfo = @{
+			@"object": rawLanguagesDictionaries
+		};
+
+		@throw [NSException exceptionWithName:NSInvalidArgumentException
+									   reason:@"Parameter rawLanguagesDictionary must be an NSArray instance."
+									 userInfo:userInfo];
 	}
 
-	if ([rawLanguagesDictionaries count] == 0) {
+	if (rawLanguagesDictionaries.count == 0) {
 		return @[];
-	}
-
-	if (context == nil || ![context isKindOfClass:[TMDB class]]) {
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Parameter context must be an instance of `TMDB`." userInfo:context ? @{@"object": context} : nil];
 	}
 
 	NSMutableArray *languages = [NSMutableArray array];
 
 	for (NSDictionary *rawLanguage in rawLanguagesDictionaries) {
-		TMDBLanguage *language = [[TMDBLanguage alloc] initWithDictionary:rawLanguage context:context];
+		TMDBLanguage *language = [[TMDBLanguage alloc] initWithDictionary:rawLanguage];
 
-		if (language) {
+		if (language != nil) {
 			[languages addObject:language];
 		}
 	}
@@ -41,12 +43,11 @@
 	return [languages copy];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary context:(TMDB *)context {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
 	if (!(self = [super init])) {
 		return nil;
 	}
 
-	_context = context;
 	_name = TMDB_NSStringOrNil(dictionary[@"name"]);
 	_iso639_1 = TMDB_NSStringOrNil(dictionary[@"iso_639_1"]);
 

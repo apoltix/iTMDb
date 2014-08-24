@@ -8,15 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class TMDB;
-
 @interface TMDBLanguage : NSObject
 
-+ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries context:(TMDB *)context;
++ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary context:(TMDB *)context NS_DESIGNATED_INITIALIZER;
-
-@property (nonatomic, strong, readonly) TMDB *context;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, copy, readonly) NSString *name;
 @property (nonatomic, copy, readonly) NSString *iso639_1;

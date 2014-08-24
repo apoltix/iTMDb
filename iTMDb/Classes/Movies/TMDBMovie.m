@@ -263,7 +263,7 @@
 	_isAdult = [TMDB_NSNumberOrNil(d[@"adult"]) boolValue];
 
 	// Spoken Languages
-	_languagesSpoken = [TMDBLanguage languagesFromArrayOfDictionaries:TMDB_NSArrayOrNil(d[@"spoken_languages"]) context:context];
+	_languagesSpoken = [TMDBLanguage languagesFromArrayOfDictionaries:TMDB_NSArrayOrNil(d[@"spoken_languages"])];
 
 	// Release date
 	NSString *released = TMDB_NSStringOrNil(d[@"release_date"]);
@@ -282,7 +282,7 @@
 
 	// Posters
 	if (images != nil && images[@"posters"] != nil) {
-		_posters = [TMDBImage imageArrayWithRawImageDictionaries:images[@"posters"] ofType:TMDBImageTypePoster context:context];
+		_posters = [TMDBImage imageArrayWithRawImageDictionaries:images[@"posters"] ofType:TMDBImageTypePoster];
 	}
 	else {
 		_posters = nil;
@@ -290,7 +290,7 @@
 
 	// Backdrops
 	if (images != nil && images[@"backdrops"] != nil) {
-		_backdrops = [TMDBImage imageArrayWithRawImageDictionaries:images[@"backdrops"] ofType:TMDBImageTypeBackdrop context:context];
+		_backdrops = [TMDBImage imageArrayWithRawImageDictionaries:images[@"backdrops"] ofType:TMDBImageTypeBackdrop];
 	}
 	else {
 		_backdrops = nil;
@@ -345,8 +345,7 @@
 	return [df stringFromDate:date].integerValue;
 }
 
-- (NSDate *)dateFromString:(NSString *)dateString
-{
+- (NSDate *)dateFromString:(NSString *)dateString {
 	static NSDateFormatter *releasedFormatter;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{

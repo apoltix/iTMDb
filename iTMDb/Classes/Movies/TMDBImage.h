@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-@class TMDB;
-
 typedef NS_ENUM(NSUInteger, TMDBImageType) {
 	TMDBImageTypePoster,
 	TMDBImageTypeBackdrop
@@ -30,8 +28,6 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
  */
 @interface TMDBImage : NSObject
 
-@property (nonatomic, strong, readonly) TMDB *context;
-
 @property (nonatomic, readonly) TMDBImageType type;
 @property (nonatomic, readonly) CGSize originalSize;
 @property (nonatomic, readonly) float aspectRatio; // This is actually unnecessary
@@ -42,13 +38,13 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 
 /** @name Creating `TMDBImage` instances */
 
-+ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType context:(TMDB *)context;
++ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType;
 
-- (instancetype)initWithDictionary:(NSDictionary *)rawImageData type:(TMDBImageType)type context:(TMDB *)context NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDictionary:(NSDictionary *)rawImageData type:(TMDBImageType)type NS_DESIGNATED_INITIALIZER;
 
 /** @name Getting URLs */
 
-+ (NSURL *)urlForSize:(NSString *)size imagePath:(NSString *)imagePath context:(TMDB *)context;
++ (NSURL *)urlForSize:(NSString *)size imagePath:(NSString *)imagePath;
 - (NSURL *)urlForSize:(NSString *)size;
 
 /** @name Getting Sizes */
