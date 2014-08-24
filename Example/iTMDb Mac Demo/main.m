@@ -3,7 +3,7 @@
 //  iTMDbTest
 //
 //  Created by Christian Rasmussen on 27/11/11.
-//  Copyright (c) 2011 Apoltix. All rights reserved.
+//  Copyright (c) 2011 Devify. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

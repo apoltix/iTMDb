@@ -3,7 +3,7 @@
 //  iTMDb
 //
 //  Created by Christian Rasmussen on 29/12/10.
-//  Copyright 2010 Apoltix. All rights reserved.
+//  Copyright (c) 2010 Devify. All rights reserved.
 //
 
 #import "TMDBPerson.h"
@@ -14,7 +14,7 @@
 @implementation TMDBPerson
 
 + (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)d {
-	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:[d count]];
+	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:d.count];
 
 	for (NSDictionary *rawPerson in d) {
 		TMDBPerson *person = [[TMDBPerson alloc] initWithMovie:movie personInfo:rawPerson];

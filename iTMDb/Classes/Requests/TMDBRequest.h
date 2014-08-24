@@ -3,10 +3,10 @@
 //  iTMDb
 //
 //  Created by Christian Rasmussen on 04/11/10.
-//  Copyright 2010 Apoltix. All rights reserved.
+//  Copyright (c) 2010 Devify. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 typedef void (^TMDBRequestCompletionBlock)(id parsedData, NSError *error);
 

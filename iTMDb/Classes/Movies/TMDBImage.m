@@ -3,7 +3,7 @@
 //  iTMDb
 //
 //  Created by Christian Rasmussen on 07/11/10.
-//  Copyright 2010 Apoltix. All rights reserved.
+//  Copyright (c) 2010 Devify. All rights reserved.
 //
 
 #import "TMDBImage.h"
