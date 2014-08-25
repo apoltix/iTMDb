@@ -14,6 +14,7 @@
 
 @interface DMSearchViewController () <UISearchBarDelegate>
 
+@property (nonatomic, weak) UIActivityIndicatorView *spinner;
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 
 @property (nonatomic, strong) NSMutableArray *objects;
@@ -35,6 +36,11 @@
 
 - (void)awakeFromNib {
 	[super awakeFromNib];
+
+	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+	spinner.hidesWhenStopped = YES;
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+	self.spinner = spinner;
 
 	self.objects = [NSMutableArray array];
 }
@@ -100,19 +106,20 @@
 
 	NSNumber *searchMovieID = [settings settingsItemNamed:@"movieID"].value;
 
-	if (!(apiKey.length > 0 && (searchMovieID.integerValue > 0 || searchMovieName.length > 0))) {
-		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Missing either API key, movie ID or title"
-															message:@"Please enter both API key, and a movie ID or title.\n\nYou can obtain an API key from themoviedb.org."
+	if (apiKey.length == 0) {
+		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Missing API key"
+															message:@"Please enter your API key in Settings. You can obtain an API key from themoviedb.org."
 														   delegate:nil
 												  cancelButtonTitle:@"OK"
 												  otherButtonTitles:nil];
 		[alertView show];
 		return;
 	}
+	else if (searchMovieID.integerValue == 0 && searchMovieName.length == 0) {
+		return;
+	}
 
-//	[self.throbber startAnimation:self];
-//	self.goButton.enabled = NO;
-//	self.viewAllDataButton.enabled = NO;
+	[self.spinner startAnimating];
 
 	TMDB *tmdb = [TMDB sharedInstance];
 
@@ -131,11 +138,6 @@
 - (void)search:(NSNumber *)movieID name:(NSString *)movieName {
 	DMSettingsManager *settings = [DMSettingsManager sharedManager];
 	TMDB *tmdb = [TMDB sharedInstance];
-
-	// Clear previous data, if any
-//	if (_allData) {
-//		_allData = nil;
-//	}
 
 	// Set the language, if specified
 	NSString *lang = [settings settingsItemNamed:@"language"].value;
@@ -179,6 +181,8 @@
 
 	__weak TMDBMovie *weakMovie = movie;
 	[movie load:^(NSError *error) {
+		[self.spinner stopAnimating];
+
 		if (error != nil) {
 			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error fetching movie"
 																message:error.localizedDescription
