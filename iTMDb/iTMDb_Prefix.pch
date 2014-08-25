@@ -13,4 +13,12 @@
 	#else
 		#define TMDBLog(...)
 	#endif
+
+	#define TMDBSetValue(varName, value) TMDBSetIvarValue(varName, _##varName, value)
+
+	#define TMDBSetIvarValue(varName, ivarName, value) ({ \
+		[self willChangeValueForKey:@#varName]; \
+		ivarName = value; \
+		[self didChangeValueForKey:@#varName]; \
+	})
 #endif

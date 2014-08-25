@@ -36,7 +36,7 @@
 	NSString *configURLString = [NSString stringWithFormat:@"%@%@/configuration?api_key=%@", TMDBAPIURLBase, TMDBAPIVersion, context.apiKey];
 	NSURL *configURL = [NSURL URLWithString:configURLString];
 
-	TMDBRequestCompletionBlock innerCompletionBlock = ^(id parsedData, NSError *error) {
+	TMDBRequest *request = [TMDBRequest requestWithURL:configURL completionBlock:^(id parsedData, NSError *error) {
 		if (error != nil) {
 			if (completionBlock != nil) {
 				completionBlock(error);
@@ -57,9 +57,9 @@
 		if (completionBlock != nil) {
 			completionBlock(nil);
 		}
-	};
+	}];
 
-	if (![TMDBRequest requestWithURL:configURL completionBlock:innerCompletionBlock]) {
+	if (request == nil) {
 		TMDBLog(@"Could not create request for configuration.");
 	}
 }

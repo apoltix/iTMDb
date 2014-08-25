@@ -40,7 +40,7 @@ static NSCache *imageCache;
 	self.textField.stringValue = [image description] ? : @"";
 
 	if (image != nil) {
-		TMDBConfiguration *config = image.context.configuration;
+		TMDBConfiguration *config = [TMDB sharedInstance].configuration;
 
 		NSString *imageSize = [TMDBImage sizeClosestMatchingSize:self.view.frame.size.width
 														 inSizes:config.imagesPosterSizes
