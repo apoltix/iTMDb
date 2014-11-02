@@ -11,5 +11,6 @@
 extern NSString * const TMDBErrorDomain;
 
 typedef NS_ENUM(NSUInteger, TMDBErrorCode) {
-	TMDBErrorCodeReceivedInvalidData = 1001
+	TMDBErrorCodeReceivedInvalidData = 1001,
+	TMDBErrorCodeInvalidURL
 };

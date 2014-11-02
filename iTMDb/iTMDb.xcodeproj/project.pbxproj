@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = AA3242CB12CBEF2F00063558 /* TMDBPerson.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3242CC12CBEF2F00063558 /* TMDBPerson.m */; };
+		AA38A4DB1A06D9A100D424C6 /* TMDBMovieSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72F93519AB9B6000E68128 /* TMDBMovieSearch.m */; };
 		AA4B5D6E199647090007EE28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5D6D199647090007EE28 /* CoreGraphics.framework */; };
 		AA4B5D89199647E90007EE28 /* TMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = AABB1F6512833F5300F84FEB /* TMDB.m */; };
 		AA4B5D8A199647E90007EE28 /* TMDBError.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65EA90176E665300D8C4D5 /* TMDBError.m */; };
@@ -23,6 +24,8 @@
 		AA4B5D95199647F60007EE28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5D94199647F60007EE28 /* CoreGraphics.framework */; };
 		AA65EA92176E698E00D8C4D5 /* TMDBError.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65EA90176E665300D8C4D5 /* TMDBError.m */; };
 		AA65EA93176E69A800D8C4D5 /* TMDBError.h in Headers */ = {isa = PBXBuildFile; fileRef = AA65EA8F176E665300D8C4D5 /* TMDBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA72F93619AB9B6000E68128 /* TMDBMovieSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = AA72F93419AB9B6000E68128 /* TMDBMovieSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA72F93719AB9B6000E68128 /* TMDBMovieSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72F93519AB9B6000E68128 /* TMDBMovieSearch.m */; };
 		AA985848128309AA0074F570 /* iTMDb.h in Headers */ = {isa = PBXBuildFile; fileRef = AA985847128309AA0074F570 /* iTMDb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA9D9B7217B51EAA0016B954 /* TMDBConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7017B51EAA0016B954 /* TMDBConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA9D9B7317B51EAA0016B954 /* TMDBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7117B51EAA0016B954 /* TMDBConfiguration.m */; };
@@ -66,6 +69,8 @@
 		AA4B5D94199647F60007EE28 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		AA65EA8F176E665300D8C4D5 /* TMDBError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TMDBError.h; path = Classes/TMDBError.h; sourceTree = "<group>"; };
 		AA65EA90176E665300D8C4D5 /* TMDBError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TMDBError.m; path = Classes/TMDBError.m; sourceTree = "<group>"; };
+		AA72F93419AB9B6000E68128 /* TMDBMovieSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBMovieSearch.h; path = Classes/Movies/TMDBMovieSearch.h; sourceTree = "<group>"; };
+		AA72F93519AB9B6000E68128 /* TMDBMovieSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBMovieSearch.m; path = Classes/Movies/TMDBMovieSearch.m; sourceTree = "<group>"; };
 		AA985847128309AA0074F570 /* iTMDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb.h; sourceTree = "<group>"; };
 		AA98586D12830B680074F570 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		AA9D9B7017B51EAA0016B954 /* TMDBConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBConfiguration.h; path = Classes/Configuration/TMDBConfiguration.h; sourceTree = "<group>"; };
@@ -194,6 +199,8 @@
 			children = (
 				AAF4389D12834E6600F5CC92 /* TMDBMovie.h */,
 				AAF4389E12834E6600F5CC92 /* TMDBMovie.m */,
+				AA72F93419AB9B6000E68128 /* TMDBMovieSearch.h */,
+				AA72F93519AB9B6000E68128 /* TMDBMovieSearch.m */,
 			);
 			name = Movies;
 			sourceTree = "<group>";
@@ -276,6 +283,7 @@
 				AAF438B012834F6400F5CC92 /* TMDB.h in Headers */,
 				AA9D9B7217B51EAA0016B954 /* TMDBConfiguration.h in Headers */,
 				AAF4389F12834E6600F5CC92 /* TMDBMovie.h in Headers */,
+				AA72F93619AB9B6000E68128 /* TMDBMovieSearch.h in Headers */,
 				AAFA3EB312863A78002B9E38 /* TMDBImage.h in Headers */,
 				AA9D9B7C17B62E1B0016B954 /* TMDBLanguage.h in Headers */,
 				AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */,
@@ -380,6 +388,7 @@
 				AA9D9B7817B61E380016B954 /* TMDBHelpers.m in Sources */,
 				AAF43A1112835F9400F5CC92 /* TMDBRequest.m in Sources */,
 				AA9D9B7317B51EAA0016B954 /* TMDBConfiguration.m in Sources */,
+				AA72F93719AB9B6000E68128 /* TMDBMovieSearch.m in Sources */,
 				AA65EA92176E698E00D8C4D5 /* TMDBError.m in Sources */,
 				AAFA3EB412863A78002B9E38 /* TMDBImage.m in Sources */,
 				AA9D9B7D17B62E1B0016B954 /* TMDBLanguage.m in Sources */,
@@ -396,6 +405,7 @@
 				AA4B5D8B199647E90007EE28 /* TMDBHelpers.m in Sources */,
 				AA4B5D8C199647E90007EE28 /* TMDBConfiguration.m in Sources */,
 				AA4B5D8D199647E90007EE28 /* TMDBMovie.m in Sources */,
+				AA38A4DB1A06D9A100D424C6 /* TMDBMovieSearch.m in Sources */,
 				AA4B5D8E199647E90007EE28 /* TMDBImage.m in Sources */,
 				AA4B5D8F199647E90007EE28 /* TMDBPerson.m in Sources */,
 				AA4B5D90199647E90007EE28 /* TMDBLanguage.m in Sources */,

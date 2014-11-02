@@ -44,7 +44,7 @@
 
 @property (nonatomic, copy) IBOutlet NSArray *posters;
 
-@property (nonatomic, strong) TMDBMovie *movie;
+@property (nonatomic, strong) NSArray *movies;
 @property (nonatomic, strong) NSDictionary *allData;
 
 @end
@@ -104,6 +104,10 @@
 		tmdb.apiKey = apiKey;
 
 		[tmdb.configuration reload:^(NSError *error) {
+			if (error != nil) {
+				NSLog(@"Error while loading configuration: %@", error);
+			}
+
 			[self search];
 		}];
 	}
@@ -146,24 +150,38 @@
 	}
 
 	// Actually fetch the movie based on the information we have
-	if ([self.searchMovieID integerValue] > 0) {
-		self.movie = [[TMDBMovie alloc] initWithID:[self.searchMovieID integerValue] options:fetchOptions];
-	}
-	else if ([self.movieYear integerValue] > 0) {
-		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] year:(NSUInteger)[self.movieYear integerValue] options:fetchOptions];
-	}
-	else {
-		self.movie = [[TMDBMovie alloc] initWithName:[self.searchMovieName stringValue] options:fetchOptions];
-	}
+	NSUInteger searchMovieID = self.searchMovieID.integerValue,
+			   searchMovieYear = self.movieYear.integerValue;
 
-	[self.movie load:^(NSError *error) {
+	NSString *searchMovieTitle = self.searchMovieName.stringValue;
+
+	TMDBMoviesFetchCompletionBlock completionBlock = ^(NSArray *movies, NSError *error) {
 		if (error != nil) {
-			[self tmdbDidFailLoadingMovie:self.movie error:error];
+			[self tmdbDidFailLoadingMovie:movies.firstObject error:error];
 			return;
 		}
 
-		[self tmdbDidFinishLoadingMovie:self.movie];
-	}];
+		TMDBMovie *movie = movies.firstObject;
+		[movie load:fetchOptions completion:^(NSError *error2) {
+			if (error2 != nil) {
+				[self tmdbDidFailLoadingMovie:movie error:error2];
+				return;
+			}
+
+			[self tmdbDidFinishLoadingMovie:movie];
+		}];
+	};
+
+	if (searchMovieID > 0) {
+		TMDBMovie *movie = [[TMDBMovie alloc] initWithID:searchMovieID];
+		completionBlock(@[movie], nil);
+	}
+	else if (searchMovieYear > 0) {
+		[TMDBMovieSearch moviesWithTitle:searchMovieTitle year:searchMovieYear options:fetchOptions completion:completionBlock];
+	}
+	else {
+		[TMDBMovieSearch moviesWithTitle:searchMovieTitle options:fetchOptions completion:completionBlock];
+	}
 }
 
 - (IBAction)viewAllData:(id)sender
@@ -232,13 +250,16 @@
 #pragma mark - NSTableViewDataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-	return [_movie.cast count];
+	TMDBMovie *movie = self.movies.firstObject;
+	return movie.cast.count;
 }
 
 #pragma mark - NSTableViewDelegate
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-	TMDBPerson *person = _movie.cast[row];
+	TMDBMovie *movie = self.movies.firstObject;
+
+	TMDBPerson *person = movie.cast[row];
 	NSTableCellView *view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 
 	if ([tableColumn.identifier isEqualToString:@"imageAndName"]) {

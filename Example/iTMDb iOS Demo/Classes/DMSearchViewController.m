@@ -10,16 +10,14 @@
 #import "DetailViewController.h"
 #import "DMAppDelegate.h"
 #import "DMSettingsManager.h"
-#import <TMDb.h>
+#import <iTMDb.h>
 
 @interface DMSearchViewController () <UISearchBarDelegate>
 
 @property (nonatomic, weak) UIActivityIndicatorView *spinner;
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 
-@property (nonatomic, strong) NSMutableArray *objects;
-
-@property (nonatomic, strong) TMDBMovie *movie;
+@property (nonatomic, strong) NSArray *movies;
 
 @end
 
@@ -41,8 +39,6 @@
 	spinner.hidesWhenStopped = YES;
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 	self.spinner = spinner;
-
-	self.objects = [NSMutableArray array];
 }
 
 #pragma mark -
@@ -64,7 +60,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"showDetail"]) {
 		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-		NSDate *object = self.objects[indexPath.row];
+		NSDate *object = self.movies[indexPath.row];
 		[segue.destinationViewController setDetailItem:object];
 	}
 }
@@ -72,14 +68,15 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return self.objects.count;
+	return self.movies.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-	TMDBMovie *movie = self.objects[indexPath.row];
-	cell.textLabel.text = [movie description];
+	TMDBMovie *movie = self.movies[indexPath.row];
+	cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", movie.title, @(movie.year)];
+	cell.detailTextLabel.text = movie.description;
 	return cell;
 }
 
@@ -102,7 +99,7 @@
 	DMSettingsManager *settings = [DMSettingsManager sharedManager];
 
 	NSString *apiKey = [settings settingsItemNamed:@"apiKey"].value,
-			 *searchMovieName = self.searchBar.text;//[settings settingsItemNamed:@"movieTitle"].value;
+			 *searchMovieName = self.searchBar.text;
 
 	NSNumber *searchMovieID = [settings settingsItemNamed:@"movieID"].value;
 
@@ -116,6 +113,8 @@
 		return;
 	}
 	else if (searchMovieID.integerValue == 0 && searchMovieName.length == 0) {
+		self.movies = nil;
+		[self.tableView reloadData];
 		return;
 	}
 
@@ -167,22 +166,7 @@
 	// Actually fetch the movie based on the information we have
 	NSUInteger year = [(NSNumber *)[settings settingsItemNamed:@"movieYear"].value unsignedIntegerValue];
 
-	TMDBMovie *movie = nil;
-
-	if (movieID.integerValue > 0) {
-		movie = [[TMDBMovie alloc] initWithID:movieID.integerValue options:fetchOptions];
-	}
-	else if (year > 0) {
-		movie = [[TMDBMovie alloc] initWithName:movieName year:year options:fetchOptions];
-	}
-	else {
-		movie = [[TMDBMovie alloc] initWithName:movieName options:fetchOptions];
-	}
-
-	__weak TMDBMovie *weakMovie = movie;
-	[movie load:^(NSError *error) {
-		[self.spinner stopAnimating];
-
+	TMDBMoviesFetchCompletionBlock completionBlock = ^(NSArray *movies, NSError *error) {
 		if (error != nil) {
 			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error fetching movie"
 																message:error.localizedDescription
@@ -193,13 +177,22 @@
 			return;
 		}
 
-		[self.tableView beginUpdates];
-		[self.objects insertObject:weakMovie atIndex:0];
-		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-		[self.tableView endUpdates];
-	}];
+		[self.spinner stopAnimating];
 
-	self.movie = movie;
+		self.movies = movies;
+		[self.tableView reloadData];
+	};
+
+	if (movieID.integerValue > 0) {
+		TMDBMovie *movie = [[TMDBMovie alloc] initWithID:movieID.integerValue];
+		completionBlock(@[movie], nil);
+	}
+	else if (year > 0) {
+		[TMDBMovieSearch moviesWithTitle:movieName year:year options:fetchOptions completion:completionBlock];
+	}
+	else {
+		[TMDBMovieSearch moviesWithTitle:movieName options:fetchOptions completion:completionBlock];
+	}
 }
 
 @end

@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class TMDB;
-
 typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 	TMDBMovieFetchOptionBasic    = 1 << 1,
 	TMDBMovieFetchOptionCasts    = 1 << 2,
@@ -34,59 +32,60 @@ typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
  */
 @interface TMDBMovie : NSObject
 
+#pragma mark - Creating an Instance
 /** @name Creating an Instance */
 
 /**
- * Creates a fetch request for the movie with the provided TMDb ID, and returns
- * an object representing that movie.
+ * Creates an empty movie object ready to be loaded, based on the provided TMDb
+ * ID.
  *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
- * object has finished loading.
+ * You must call either `-load` or `-populate:` to populate the object with
+ * data.
  *
- * @param anID The TMDb ID of the movie to be looked up.
- * @param context The IMDb context from which the lookup should be made.
- * @return An object representing the movie.
+ * @param tmdbID The TMDb ID of the movie to be looked up.
+ * @return An empty movie object ready to be loaded.
  */
-- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options;
+- (instancetype)initWithID:(NSUInteger)tmdbID NS_DESIGNATED_INITIALIZER;
+
+/**
+ * Creates an empty movie object ready to be loaded, based on the provided
+ * title.
+ *
+ * You must call either `-load` or `-populate:` to populate the object with
+ * data.
+ *
+ * @param title The name of the movie to be looked up.
+ * @return An empty movie object ready to be loaded.
+ */
+- (instancetype)initWithTitle:(NSString *)title;
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
  * object representing that movie.
  *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
- * object has finished loading.
+ * You must call either `-load` or `-populate:` to populate the object with
+ * data.
  *
- * @param aName The name of the movie to be looked up.
- * @param context The IMDb context from which the lookup should be made.
- * @return An object representing the movie.
- */
-- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options;
-
-/**
- * Creates a fetch request for the movie with the provided name, and returns an
- * object representing that movie.
- *
- * The context gets notified using [TMDB movieDidFinishLoading:] when the movie
- * object has finished loading.
- *
- * @param aName The name of the movie to be looked up.
- * @param aYear The year the movie was released. This is only a hint and not a
+ * @param title The name of the movie to be looked up.
+ * @param year The year the movie was released. This is only a hint and not a
  * requirement for the returned movie.
- * @param context The IMDb context from which the lookup should be made.
- * @return An object representing the movie.
+ * @return An empty movie object ready to be loaded.
  */
-- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options;
+- (instancetype)initWithTitle:(NSString *)title year:(NSUInteger)year;
 
 /** @name Loading Data */
 
-- (void)load:(TMDBMovieFetchCompletionBlock)completionBlock;
+- (void)load:(TMDBMovieFetchOptions)options completion:(TMDBMovieFetchCompletionBlock)completionBlock;
 
+- (void)populate:(NSDictionary *)d;
+
+#pragma mark - Basic Information
 /** @name Basic Information */
 
 @property (nonatomic, readonly) TMDBMovieFetchOptions options;
 
 /** The TMDb ID of the movie. */
-@property (nonatomic, readonly) NSInteger id;
+@property (nonatomic, readonly) NSInteger tmdbID;
 
 /** The title of the movie. */
 @property (nonatomic, copy, readonly) NSString *title;
@@ -128,8 +127,6 @@ typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
 
 /** The number of votes for this movie from users on the TMDb website. */
 @property (nonatomic, readonly) NSInteger votes;
-
-@property (nonatomic, strong, readonly) NSDictionary *userData;
 
 /**
  * The raw contents from the API itself.
@@ -186,7 +183,13 @@ typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
  */
 @property (nonatomic, strong, readonly) NSArray *cast;
 
+// TODO: Move out of TMDBMovie
++ (NSUInteger)yearFromDate:(NSDate *)date;
++ (NSDate *)dateFromString:(NSString *)dateString;
+
 @end
+
+@class TMDB;
 
 @interface TMDBMovie (UnavailableMethods)
 

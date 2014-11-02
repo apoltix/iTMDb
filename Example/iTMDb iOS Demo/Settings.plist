@@ -10,26 +10,6 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>movieID</string>
-		<key>type</key>
-		<string>integer</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>movieTitle</string>
-		<key>type</key>
-		<string>string</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>movieYear</string>
-		<key>type</key>
-		<string>integer</string>
-		<key>maxLength</key>
-		<integer>4</integer>
-	</dict>
-	<dict>
-		<key>name</key>
 		<string>language</string>
 		<key>type</key>
 		<string>string</string>

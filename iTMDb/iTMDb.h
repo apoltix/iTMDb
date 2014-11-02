@@ -10,6 +10,7 @@
 
 #import "TMDB.h"
 #import "TMDBMovie.h"
+#import "TMDBMovieSearch.h"
 #import "TMDBImage.h"
 #import "TMDBPerson.h"
 #import "TMDBConfiguration.h"
