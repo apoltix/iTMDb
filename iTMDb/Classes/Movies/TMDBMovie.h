@@ -47,32 +47,6 @@ typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
  */
 - (instancetype)initWithID:(NSUInteger)tmdbID NS_DESIGNATED_INITIALIZER;
 
-/**
- * Creates an empty movie object ready to be loaded, based on the provided
- * title.
- *
- * You must call either `-load` or `-populate:` to populate the object with
- * data.
- *
- * @param title The name of the movie to be looked up.
- * @return An empty movie object ready to be loaded.
- */
-- (instancetype)initWithTitle:(NSString *)title;
-
-/**
- * Creates a fetch request for the movie with the provided name, and returns an
- * object representing that movie.
- *
- * You must call either `-load` or `-populate:` to populate the object with
- * data.
- *
- * @param title The name of the movie to be looked up.
- * @param year The year the movie was released. This is only a hint and not a
- * requirement for the returned movie.
- * @return An empty movie object ready to be loaded.
- */
-- (instancetype)initWithTitle:(NSString *)title year:(NSUInteger)year;
-
 /** @name Loading Data */
 
 - (void)load:(TMDBMovieFetchOptions)options completion:(TMDBMovieFetchCompletionBlock)completionBlock;

@@ -18,7 +18,9 @@
 
 	for (NSDictionary *rawPerson in d) {
 		TMDBPerson *person = [[TMDBPerson alloc] initWithMovie:movie personInfo:rawPerson];
-		[persons addObject:person];
+		if (person != nil) {
+			[persons addObject:person];
+		}
 	}
 
 	return [persons copy];

@@ -161,6 +161,8 @@
 			return;
 		}
 
+		self.movies = movies;
+
 		TMDBMovie *movie = movies.firstObject;
 		[movie load:fetchOptions completion:^(NSError *error2) {
 			if (error2 != nil) {

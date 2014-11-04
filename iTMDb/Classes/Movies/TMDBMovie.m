@@ -39,21 +39,6 @@
 	return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title {
-	return (self = [self initWithTitle:title year:0]);
-}
-
-- (instancetype)initWithTitle:(NSString *)title year:(NSUInteger)year {
-	if (!(self = [self initWithID:0])) {
-		return nil;
-	}
-
-	_title = [title copy];
-	_year = year;
-
-	return self;
-}
-
 #pragma mark - Data Fetching
 
 - (void)load:(TMDBMovieFetchOptions)options completion:(TMDBMovieFetchCompletionBlock)completionBlock {
