@@ -26,7 +26,7 @@
 	dispatch_once(&onceToken, ^{
 		sharedQueue = [[NSOperationQueue alloc] init];
 		sharedQueue.name = [NSStringFromClass(self) stringByAppendingString:@"Queue"];
-		sharedQueue.maxConcurrentOperationCount = 4;
+		sharedQueue.maxConcurrentOperationCount = 4; // TODO: Do time-based throttling to compensate for TMDb's rate limiting
 	});
 	return sharedQueue;
 }
@@ -53,7 +53,7 @@
 
 #pragma mark - NSOperation
 
-- (BOOL)isConcurrent {
+- (BOOL)isAsynchronous {
 	return YES;
 }
 

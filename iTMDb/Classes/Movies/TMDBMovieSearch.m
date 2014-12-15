@@ -53,28 +53,29 @@
 	return [NSURL URLWithString:urlString];
 }
 
-+ (NSURL *)fetchURLWithMovieTitle:(NSString *)title options:(TMDBMovieFetchOptions)options {
++ (NSURL *)searchURLWithMovieTitle:(NSString *)title year:(NSUInteger)year {
 	TMDB *context = [TMDB sharedInstance];
 
 	NSString *apiKey = context.apiKey,
 			 *language = context.language,
-			 *titleEscaped = [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-			 *additionalQueries = [self appendToResponseStringFromFetchOptions:options];
+			 *titleEscaped = [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-	NSString *urlString = [TMDBAPIURLBase stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@&language=%@%@",
-						   TMDBAPIVersion, apiKey, titleEscaped, language, additionalQueries];
+	NSString *yearQuery = year > 0 ? [NSString stringWithFormat:@"&year=%lu", year] : @"";
+
+	NSString *urlString = [TMDBAPIURLBase stringByAppendingFormat:@"%@/search/movie?api_key=%@&query=%@%@&language=%@",
+						   TMDBAPIVersion, apiKey, titleEscaped, yearQuery, language];
 
 	return [NSURL URLWithString:urlString];
 }
 
 #pragma mark - Searching
 
-+ (void)moviesWithTitle:(NSString *)title options:(TMDBMovieFetchOptions)options completion:(TMDBMoviesFetchCompletionBlock)completionBlock {
-	[self moviesWithTitle:title year:0 options:options completion:completionBlock];
++ (void)moviesWithTitle:(NSString *)title completion:(TMDBMoviesFetchCompletionBlock)completionBlock {
+	[self moviesWithTitle:title year:0 completion:completionBlock];
 }
 
-+ (void)moviesWithTitle:(NSString *)title year:(NSUInteger)year options:(TMDBMovieFetchOptions)options completion:(TMDBMoviesFetchCompletionBlock)completionBlock {
-	NSURL *url = [TMDBMovieSearch fetchURLWithMovieTitle:title options:options];
++ (void)moviesWithTitle:(NSString *)title year:(NSUInteger)year completion:(TMDBMoviesFetchCompletionBlock)completionBlock {
+	NSURL *url = [TMDBMovieSearch searchURLWithMovieTitle:title year:year];
 
 	if (url == nil) {
 		if (completionBlock != nil) {

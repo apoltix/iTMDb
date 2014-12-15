@@ -20,8 +20,8 @@ typedef void (^TMDBMoviesFetchCompletionBlock)(NSArray /* TMDBMovie * */ *movies
 #pragma mark - Searching
 /** @name Searching */
 
-+ (void)moviesWithTitle:(NSString *)title options:(TMDBMovieFetchOptions)options completion:(TMDBMoviesFetchCompletionBlock)completionBlock;
++ (void)moviesWithTitle:(NSString *)title completion:(TMDBMoviesFetchCompletionBlock)completionBlock;
 
-+ (void)moviesWithTitle:(NSString *)title year:(NSUInteger)year options:(TMDBMovieFetchOptions)options completion:(TMDBMoviesFetchCompletionBlock)completionBlock;
++ (void)moviesWithTitle:(NSString *)title year:(NSUInteger)year completion:(TMDBMoviesFetchCompletionBlock)completionBlock;
 
 @end

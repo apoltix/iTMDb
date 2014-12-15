@@ -112,6 +112,8 @@
 #pragma mark - Data Population
 
 - (void)populate:(NSDictionary *)d {
+	_rawResults = d;
+
 	// SIMPLE DATA
 	_tmdbID   = [TMDB_NSNumberOrNil((NSNumber *)d[@"id"]) integerValue];
 	_title    = TMDB_NSStringOrNil(d[@"title"]);
