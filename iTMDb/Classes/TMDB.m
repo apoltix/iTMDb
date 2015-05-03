@@ -27,6 +27,7 @@ NSString * const TMDBAPIVersion = @"3";
 		return nil;
 
 	_configuration = [[TMDBConfiguration alloc] init];
+	_language = @"en";
 
 	return self;
 }

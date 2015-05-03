@@ -30,7 +30,6 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 
 @property (nonatomic, readonly) TMDBImageType type;
 @property (nonatomic, readonly) CGSize originalSize;
-@property (nonatomic, readonly) float aspectRatio; // This is actually unnecessary
 @property (nonatomic, copy, readonly) NSString *iso639_1; // Two-letter language code
 
 @property (nonatomic, readonly) float voteAverage;
@@ -44,7 +43,6 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 
 /** @name Getting URLs */
 
-+ (NSURL *)urlForSize:(NSString *)size imagePath:(NSString *)imagePath;
 - (NSURL *)urlForSize:(NSString *)size;
 
 /** @name Getting Sizes */
@@ -53,8 +51,10 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
  * Returns the width or height of an image size string. If no size is explicitly
  * specified, such as the `original` size, `-1` is returned. The dimension, i.e.
  * either width or height (or original) is put in the `outImageSize` parameter.
+ *
+ * @return `-1` if no valid size could be found, or if it is the original size.
  */
-+ (float)sizeFromString:(NSString *)s imageSize:(TMDBImageSize *)outImageSize;
++ (CGFloat)sizeFromString:(NSString *)s imageSize:(TMDBImageSize *)outImageSize;
 
 /**
  * Returns the size from `sizes` that closest matches the specified `size`.
@@ -63,15 +63,14 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
  * the size that matches the closest, is returned.
  *
  * @param size The size in pixels that should be returned in string form.
- * @param sizes An array of `NSString`s that should be enumerated.
+ * @param sizes An array of `NSString`s that should be enumerated. Valid values
+ * can be found in the `TMDBConfiguration` instance, such as `imagesPosterSizes`.
  * @param dimension The dimension (width, height or original) that should be
  * returned.
  * @return An `NSString` representing the `size` in the specified `dimension`,
  * or nil if no such exist.
  */
 + (NSString *)sizeClosestMatchingSize:(float)size inSizes:(NSArray *)sizes dimension:(TMDBImageSize)dimension;
-
-- (CGSize)sizeForSize:(NSString *)size UNAVAILABLE_ATTRIBUTE; // Not yet updated for TMDb 3.0
 
 @end
 
@@ -81,5 +80,7 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 
 + (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithID:(NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
+
+- (CGSize)sizeForSize:(NSString *)size UNAVAILABLE_ATTRIBUTE;
 
 @end

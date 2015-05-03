@@ -179,10 +179,10 @@
 		completionBlock(@[movie], nil);
 	}
 	else if (searchMovieYear > 0) {
-		[TMDBMovieSearch moviesWithTitle:searchMovieTitle year:searchMovieYear options:fetchOptions completion:completionBlock];
+		[TMDBMovieSearch moviesWithTitle:searchMovieTitle year:searchMovieYear completion:completionBlock];
 	}
 	else {
-		[TMDBMovieSearch moviesWithTitle:searchMovieTitle options:fetchOptions completion:completionBlock];
+		[TMDBMovieSearch moviesWithTitle:searchMovieTitle completion:completionBlock];
 	}
 }
 
