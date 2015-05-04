@@ -6,7 +6,7 @@
 //  Copyright (c) 2010 Devify. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #import "TMDBMovie.h"
 #import "TMDBError.h"

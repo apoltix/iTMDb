@@ -59,9 +59,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([segue.identifier isEqualToString:@"showDetail"]) {
-		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-		NSDate *object = self.movies[indexPath.row];
-		[segue.destinationViewController setDetailItem:object];
+		NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+		TMDBMovie *movie = self.movies[indexPath.row];
+		[segue.destinationViewController setMovie:movie];
 	}
 }
 
@@ -148,21 +148,6 @@
 		tmdb.language = @"en";
 	}
 
-	// Define the amount of detail we want to fetch
-	TMDBMovieFetchOptions fetchOptions = TMDBMovieFetchOptionBasic;
-
-	if ([(NSNumber *)[settings settingsItemNamed:@"fetchCastCrew"].value boolValue]) {
-		fetchOptions |= TMDBMovieFetchOptionCasts;
-	}
-
-	if ([(NSNumber *)[settings settingsItemNamed:@"fetchKeywords"].value boolValue]) {
-		fetchOptions |= TMDBMovieFetchOptionKeywords;
-	}
-
-	if ([(NSNumber *)[settings settingsItemNamed:@"fetchImageURLs"].value boolValue]) {
-		fetchOptions |= TMDBMovieFetchOptionImages;
-	}
-
 	// Actually fetch the movie based on the information we have
 	NSUInteger year = [(NSNumber *)[settings settingsItemNamed:@"movieYear"].value unsignedIntegerValue];
 
@@ -188,10 +173,10 @@
 		completionBlock(@[movie], nil);
 	}
 	else if (year > 0) {
-		[TMDBMovieSearch moviesWithTitle:movieName year:year options:fetchOptions completion:completionBlock];
+		[TMDBMovieSearch moviesWithTitle:movieName year:year completion:completionBlock];
 	}
 	else {
-		[TMDBMovieSearch moviesWithTitle:movieName options:fetchOptions completion:completionBlock];
+		[TMDBMovieSearch moviesWithTitle:movieName completion:completionBlock];
 	}
 }
 

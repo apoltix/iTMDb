@@ -6,7 +6,7 @@
 //  Copyright (c) 2010 Devify. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 typedef NS_OPTIONS(NSUInteger, TMDBMovieFetchOptions) {
 	TMDBMovieFetchOptionBasic    = 1 << 1,
@@ -178,7 +178,7 @@ typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithID:options: instead.")));
++ (instancetype)movieWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithID: and -load:completion: instead.")));
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -191,7 +191,7 @@ typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:options: instead.")));
++ (instancetype)movieWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use TMDBMovieSearch instead.")));
 
 /**
  * Creates a fetch request for the movie with the provided name, and returns an
@@ -206,13 +206,13 @@ typedef void (^TMDBMovieFetchCompletionBlock)(NSError *error);
  * @param context The IMDb context from which the lookup should be made.
  * @return An object representing the movie.
  */
-+ (instancetype)movieWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:year:options: instead.")));
++ (instancetype)movieWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use TMDBMovieSearch instead.")));
 
-- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithID:options: instead.")));
+- (instancetype)initWithID:(NSUInteger)anID options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithID: and -load:completion: instead.")));
 
-- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:options: instead.")));
+- (instancetype)initWithName:(NSString *)name options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use TMDBMovieSearch instead.")));
 
-- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use -initWithName:year:options: instead.")));
+- (instancetype)initWithName:(NSString *)name year:(NSUInteger)year options:(TMDBMovieFetchOptions)options context:(TMDB *)context __attribute__((unavailable("Use TMDBMovieSearch instead.")));
 
 /** The original language of the movie. */
 @property (nonatomic, copy, readonly) NSString *language UNAVAILABLE_ATTRIBUTE;

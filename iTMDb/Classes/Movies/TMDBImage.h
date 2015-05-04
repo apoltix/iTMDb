@@ -6,8 +6,8 @@
 //  Copyright (c) 2010 Devify. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
+@import Foundation;
+@import CoreGraphics;
 
 typedef NS_ENUM(NSUInteger, TMDBImageType) {
 	TMDBImageTypePoster,

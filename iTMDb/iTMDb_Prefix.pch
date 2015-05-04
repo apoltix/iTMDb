@@ -3,10 +3,10 @@
 //
 
 #ifdef __OBJC__
-	#import <Foundation/Foundation.h>
-	#import <CoreGraphics/CoreGraphics.h>
+	@import Foundation;
+	@import CoreGraphics;
 
-	#import "TMDBHelpers.h"
+	#import "TMDBDataValidation.h"
 
 	#ifdef DEBUG
 		#define TMDBLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)

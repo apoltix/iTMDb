@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Devify. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 #import "TMDBMovie.h"
 
 typedef void (^TMDBMoviesFetchCompletionBlock)(NSArray /* TMDBMovie * */ *movies, NSError *error);
@@ -15,7 +15,7 @@ typedef void (^TMDBMoviesFetchCompletionBlock)(NSArray /* TMDBMovie * */ *movies
 
 + (NSURL *)fetchURLWithMovieID:(NSUInteger)tmdbID options:(TMDBMovieFetchOptions)options;
 
-+ (NSURL *)fetchURLWithMovieTitle:(NSString *)title options:(TMDBMovieFetchOptions)options;
++ (NSURL *)searchURLWithMovieTitle:(NSString *)title year:(NSUInteger)year;
 
 #pragma mark - Searching
 /** @name Searching */

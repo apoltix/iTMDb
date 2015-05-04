@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 Devify. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
+@class TMDBMovie;
 
 @interface DetailViewController : UIViewController
 
-@property (nonatomic, strong) id detailItem;
+@property (nonatomic, strong) TMDBMovie *movie;
 @property (nonatomic, weak) IBOutlet UILabel *detailDescriptionLabel;
 
 @end

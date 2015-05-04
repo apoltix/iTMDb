@@ -82,7 +82,7 @@
 
 	NSString *apiKey = [self.apiKey stringValue];
 
-	if (!([apiKey length] > 0 && ([self.searchMovieID integerValue] > 0 || [[self.searchMovieName stringValue] length] > 0))) {
+	if (!(apiKey.length > 0 && (self.searchMovieID.integerValue > 0 || self.searchMovieName.stringValue.length > 0))) {
 		NSAlert *alert = [NSAlert alertWithMessageText:@"Missing either API key, movie ID or title"
 										 defaultButton:@"OK"
 									   alternateButton:nil
@@ -125,7 +125,7 @@
 	}
 
 	// Set the language, if specified
-	NSString *lang = [self.language stringValue];
+	NSString *lang = self.language.stringValue;
 
 	if (lang.length > 0) {
 		tmdb.language = lang;

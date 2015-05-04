@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Devify. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /**
  * The TMDb configuration information includes information commonly needed 
