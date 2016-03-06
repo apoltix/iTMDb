@@ -4,7 +4,7 @@ iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb
 
 This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. See the `LICENSE` file. If you would like to use a different license, please contact me at code at devify dot dk.
 
-iTMDb supports **OS X 10.9 and iOS 7.0** and up, but should be compatible with Mac OS X 10.8 Mountain Lion and iOS 6 and up without modification. It is tested working on OS X 10.10 Yosemite and iOS 8 (though it has not been tested as a framework under iOS 8, only as a static library). The project ships with framework targets for OS X and iOS 8+, and a static library for iOS 7.
+iTMDb supports **OS X 10.9 and iOS 7.0** and up, but should be compatible with Mac OS X 10.8 Mountain Lion and iOS 6 and up without modification. It is tested working on OS X 10.11 El Capitan and iOS 9. The project ships with framework targets for OS X and iOS 8+, and a static library for iOS 7.
 
 You need Xcode 7.2 or higher to build the project.
 
@@ -24,7 +24,7 @@ There are a few ways to add the framework to your project. The easiest is to add
 
 Either drag the iTMDb project, or framework, or static library, to your project, or add it through `File > Add Files to (project name)…`. If you add the framework or static library, Xcode will offer to add it to your target. You can choose to say yes or no to this (if you say no, you'll do it manually in the next step).
 
-If your app is a **Mac app** (or an iOS 8 app):
+If your app is a **Mac app** (or an iOS 8+ app):
 
 1. Under `Project > Target > Build Phases > Link Binary With Libraries`, add `iTMDb.framework` (if it is not already there).
 

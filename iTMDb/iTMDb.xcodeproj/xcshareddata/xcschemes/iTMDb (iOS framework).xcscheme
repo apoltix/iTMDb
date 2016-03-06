@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA1EC7F41C8C585600D13478"
-               BuildableName = "iTMDb (iOS framework).framework"
+               BuildableName = "iTMDb.framework"
                BlueprintName = "iTMDb (iOS framework)"
                ReferencedContainer = "container:iTMDb.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA1EC7F41C8C585600D13478"
-            BuildableName = "iTMDb (iOS framework).framework"
+            BuildableName = "iTMDb.framework"
             BlueprintName = "iTMDb (iOS framework)"
             ReferencedContainer = "container:iTMDb.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA1EC7F41C8C585600D13478"
-            BuildableName = "iTMDb (iOS framework).framework"
+            BuildableName = "iTMDb.framework"
             BlueprintName = "iTMDb (iOS framework)"
             ReferencedContainer = "container:iTMDb.xcodeproj">
          </BuildableReference>

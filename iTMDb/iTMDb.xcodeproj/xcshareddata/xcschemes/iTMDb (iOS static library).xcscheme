@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA4B5D72199647690007EE28"
-               BuildableName = "libiTMDb.a"
+               BuildableName = "iTMDb.a"
                BlueprintName = "iTMDb (iOS static library)"
                ReferencedContainer = "container:iTMDb.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA4B5D72199647690007EE28"
-            BuildableName = "libiTMDb.a"
+            BuildableName = "iTMDb.a"
             BlueprintName = "iTMDb (iOS static library)"
             ReferencedContainer = "container:iTMDb.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA4B5D72199647690007EE28"
-            BuildableName = "libiTMDb.a"
+            BuildableName = "iTMDb.a"
             BlueprintName = "iTMDb (iOS static library)"
             ReferencedContainer = "container:iTMDb.xcodeproj">
          </BuildableReference>
