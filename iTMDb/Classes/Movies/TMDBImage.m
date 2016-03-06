@@ -11,13 +11,13 @@
 
 @interface TMDBImage ()
 
-@property (nonatomic, copy) NSString *filePath;
+@property (nonatomic, nullable, copy) NSString *filePath;
 
 @end
 
 @implementation TMDBImage
 
-+ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType {
++ (nonnull NSArray<TMDBImage *> *)imageArrayWithRawImageDictionaries:(nonnull NSArray<NSDictionary *> *)rawImages ofType:(TMDBImageType)aType {
 	NSMutableArray *images = [NSMutableArray array];
 
 	for (NSDictionary *imageDict in rawImages) {
@@ -28,6 +28,10 @@
 	return images;
 }
 
+- (instancetype)init {
+	return (self = [self initWithDictionary:@{} type:TMDBImageTypeBackdrop]);
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)d type:(TMDBImageType)type {
 	if (!(self = [super init])) {
 		return nil;
@@ -35,7 +39,7 @@
 
 	_type = type;
 	_filePath = [TMDB_NSStringOrNil(d[@"file_path"]) copy];
-	_originalSize = CGSizeMake(TMDB_NSNumberOrNil(d[@"width"]).floatValue, TMDB_NSNumberOrNil(d[@"height"]).floatValue);
+	_originalSize = CGSizeMake(TMDB_NSNumberOrNil(d[@"width"]).doubleValue, TMDB_NSNumberOrNil(d[@"height"]).doubleValue);
 	_iso639_1 = TMDB_NSStringOrNil(d[@"iso_639_1"]);
 	_voteAverage = TMDB_NSNumberOrNil(d[@"vote_average"]).floatValue;
 	_voteCount = TMDB_NSNumberOrNil(d[@"vote_count"]).unsignedIntegerValue;
@@ -80,7 +84,7 @@
 	return size.floatValue;
 }
 
-+ (NSString *)sizeClosestMatchingSize:(float)size inSizes:(NSArray *)sizes dimension:(TMDBImageSize)dimension {
++ (nullable NSString *)sizeClosestMatchingSize:(float)size inSizes:(nonnull NSArray<NSString *> *)sizes dimension:(TMDBImageSize)dimension {
 	if (sizes.count == 0) {
 		return nil;
 	}

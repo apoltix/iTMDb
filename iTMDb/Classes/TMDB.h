@@ -15,12 +15,12 @@
 /**
  * A string value indicating the URL base of the API.
  */
-extern NSString * const TMDBAPIURLBase;
+extern NSString * _Nonnull const TMDBAPIURLBase;
 
 /**
  * A string value indicating the version of the API used.
  */
-extern NSString * const TMDBAPIVersion;
+extern NSString * _Nonnull const TMDBAPIVersion;
 
 /**
  * The `TMDB` singleton instance is used as the TMDb context for all requests to
@@ -30,20 +30,20 @@ extern NSString * const TMDBAPIVersion;
 
 /** @name Getting the Shared Instance */
 
-+ (instancetype)sharedInstance;
++ (nonnull instancetype)sharedInstance;
 
 /** @name Context Settings */
 
 /** The API key used by the context. Required. */
-@property (nonatomic, copy) NSString *apiKey;
+@property (nonatomic, copy, nullable) NSString *apiKey;
 
 /** The language used by the context. Default `@"en"` (English). Optional. */
-@property (nonatomic, copy) NSString *language;
+@property (nonatomic, copy, nonnull) NSString *language;
 
 /** @name Getting Configuration */
 
 /** The TMDb configuration. */
-@property (nonatomic, strong, readonly) TMDBConfiguration *configuration;
+@property (nonatomic, strong, readonly, nonnull) TMDBConfiguration *configuration;
 
 @end
 
@@ -57,7 +57,7 @@ extern NSString * const TMDBAPIVersion;
  * @warning This method has been deprecated and removed as it doesn't follow
  * proper API design. Use `-[TMDBMovie movieWithID:options:context:]` instead.
  */
-- (TMDBMovie *)movieWithID:(NSInteger)anID __attribute__((unavailable("This method has been deprecated and removed as it doesn't follow proper API design. Use `-[TMDBMovie movieWithID:options:context:]` instead.")));
+- (nullable TMDBMovie *)movieWithID:(NSInteger)anID __attribute__((unavailable("This method has been deprecated and removed as it doesn't follow proper API design. Use `-[TMDBMovie movieWithID:options:context:]` instead.")));
 
 /**
  * Fetches information about the movie with the given name.
@@ -68,6 +68,6 @@ extern NSString * const TMDBAPIVersion;
  * @warning This method has been deprecated and removed as it doesn't follow
  * proper API design. Use `-[TMDBMovie movieWithName:options:context:]` instead.
  */
-- (TMDBMovie *)movieWithName:(NSString *)aName __attribute__((unavailable("This method has been deprecated and removed as it doesn't follow proper API design. Use `-[TMDBMovie movieWithName:options:context:]` instead.")));
+- (nullable TMDBMovie *)movieWithName:(nonnull NSString *)aName __attribute__((unavailable("This method has been deprecated and removed as it doesn't follow proper API design. Use `-[TMDBMovie movieWithName:options:context:]` instead.")));
 
 @end

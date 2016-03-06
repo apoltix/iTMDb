@@ -54,9 +54,10 @@ static NSCache *imageCache;
 			self.tmdbImageView.image = cachedImage;
 		}
 		else if (imageURL != nil) {
-			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-				// Never download images this way. Only done this way to avoid dependencies
+			dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
+				// Never download images this way. Only done this way in this demo to avoid network-layer dependencies.
 				NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+
 				dispatch_async(dispatch_get_main_queue(), ^{
 					if (image != nil) {
 						self.tmdbImageView.image = image;

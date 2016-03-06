@@ -8,7 +8,7 @@
 
 @import Foundation;
 
-extern NSString * const TMDBErrorDomain;
+extern NSString * _Nonnull const TMDBErrorDomain;
 
 typedef NS_ENUM(NSUInteger, TMDBErrorCode) {
 	TMDBErrorCodeReceivedInvalidData = 1001,

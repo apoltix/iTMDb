@@ -7,7 +7,9 @@
 //
 
 #import "TMDBRequest.h"
+#import "TMDBError.h"
 
+// TODO: Replace with NSURLSession
 @interface TMDBRequest () <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @end
@@ -35,6 +37,11 @@
 	TMDBRequest *request = [[TMDBRequest alloc] initWithURL:url completionBlock:block];
 	[[TMDBRequest operationQueue] addOperation:request];
 	return request;
+}
+
+- (nullable instancetype)init {
+	[self doesNotRecognizeSelector:_cmd];
+	return nil;
 }
 
 - (instancetype)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block {
@@ -85,6 +92,12 @@
 - (id)parsedData {
 	if (_parsedData != nil) {
 		return _parsedData;
+	}
+
+	if (_responseData == nil) {
+		NSError *error = [NSError errorWithDomain:TMDBErrorDomain code:TMDBErrorCodeReceivedInvalidData userInfo:nil];
+		TMDBSetValue(error, error);
+		return nil;
 	}
 
 	NSError *error = nil;

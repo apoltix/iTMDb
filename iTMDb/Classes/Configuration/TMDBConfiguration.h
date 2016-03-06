@@ -16,19 +16,19 @@
  */
 @interface TMDBConfiguration : NSObject
 
-- (void)reload:(void (^)(NSError *error))completionBlock;
+- (void)reload:(void (^_Nullable)(NSError * _Nullable error))completionBlock;
 
 /** A value indicating if the configuration has been loaded yet. */
 @property (nonatomic, readonly, getter=isLoaded) BOOL loaded;
 
-@property (nonatomic, copy, readonly) NSURL *imagesBaseURL;
-@property (nonatomic, copy, readonly) NSURL *imagesSecureBaseURL;
+@property (nonatomic, copy, nullable, readonly) NSURL *imagesBaseURL;
+@property (nonatomic, copy, nullable, readonly) NSURL *imagesSecureBaseURL;
 
-@property (nonatomic, copy, readonly) NSArray *imagesPosterSizes;
-@property (nonatomic, copy, readonly) NSArray *imagesBackdropSizes;
-@property (nonatomic, copy, readonly) NSArray *imagesProfileSizes;
-@property (nonatomic, copy, readonly) NSArray *imagesLogoSizes;
+@property (nonatomic, copy, nullable, readonly) NSArray *imagesPosterSizes;
+@property (nonatomic, copy, nullable, readonly) NSArray *imagesBackdropSizes;
+@property (nonatomic, copy, nullable, readonly) NSArray *imagesProfileSizes;
+@property (nonatomic, copy, nullable, readonly) NSArray *imagesLogoSizes;
 
-@property (nonatomic, copy, readonly) NSArray *changeKeys;
+@property (nonatomic, copy, nullable, readonly) NSArray *changeKeys;
 
 @end

@@ -10,11 +10,11 @@
 
 @interface TMDBLanguage : NSObject
 
-+ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries;
++ (nonnull NSArray<TMDBLanguage *> *)languagesFromArrayOfDictionaries:(nonnull NSArray<NSDictionary *> *)rawLanguagesDictionaries;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, copy, readonly) NSString *name;
-@property (nonatomic, copy, readonly) NSString *iso639_1;
+@property (nonatomic, copy, nullable, readonly) NSString *name;
+@property (nonatomic, copy, nullable, readonly) NSString *iso639_1;
 
 @end

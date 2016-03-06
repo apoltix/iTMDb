@@ -23,7 +23,7 @@ typedef NS_OPTIONS(NSUInteger, TMDBPersonUpdateOptions) {
  * A block called when a person object has been updated, or failed to be
  * updated.
  */
-typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
+typedef void (^TMDBPersonUpdateCompletionBlock)(NSError * _Nullable error);
 
 /**
  * A `TMDBPerson` object contains information about a person associated with a
@@ -43,9 +43,10 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
  * @param movie The movie with which the persons should be associated.
  * @param personInfo An array of `NSDictionary` objects with information about
  * the persons for which objects are to be created.
- * @return An array of `TMDBPerson` objects.
+ * @return An array of `TMDBPerson` objects. If an object in `personsInfo` is
+ * not valid, a `TMDBPerson` object will not be created for that object.
  */
-+ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)d;
++ (nonnull NSArray<TMDBPerson *> *)personsWithMovie:(nonnull TMDBMovie *)movie personsInfo:(nonnull NSArray<NSDictionary *> *)d;
 
 /** @name Creating an Instance */
 
@@ -55,7 +56,7 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
  *
  * @param personID The ID of the person.
  */
-- (instancetype)initWithID:(NSUInteger)personID NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithID:(NSUInteger)personID NS_DESIGNATED_INITIALIZER;
 
 /**
  * Returns a person object populated with the provided person information.
@@ -65,7 +66,7 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
  * @return An immutable person object populated with the provided person
  * information.
  */
-- (instancetype)initWithMovie:(TMDBMovie *)movie personInfo:(NSDictionary *)d;
+- (nonnull instancetype)initWithMovie:(nonnull TMDBMovie *)movie personInfo:(nonnull NSDictionary *)d;
 
 /** @name Basic Information */
 
@@ -73,19 +74,19 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
 @property (nonatomic, readonly) NSUInteger id;
 
 /** The name of the person. */
-@property (nonatomic, copy, readonly) NSString *name;
+@property (nonatomic, copy, nullable, readonly) NSString *name;
 
 /** The name of the character the person played in the movie. */
-@property (nonatomic, copy, readonly) NSString *character;
+@property (nonatomic, copy, nullable,readonly) NSString *character;
 
 /** The movie in which the person played a character or was part of a crew. */
-@property (nonatomic, strong, readonly) TMDBMovie *movie;
+@property (nonatomic, strong, nullable,readonly) TMDBMovie *movie;
 
 /** The job position of the person in this movie. */
-@property (nonatomic, copy, readonly) NSString *job;
+@property (nonatomic, copy, nullable,readonly) NSString *job;
 
 /** The person's job department. */
-@property (nonatomic, copy, readonly) NSString *department;
+@property (nonatomic, copy, nullable,readonly) NSString *department;
 
 /**
  * The order in which the person should be listed in the Cast and Crew list for
@@ -99,10 +100,10 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
 /** @name External Resources */
 
 /** A URL to an official website of this person. */
-@property (nonatomic, copy, readonly) NSURL *url;
+@property (nonatomic, copy, nullable,readonly) NSURL *url;
 
 /** A URL fragment pointing to the TMDb profile image of this person. */
-@property (nonatomic, copy, readonly) NSURL *imageURL;
+@property (nonatomic, copy, nullable,readonly) NSURL *imageURL;
 
 /** @name Updating */
 
@@ -111,7 +112,7 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
  *
  * @param completionBlock A block called when the update succeeds or fails.
  */
-- (void)update:(TMDBPersonUpdateCompletionBlock)completionBlock;
+- (void)update:(nullable TMDBPersonUpdateCompletionBlock)completionBlock;
 
 /**
  * Updates the Person with the specified information.
@@ -119,6 +120,6 @@ typedef void (^TMDBPersonUpdateCompletionBlock)(NSError *error);
  * @param options The information to be fetched.
  * @param completionBlock A block called when the update succeeds or fails.
  */
-- (void)update:(TMDBPersonUpdateOptions)options completion:(TMDBPersonUpdateCompletionBlock)completionBlock;
+- (void)update:(TMDBPersonUpdateOptions)options completion:(nullable TMDBPersonUpdateCompletionBlock)completionBlock;
 
 @end

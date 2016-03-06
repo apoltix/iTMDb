@@ -13,7 +13,7 @@
 
 @implementation TMDBPerson
 
-+ (NSArray *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray *)d {
++ (NSArray<TMDBPerson *> *)personsWithMovie:(TMDBMovie *)movie personsInfo:(NSArray<NSDictionary *> *)d {
 	NSMutableArray *persons = [NSMutableArray arrayWithCapacity:d.count];
 
 	for (NSDictionary *rawPerson in d) {
@@ -24,6 +24,10 @@
 	}
 
 	return [persons copy];
+}
+
+- (instancetype)init {
+	return (self = [self initWithID:0]);
 }
 
 - (instancetype)initWithID:(NSUInteger)personID {
@@ -53,16 +57,16 @@
 #pragma mark -
 
 - (NSString *)description {
-	if (_movie != nil && [_character length] > 0 && [_name length] > 0) {
+	if (_movie != nil && _character.length > 0 && _name.length > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@ as \"%@\" in \"%@\"%@>", [self class], self, _name, _character, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%zd)", _movie.year] : @"", nil];
 	}
-	else if (_movie != nil && [_name length] > 0 && [_job length] > 0) {
+	else if (_movie != nil && _name.length > 0 && _job.length > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@ as %@ of \"%@\"%@>", [self class], self, _name, _job, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%zd)", _movie.year] : @"", nil];
 	}
-	else if (_movie != nil && [_name length] > 0) {
+	else if (_movie != nil && _name.length > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@ in \"%@\"%@>", [self class], self, _name, _movie.title, _movie.year > 0 ? [NSString stringWithFormat:@" (%zd)", _movie.year] : @"", nil];
 	}
-	else if ([_name length] > 0) {
+	else if (_name.length > 0) {
 		return [NSString stringWithFormat:@"<%@ %p: %@>", [self class], self, _name, nil];
 	}
 
@@ -72,7 +76,7 @@
 #pragma mark -
 
 - (void)populate:(NSDictionary *)d {
-	_id = [TMDB_NSNumberOrNil(d[@"id"]) unsignedIntegerValue];
+	_id = TMDB_NSNumberOrNil(d[@"id"]).unsignedIntegerValue;
 	_name = [TMDB_NSStringOrNil(d[@"name"]) copy];
 	_character = [TMDB_NSStringOrNil(d[@"character"]) copy];
 	_job = [TMDB_NSStringOrNil(d[@"job"]) copy];
@@ -80,8 +84,8 @@
 		_job = @"Actor"; // TODO: Use different/more permanent identifier
 	}
 	_url = TMDB_NSURLOrNilFromStringOrNil(d[@"url"]);
-	_order = [TMDB_NSNumberOrNil(d[@"order"]) unsignedIntegerValue];
-	_castID = [TMDB_NSNumberOrNil(d[@"cast_id"]) integerValue];
+	_order = TMDB_NSNumberOrNil(d[@"order"]).unsignedIntegerValue;
+	_castID = TMDB_NSNumberOrNil(d[@"cast_id"]).integerValue;
 	_imageURL = TMDB_NSURLOrNilFromStringOrNil(d[@"profile_path"]); // TODO: Validate URL fragment
 }
 
@@ -97,7 +101,11 @@
 									   TMDBAPIVersion, _id, context.apiKey, context.language]];
 
 	[TMDBRequest requestWithURL:url completionBlock:^(id parsedData, NSError *error) {
-		NSLog(@"%@", parsedData);
+//		NSLog(@"%@", parsedData);
+
+		if (completionBlock != nil) {
+			completionBlock(error);
+		}
 	}];
 }
 

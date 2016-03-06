@@ -9,19 +9,19 @@
 @import Foundation;
 #import "TMDBMovie.h"
 
-typedef void (^TMDBMoviesFetchCompletionBlock)(NSArray /* TMDBMovie * */ *movies, NSError *error);
+typedef void (^TMDBMoviesFetchCompletionBlock)(NSArray<TMDBMovie *> * _Nullable movies, NSError * _Nullable error);
 
 @interface TMDBMovieSearch : NSObject
 
-+ (NSURL *)fetchURLWithMovieID:(NSUInteger)tmdbID options:(TMDBMovieFetchOptions)options;
++ (nullable NSURL *)fetchURLWithMovieID:(NSUInteger)tmdbID options:(TMDBMovieFetchOptions)options;
 
-+ (NSURL *)searchURLWithMovieTitle:(NSString *)title year:(NSUInteger)year;
++ (nullable NSURL *)searchURLWithMovieTitle:(nonnull NSString *)title year:(NSUInteger)year;
 
 #pragma mark - Searching
 /** @name Searching */
 
-+ (void)moviesWithTitle:(NSString *)title completion:(TMDBMoviesFetchCompletionBlock)completionBlock;
++ (void)moviesWithTitle:(nonnull NSString *)title completion:(nullable TMDBMoviesFetchCompletionBlock)completionBlock;
 
-+ (void)moviesWithTitle:(NSString *)title year:(NSUInteger)year completion:(TMDBMoviesFetchCompletionBlock)completionBlock;
++ (void)moviesWithTitle:(nonnull NSString *)title year:(NSUInteger)year completion:(nullable TMDBMoviesFetchCompletionBlock)completionBlock;
 
 @end

@@ -11,7 +11,7 @@
 
 @implementation TMDBLanguage
 
-+ (NSArray *)languagesFromArrayOfDictionaries:(NSArray *)rawLanguagesDictionaries {
++ (nonnull NSArray<TMDBLanguage *> *)languagesFromArrayOfDictionaries:(nonnull NSArray<NSDictionary *> *)rawLanguagesDictionaries {
 	if (rawLanguagesDictionaries == nil) {
 		return nil;
 	}
@@ -41,6 +41,10 @@
 	}
 
 	return [languages copy];
+}
+
+- (instancetype)init {
+	return (self = [self initWithDictionary:@{}]);
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {

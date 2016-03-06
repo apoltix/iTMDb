@@ -30,20 +30,20 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
 
 @property (nonatomic, readonly) TMDBImageType type;
 @property (nonatomic, readonly) CGSize originalSize;
-@property (nonatomic, copy, readonly) NSString *iso639_1; // Two-letter language code
+@property (nonatomic, copy, nullable, readonly) NSString *iso639_1; // Two-letter language code
 
 @property (nonatomic, readonly) float voteAverage;
 @property (nonatomic, readonly) NSUInteger voteCount;
 
 /** @name Creating `TMDBImage` instances */
 
-+ (NSArray *)imageArrayWithRawImageDictionaries:(NSArray *)rawImages ofType:(TMDBImageType)aType;
++ (nonnull NSArray<TMDBImage *> *)imageArrayWithRawImageDictionaries:(nonnull NSArray<NSDictionary *> *)rawImages ofType:(TMDBImageType)aType;
 
-- (instancetype)initWithDictionary:(NSDictionary *)rawImageData type:(TMDBImageType)type NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary *)rawImageData type:(TMDBImageType)type NS_DESIGNATED_INITIALIZER;
 
 /** @name Getting URLs */
 
-- (NSURL *)urlForSize:(NSString *)size;
+- (nullable NSURL *)urlForSize:(nonnull NSString *)size;
 
 /** @name Getting Sizes */
 
@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
  *
  * @return `-1` if no valid size could be found, or if it is the original size.
  */
-+ (CGFloat)sizeFromString:(NSString *)s imageSize:(TMDBImageSize *)outImageSize;
++ (CGFloat)sizeFromString:(nonnull NSString *)s imageSize:(nonnull TMDBImageSize *)outImageSize;
 
 /**
  * Returns the size from `sizes` that closest matches the specified `size`.
@@ -70,17 +70,17 @@ typedef NS_ENUM(NSUInteger, TMDBImageSize) {
  * @return An `NSString` representing the `size` in the specified `dimension`,
  * or nil if no such exist.
  */
-+ (NSString *)sizeClosestMatchingSize:(float)size inSizes:(NSArray *)sizes dimension:(TMDBImageSize)dimension;
++ (nullable NSString *)sizeClosestMatchingSize:(float)size inSizes:(nonnull NSArray<NSString *> *)sizes dimension:(TMDBImageSize)dimension;
 
 @end
 
 @interface TMDBImage (UnavailableMethods)
 
-@property (nonatomic, copy, readonly) NSString *id UNAVAILABLE_ATTRIBUTE;
+@property (nonatomic, copy, nullable, readonly) NSString *id UNAVAILABLE_ATTRIBUTE;
 
-+ (TMDBImage *)imageWithId:(NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithID:(NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
++ (nullable TMDBImage *)imageWithId:(nonnull NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
+- (nullable instancetype)initWithID:(nonnull NSString *)anID ofType:(TMDBImageType)type UNAVAILABLE_ATTRIBUTE;
 
-- (CGSize)sizeForSize:(NSString *)size UNAVAILABLE_ATTRIBUTE;
+- (CGSize)sizeForSize:(nonnull NSString *)size UNAVAILABLE_ATTRIBUTE;
 
 @end

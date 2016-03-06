@@ -8,34 +8,36 @@
 
 @import Foundation;
 
-typedef void (^TMDBRequestCompletionBlock)(id parsedData, NSError *error);
+typedef void (^TMDBRequestCompletionBlock)(id _Nullable parsedData, NSError * _Nullable error);
 
 // Private class
 @interface TMDBRequest : NSOperation
 
-+ (NSOperationQueue *)operationQueue;
++ (nonnull NSOperationQueue *)operationQueue;
 
 /**
  * Creates and returns a new request operation, and adds it to the operation
  * queue.
  */
-+ (instancetype)requestWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block;
++ (nullable instancetype)requestWithURL:(nonnull NSURL *)url completionBlock:(nullable TMDBRequestCompletionBlock)block;
 
 /**
  * Instantiates a new request operation. You are responsible for adding it to
  * the operation queue.
  */
-- (instancetype)initWithURL:(NSURL *)url completionBlock:(TMDBRequestCompletionBlock)block NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithURL:(nonnull NSURL *)url completionBlock:(nullable TMDBRequestCompletionBlock)block NS_DESIGNATED_INITIALIZER;
+
+- (nullable instancetype)init NS_UNAVAILABLE;
 
 /**
  * The completion block passed during initialization.
  */
-@property (nonatomic, copy, readonly) TMDBRequestCompletionBlock requestCompletionBlock;
+@property (nonatomic, copy, nullable, readonly) TMDBRequestCompletionBlock requestCompletionBlock;
 
-@property (nonatomic, copy, readonly) NSURL *url;
+@property (nonatomic, copy, nullable, readonly) NSURL *url;
 
-@property (nonatomic, copy, readonly) NSURLResponse *response;
-@property (nonatomic, copy, readonly) NSError *error;
-@property (nonatomic, strong, readonly) id parsedData;
+@property (nonatomic, copy, nullable, readonly) NSURLResponse *response;
+@property (nonatomic, copy, nullable, readonly) NSError *error;
+@property (nonatomic, strong, nullable, readonly) id parsedData;
 
 @end

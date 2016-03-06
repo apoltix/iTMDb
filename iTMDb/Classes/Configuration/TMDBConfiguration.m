@@ -14,15 +14,15 @@
 
 @property (nonatomic, getter=isLoaded) BOOL loaded;
 
-@property (nonatomic, copy) NSURL *imagesBaseURL;
-@property (nonatomic, copy) NSURL *imagesSecureBaseURL;
+@property (nonatomic, nullable, copy) NSURL *imagesBaseURL;
+@property (nonatomic, nullable, copy) NSURL *imagesSecureBaseURL;
 
-@property (nonatomic, copy) NSArray *imagesPosterSizes;
-@property (nonatomic, copy) NSArray *imagesBackdropSizes;
-@property (nonatomic, copy) NSArray *imagesProfileSizes;
-@property (nonatomic, copy) NSArray *imagesLogoSizes;
+@property (nonatomic, nullable, copy) NSArray *imagesPosterSizes;
+@property (nonatomic, nullable, copy) NSArray *imagesBackdropSizes;
+@property (nonatomic, nullable, copy) NSArray *imagesProfileSizes;
+@property (nonatomic, nullable, copy) NSArray *imagesLogoSizes;
 
-@property (nonatomic, copy) NSArray *changeKeys;
+@property (nonatomic, nullable, copy) NSArray *changeKeys;
 
 @end
 
@@ -30,7 +30,7 @@
 
 @synthesize loaded=_isLoaded;
 
-- (void)reload:(void (^)(NSError *error))completionBlock {
+- (void)reload:(void (^_Nullable)(NSError * _Nullable))completionBlock {
 	TMDB *context = [TMDB sharedInstance];
 
 	NSString *configURLString = [NSString stringWithFormat:@"%@%@/configuration?api_key=%@", TMDBAPIURLBase, TMDBAPIVersion, context.apiKey];

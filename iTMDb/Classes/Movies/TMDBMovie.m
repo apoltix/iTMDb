@@ -29,6 +29,10 @@
 
 #pragma mark - Initializers
 
+- (instancetype)init {
+	return (self = [self initWithID:0]);
+}
+
 - (instancetype)initWithID:(NSUInteger)tmdbID {
 	if (!(self = [super init])) {
 		return nil;
@@ -115,7 +119,7 @@
 	_rawResults = d;
 
 	// SIMPLE DATA
-	_tmdbID   = [TMDB_NSNumberOrNil((NSNumber *)d[@"id"]) integerValue];
+	_tmdbID   = TMDB_NSNumberOrNil((NSNumber *)d[@"id"]).integerValue;
 	_title    = TMDB_NSStringOrNil(d[@"title"]);
 	_overview = TMDB_NSStringOrNil(d[@"overview"]);
 	_tagline  = TMDB_NSStringOrNil(d[@"tagline"]);
@@ -137,16 +141,16 @@
 	_url = TMDB_NSURLOrNilFromStringOrNil(d[@"url"]);
 
 	// Popularity
-	_popularity = [TMDB_NSNumberOrNil(d[@"popularity"]) doubleValue];
+	_popularity = TMDB_NSNumberOrNil(d[@"popularity"]).doubleValue;
 
 	// Votes
-	_votes = [TMDB_NSNumberOrNil(d[@"votes"]) integerValue];
+	_votes = TMDB_NSNumberOrNil(d[@"votes"]).integerValue;
 
 	// Rating
-	_rating = [TMDB_NSNumberOrNil(d[@"rating"]) floatValue];
+	_rating = TMDB_NSNumberOrNil(d[@"rating"]).floatValue;
 
 	// Adult
-	_isAdult = [TMDB_NSNumberOrNil(d[@"adult"]) boolValue];
+	_isAdult = TMDB_NSNumberOrNil(d[@"adult"]).boolValue;
 
 	// Spoken Languages
 	_languagesSpoken = [TMDBLanguage languagesFromArrayOfDictionaries:TMDB_NSArrayOrNil(d[@"spoken_languages"])];
@@ -158,7 +162,7 @@
 	}
 
 	// Runtime
-	_runtime = [TMDB_NSNumberOrNil(d[@"runtime"]) unsignedIntegerValue];
+	_runtime = TMDB_NSNumberOrNil(d[@"runtime"]).unsignedIntegerValue;
 
 	// Homepage
 	_homepage = TMDB_NSURLOrNilFromStringOrNil(d[@"homepage"]);
@@ -219,7 +223,7 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		df = [[NSDateFormatter alloc] init];
-		[df setDateFormat:@"YYYY"];
+		df.dateFormat = @"yyyy";
 	});
 	return [df stringFromDate:date].integerValue;
 }
@@ -229,7 +233,7 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		releasedFormatter = [[NSDateFormatter alloc] init];
-		[releasedFormatter setDateFormat:@"yyyy-MM-dd"];
+		releasedFormatter.dateFormat = @"yyyy-MM-dd";
 	});
 	return [releasedFormatter dateFromString:dateString];
 }

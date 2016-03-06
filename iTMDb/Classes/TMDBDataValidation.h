@@ -8,7 +8,7 @@
 
 @import Foundation;
 
-static inline id TMDB_ObjectOfClassOrNil(id objectOrNil, Class expectedClass) {
+static inline _Nullable id TMDB_ObjectOfClassOrNil(id _Nullable objectOrNil, Class _Nonnull expectedClass) {
 	if (objectOrNil == nil || ![objectOrNil isKindOfClass:expectedClass]) {
 		return nil;
 	}
@@ -16,26 +16,26 @@ static inline id TMDB_ObjectOfClassOrNil(id objectOrNil, Class expectedClass) {
 	return objectOrNil;
 }
 
-static inline NSString *TMDB_NSStringOrNil(NSString *stringOrNil) {
+static inline NSString * _Nullable TMDB_NSStringOrNil(NSString * _Nullable stringOrNil) {
 	return TMDB_ObjectOfClassOrNil(stringOrNil, [NSString class]);
 }
 
-static inline NSNumber *TMDB_NSNumberOrNil(NSNumber *numberOrNil) {
+static inline NSNumber * _Nullable TMDB_NSNumberOrNil(NSNumber * _Nullable numberOrNil) {
 	return TMDB_ObjectOfClassOrNil(numberOrNil, [NSNumber class]);
 }
 
-static inline NSURL *TMDB_NSURLOrNilFromStringOrNil(NSString *urlString) {
-	if (TMDB_NSStringOrNil(urlString) == nil || [urlString length] == 0) {
+static inline NSURL * _Nullable TMDB_NSURLOrNilFromStringOrNil(NSString * _Nullable urlStringOrNil) {
+	if (TMDB_NSStringOrNil(urlStringOrNil) == nil || urlStringOrNil.length == 0) {
 		return nil;
 	}
 
-	return [NSURL URLWithString:urlString];
+	return [NSURL URLWithString:urlStringOrNil];
 }
 
-static inline NSArray *TMDB_NSArrayOrNil(NSArray *arrayOrNil) {
+static inline NSArray * _Nullable TMDB_NSArrayOrNil(NSArray * _Nullable arrayOrNil) {
 	return TMDB_ObjectOfClassOrNil(arrayOrNil, [NSArray class]);
 }
 
-static inline NSDictionary *TMDB_NSDictionaryOrNil(NSDictionary *dictionaryOrNil) {
+static inline NSDictionary * _Nullable TMDB_NSDictionaryOrNil(NSDictionary * _Nullable dictionaryOrNil) {
 	return TMDB_ObjectOfClassOrNil(dictionaryOrNil, [NSDictionary class]);
 }
