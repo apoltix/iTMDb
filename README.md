@@ -1,12 +1,12 @@
 # iTMDb
 
-iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb.org/) v3.0 API. © Christian Rasmussen, 2010–2015.
+iTMDb is an Objective-C Cocoa wrapper (framework) for the [TMDb.org](http://tmdb.org/) v3.0 API. © Christian Rasmussen, 2010–2016.
 
 This software is dual-licensed (pick either one you want): **MIT License** or **New BSD License**. See the `LICENSE` file. If you would like to use a different license, please contact me at code at devify dot dk.
 
-iTMDb supports **OS X 10.9 and iOS 7.0** and up, but should be compatible with Mac OS X 10.8 Mountain Lion and iOS 6 and up without modification. It is tested working on OS X 10.10 Yosemite and iOS 8 (though it has not been tested as a framework under iOS 8, only as a static library). By default OS X uses a framework and iOS a static library.
+iTMDb supports **OS X 10.9 and iOS 7.0** and up, but should be compatible with Mac OS X 10.8 Mountain Lion and iOS 6 and up without modification. It is tested working on OS X 10.10 Yosemite and iOS 8 (though it has not been tested as a framework under iOS 8, only as a static library). The project ships with framework targets for OS X and iOS 8+, and a static library for iOS 7.
 
-You need Xcode 6.3 or higher to build the project.
+You need Xcode 7.2 or higher to build the project.
 
 Please remember to read the TMDb API [Terms of Use](https://www.themoviedb.org/about/api-terms). You need an API key to use the framework.
 
@@ -36,7 +36,7 @@ If your app is an **iOS app**:
 
 ### Signing the framework
 
-On OS X (and iOS 8+ if you use the framework instead of the static library) you must sign the bundled framework with your own certificate. For more information, see Apple's tech note [TN2206](https://developer.apple.com/library/mac/technotes/tn2206/_index.html#//apple_ref/doc/uid/DTS40007919-CH1-TNTAG13).
+On OS X (and iOS 8+ if you use the framework instead of the static library) you must sign the bundled framework with your own certificate. Xcode is able to do this for you, and does so by default. For more information, see Apple's tech note [TN2206](https://developer.apple.com/library/mac/technotes/tn2206/_index.html#//apple_ref/doc/uid/DTS40007919-CH1-TNTAG13).
 
 ## How to use
 
@@ -75,7 +75,7 @@ The movie's properties (title, year, cast, etc.) is not populated until the info
 If you only know the movie's title (and optionally year), use the `TMDBMovieSearch` class:
 
 ```objective-c
-[TMDBMovieSearch moviesWithTitle:@"Interstellar" year:2014 completion:^(NSArray *movies, NSError *error) {
+[TMDBMovieSearch moviesWithTitle:@"Deadpool" year:2016 completion:^(NSArray *movies, NSError *error) {
 	// Look in movies array and find the TMDBMovie that is the correct one
 	TMDBMovie *movie = movies.firstObject;
 	[movie load:TMDBMovieFetchOptionAll completion:^(NSError *error) {
@@ -95,5 +95,9 @@ There are no third-party dependencies; only system-available Apple frameworks ar
 ## What's missing
 
 iTMDb does not cover the entire TMDb API, and only movie search and lookup works – including Cast & Crew and Posters. Things like authentication is not implemented.
+
+There is no unit testing, which is probably something that should be added.
+
+There is no CocoaPods integration yet.
 
 If you are up for it, feel free to develop on the framework and submit a pull request.
