@@ -6,12 +6,12 @@
 //  Copyright (c) 2010 Devify. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-#import "TMDB.h"
-#import "TMDBMovie.h"
-#import "TMDBMovieSearch.h"
-#import "TMDBImage.h"
-#import "TMDBPerson.h"
-#import "TMDBLanguage.h"
-#import "TMDBConfiguration.h"
+#import <iTMDb/TMDB.h>
+#import <iTMDb/TMDBMovie.h>
+#import <iTMDb/TMDBMovieSearch.h>
+#import <iTMDb/TMDBImage.h>
+#import <iTMDb/TMDBPerson.h>
+#import <iTMDb/TMDBLanguage.h>
+#import <iTMDb/TMDBConfiguration.h>

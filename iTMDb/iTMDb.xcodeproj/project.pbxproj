@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA1EC7F61C8C585600D13478 /* iTMDb.h in Headers */ = {isa = PBXBuildFile; fileRef = AA985847128309AA0074F570 /* iTMDb.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7F71C8C585600D13478 /* TMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = AABB1F6412833F5300F84FEB /* TMDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7F81C8C585600D13478 /* TMDBConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7017B51EAA0016B954 /* TMDBConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7F91C8C585600D13478 /* TMDBMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF4389D12834E6600F5CC92 /* TMDBMovie.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7FA1C8C585600D13478 /* TMDBMovieSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = AA72F93419AB9B6000E68128 /* TMDBMovieSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7FB1C8C585600D13478 /* TMDBImage.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFA3EB112863A77002B9E38 /* TMDBImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7FC1C8C585600D13478 /* TMDBLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7A17B62E1B0016B954 /* TMDBLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7FD1C8C585600D13478 /* TMDBPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = AA3242CB12CBEF2F00063558 /* TMDBPerson.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7FE1C8C585600D13478 /* TMDBError.h in Headers */ = {isa = PBXBuildFile; fileRef = AA65EA8F176E665300D8C4D5 /* TMDBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA1EC7FF1C8C585600D13478 /* TMDBDataValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA9D9B7517B61E380016B954 /* TMDBDataValidation.h */; };
+		AA1EC8001C8C585600D13478 /* TMDBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF43A0E12835F9400F5CC92 /* TMDBRequest.h */; };
+		AA1EC8031C8C585600D13478 /* TMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = AABB1F6512833F5300F84FEB /* TMDB.m */; };
+		AA1EC8041C8C585600D13478 /* TMDBMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF4389E12834E6600F5CC92 /* TMDBMovie.m */; };
+		AA1EC8051C8C585600D13478 /* TMDBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF43A0F12835F9400F5CC92 /* TMDBRequest.m */; };
+		AA1EC8061C8C585600D13478 /* TMDBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7117B51EAA0016B954 /* TMDBConfiguration.m */; };
+		AA1EC8071C8C585600D13478 /* TMDBMovieSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72F93519AB9B6000E68128 /* TMDBMovieSearch.m */; };
+		AA1EC8081C8C585600D13478 /* TMDBError.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65EA90176E665300D8C4D5 /* TMDBError.m */; };
+		AA1EC8091C8C585600D13478 /* TMDBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFA3EB212863A78002B9E38 /* TMDBImage.m */; };
+		AA1EC80A1C8C585600D13478 /* TMDBLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9D9B7B17B62E1B0016B954 /* TMDBLanguage.m */; };
+		AA1EC80B1C8C585600D13478 /* TMDBPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3242CC12CBEF2F00063558 /* TMDBPerson.m */; };
+		AA1EC80D1C8C585600D13478 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9D9B7E17B63D5D0016B954 /* Foundation.framework */; };
+		AA1EC80E1C8C585600D13478 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4B5D6D199647090007EE28 /* CoreGraphics.framework */; };
 		AA3242CD12CBEF2F00063558 /* TMDBPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = AA3242CB12CBEF2F00063558 /* TMDBPerson.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3242CC12CBEF2F00063558 /* TMDBPerson.m */; };
 		AA38A4DB1A06D9A100D424C6 /* TMDBMovieSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72F93519AB9B6000E68128 /* TMDBMovieSearch.m */; };
@@ -59,10 +81,11 @@
 		32DBCF5E0370ADEE00C91783 /* iTMDb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTMDb_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* iTMDb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iTMDb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA1EC8121C8C585600D13478 /* iTMDb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iTMDb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3242CB12CBEF2F00063558 /* TMDBPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMDBPerson.h; path = Classes/People/TMDBPerson.h; sourceTree = "<group>"; };
 		AA3242CC12CBEF2F00063558 /* TMDBPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TMDBPerson.m; path = Classes/People/TMDBPerson.m; sourceTree = "<group>"; };
 		AA4B5D6D199647090007EE28 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		AA4B5D73199647690007EE28 /* libiTMDb.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiTMDb.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA4B5D73199647690007EE28 /* iTMDb.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = iTMDb.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4B5D92199647F10007EE28 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		AA4B5D94199647F60007EE28 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		AA65EA8F176E665300D8C4D5 /* TMDBError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TMDBError.h; path = Classes/TMDBError.h; sourceTree = "<group>"; };
@@ -98,6 +121,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA1EC80C1C8C585600D13478 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA1EC80D1C8C585600D13478 /* Foundation.framework in Frameworks */,
+				AA1EC80E1C8C585600D13478 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA4B5D70199647690007EE28 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -114,7 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* iTMDb.framework */,
-				AA4B5D73199647690007EE28 /* libiTMDb.a */,
+				AA4B5D73199647690007EE28 /* iTMDb.a */,
+				AA1EC8121C8C585600D13478 /* iTMDb.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -289,12 +322,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA1EC7F51C8C585600D13478 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA1EC7F61C8C585600D13478 /* iTMDb.h in Headers */,
+				AA1EC7F71C8C585600D13478 /* TMDB.h in Headers */,
+				AA1EC7F81C8C585600D13478 /* TMDBConfiguration.h in Headers */,
+				AA1EC7F91C8C585600D13478 /* TMDBMovie.h in Headers */,
+				AA1EC7FA1C8C585600D13478 /* TMDBMovieSearch.h in Headers */,
+				AA1EC7FB1C8C585600D13478 /* TMDBImage.h in Headers */,
+				AA1EC7FC1C8C585600D13478 /* TMDBLanguage.h in Headers */,
+				AA1EC7FD1C8C585600D13478 /* TMDBPerson.h in Headers */,
+				AA1EC7FE1C8C585600D13478 /* TMDBError.h in Headers */,
+				AA1EC7FF1C8C585600D13478 /* TMDBDataValidation.h in Headers */,
+				AA1EC8001C8C585600D13478 /* TMDBRequest.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8DC2EF4F0486A6940098B216 /* iTMDb */ = {
+		8DC2EF4F0486A6940098B216 /* iTMDb (OS X framework) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "iTMDb" */;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "iTMDb (OS X framework)" */;
 			buildPhases = (
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF520486A6940098B216 /* Resources */,
@@ -305,15 +356,34 @@
 			);
 			dependencies = (
 			);
-			name = iTMDb;
+			name = "iTMDb (OS X framework)";
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = iTMDb;
 			productReference = 8DC2EF5B0486A6940098B216 /* iTMDb.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		AA4B5D72199647690007EE28 /* iTMDb-static */ = {
+		AA1EC7F41C8C585600D13478 /* iTMDb (iOS framework) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA4B5D811996476A0007EE28 /* Build configuration list for PBXNativeTarget "iTMDb-static" */;
+			buildConfigurationList = AA1EC80F1C8C585600D13478 /* Build configuration list for PBXNativeTarget "iTMDb (iOS framework)" */;
+			buildPhases = (
+				AA1EC7F51C8C585600D13478 /* Headers */,
+				AA1EC8011C8C585600D13478 /* Resources */,
+				AA1EC8021C8C585600D13478 /* Sources */,
+				AA1EC80C1C8C585600D13478 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iTMDb (iOS framework)";
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = iTMDb;
+			productReference = AA1EC8121C8C585600D13478 /* iTMDb.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AA4B5D72199647690007EE28 /* iTMDb (iOS static library) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA4B5D811996476A0007EE28 /* Build configuration list for PBXNativeTarget "iTMDb (iOS static library)" */;
 			buildPhases = (
 				AA4B5D6F199647690007EE28 /* Sources */,
 				AA4B5D70199647690007EE28 /* Frameworks */,
@@ -323,9 +393,9 @@
 			);
 			dependencies = (
 			);
-			name = "iTMDb-static";
+			name = "iTMDb (iOS static library)";
 			productName = "iTMDb-static";
-			productReference = AA4B5D73199647690007EE28 /* libiTMDb.a */;
+			productReference = AA4B5D73199647690007EE28 /* iTMDb.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -358,14 +428,22 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DC2EF4F0486A6940098B216 /* iTMDb */,
-				AA4B5D72199647690007EE28 /* iTMDb-static */,
+				8DC2EF4F0486A6940098B216 /* iTMDb (OS X framework) */,
+				AA4B5D72199647690007EE28 /* iTMDb (iOS static library) */,
+				AA1EC7F41C8C585600D13478 /* iTMDb (iOS framework) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA1EC8011C8C585600D13478 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -388,6 +466,22 @@
 				AAFA3EB412863A78002B9E38 /* TMDBImage.m in Sources */,
 				AA9D9B7D17B62E1B0016B954 /* TMDBLanguage.m in Sources */,
 				AA3242CE12CBEF2F00063558 /* TMDBPerson.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA1EC8021C8C585600D13478 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA1EC8031C8C585600D13478 /* TMDB.m in Sources */,
+				AA1EC8041C8C585600D13478 /* TMDBMovie.m in Sources */,
+				AA1EC8051C8C585600D13478 /* TMDBRequest.m in Sources */,
+				AA1EC8061C8C585600D13478 /* TMDBConfiguration.m in Sources */,
+				AA1EC8071C8C585600D13478 /* TMDBMovieSearch.m in Sources */,
+				AA1EC8081C8C585600D13478 /* TMDBError.m in Sources */,
+				AA1EC8091C8C585600D13478 /* TMDBImage.m in Sources */,
+				AA1EC80A1C8C585600D13478 /* TMDBLanguage.m in Sources */,
+				AA1EC80B1C8C585600D13478 /* TMDBPerson.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,10 +630,54 @@
 			};
 			name = Release;
 		};
+		AA1EC8101C8C585600D13478 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dk.devify.${PRODUCT_NAME:rfc1034Identifier}";
+				PRODUCT_NAME = iTMDb;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		AA1EC8111C8C585600D13478 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dk.devify.${PRODUCT_NAME:rfc1034Identifier}";
+				PRODUCT_NAME = iTMDb;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
 		AA4B5D821996476A0007EE28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				EXECUTABLE_PREFIX = "";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -555,6 +693,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				EXECUTABLE_PREFIX = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -568,7 +707,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "iTMDb" */ = {
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "iTMDb (OS X framework)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
@@ -586,7 +725,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA4B5D811996476A0007EE28 /* Build configuration list for PBXNativeTarget "iTMDb-static" */ = {
+		AA1EC80F1C8C585600D13478 /* Build configuration list for PBXNativeTarget "iTMDb (iOS framework)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA1EC8101C8C585600D13478 /* Debug */,
+				AA1EC8111C8C585600D13478 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA4B5D811996476A0007EE28 /* Build configuration list for PBXNativeTarget "iTMDb (iOS static library)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA4B5D821996476A0007EE28 /* Debug */,
